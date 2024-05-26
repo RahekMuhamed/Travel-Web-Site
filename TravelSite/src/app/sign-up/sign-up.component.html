@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css"> -->
+
+
+</head>
+<body>
+
+    <div class="main">
+
+        <section class="signup ">
+            <div class="container ">
+                <div class="signup-content bg-dark text-white">
+                    <form method="POST" id="signup-form" class="signup-form">
+                        <h2 class="form-title text-white">Create account</h2>
+                        <div class="form-group">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-input" name="name" id="name" placeholder="Your Name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" class="form-input" name="email" id="email" placeholder="Your Email"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="text" class="form-input" name="password" id="password" placeholder="Password"/>
+                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="re_password" class="form-label">Repeat your password</label>
+                            <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password"/>
+                        </div>
+                        <div class="form-group d-flex justify-content-center align-items-center">
+                          <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                          <label for="agree-term" class="label-agree-term text-white"><span style="margin-left: 5px;"><span></span></span> I agree to all statements in <a href="#" class="term-service text-white-50">Terms of service</a></label>
+                      </div>
+
+                        <div class="text-center"><button data-mdb-button-init data-mdb-ripple-init class=" btn btn-outline-light btn-lg px-5 " type="submit">Sign up</button>
+                        </div>
+                    </form>
+                    <div>
+                      <p class="mt-4 text-center text-white">Or Signup Using :</p>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center mt-4">
+                      <div class="d-flex">
+                        <a href="#!" class="text-decoration-none me-3">
+                          <i class="fab fa-facebook-f fa-lg text-primary"></i>
+                        </a>
+                        <a href="#!" class="text-decoration-none me-3">
+                          <i class="fab fa-twitter fa-lg text-info"></i>
+                        </a>
+                        <a href="#!" class="text-decoration-none">
+                          <i class="fab fa-google fa-lg text-danger"></i>
+                        </a>
+                      </div>
+                    </div>
+                    <p class="loginhere text-white">
+                      Have already an account? <a routerLink="/login" class="loginhere-link text-white-50">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-5">
+      <h1 class="mb-5">Contact Us</h1>
+      <form  onsubmit="sendMail(); return false;">
+
+        <div class="mb-3">
+          <label class="form-label">Full Name</label>
+          <input name="name" id ="Sendername" type="text" class="form-control" required />
+        </div>
+        <!-- <div class="mb-3">
+          <label class="form-label">Phone number</label>
+          <input name="Phone" id ="Phone" type="phone" class="form-control" required />
+        </div> -->
+
+        <div class="mb-3">
+          <label class="form-label">Email address</label>
+          <input name="email" type="email" class="form-control" required />
+          <div id="emailHelp" class="form-text">
+            Don't worry, we won't share it with anyone else.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="mb-3">
+            <label class="form-label">Subject</label>
+            <input name="Subject" type="text" id="subject" class="form-control"  required/>
+            </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Your Message</label>
+          <textarea
+            name="message"
+            id="message"
+            class="form-control"
+            rows="3"
+            required
+          ></textarea>
+        </div>
+
+        <button class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+    <div class="col-1"></div>
+
+    <div class="col-6 position-relative">
+      <img id="mailimg"
+        src="../../assets/mail.svg"
+        class="w-75 position-absolute top-50 start-50 translate-middle"
+      />
+    </div>
+  </div>
+</div>

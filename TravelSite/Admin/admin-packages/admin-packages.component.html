@@ -1,0 +1,33 @@
+<div class="container">
+  <h2>Packages List</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>quantityAvailable</th>
+        <th>Details</th>
+        <th>Update</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of packages; track $index) {
+      <tr >
+        <td>{{item.id}}</td>
+        <td>{{ item.name}}</td>
+        <td>{{ item.quantityAvailable}}</td>
+        <td>
+          <button class="btn btn-info">Details</button>
+        </td>
+        <td>
+          <button class="btn btn-warning">Update</button>
+        </td>
+        <td>
+          <button class="btn btn-danger">Remove</button>
+        </td>
+      </tr>
+    }
+    </tbody>
+  </table>
+  <button class="btn btn-info">Add</button>

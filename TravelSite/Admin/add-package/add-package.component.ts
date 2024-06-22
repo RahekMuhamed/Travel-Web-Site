@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Package } from '../../src/app/models/packages';
 import { PackagesService } from '../../src/app/services/packages.service';
 import { Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-package',
+  standalone:true,
+  imports:[ReactiveFormsModule,[FormsModule],CommonModule],
   templateUrl: './add-package.component.html',
   styleUrls: ['./add-package.component.css']
 })

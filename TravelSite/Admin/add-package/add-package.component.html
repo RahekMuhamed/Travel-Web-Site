@@ -4,25 +4,33 @@
       <h2 class="fw-bold mb-2 text-uppercase text-center">Add Package</h2>
       <p class="mb-4 text-center">Please enter Package information</p>
 
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-outline form-white mb-4">
-            <label class="form-label" for="name">Package Name</label>
-            <input formControlName="name" type="text" id="name" class="form-control form-control-lg" required>
-            <div *ngIf="formControls.name.touched && formControls.name.errors?.required" class="text-danger">
-              Package Name is required.
-            </div>
-          </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-outline form-white mb-4">
+                      <label class="form-label" for="name">Package Name</label>
+                      <input formControlName="name" type="text" id="name" class="form-control form-control-lg" required>
+                      <div *ngIf="formControls['name']?.touched && formControls['name']?.errors?.['required']" class="text-danger">
+                        Package Name is required.
+                      </div>
+                    </div>
+
+
+
 
           <div class="form-outline form-white mb-4">
             <label class="form-label" for="quantityAvailable">Quantity Available</label>
             <input formControlName="quantityAvailable" type="number" id="quantityAvailable" class="form-control form-control-lg" />
           </div>
 
+
+
+
+
+
           <div class="form-outline form-white mb-4">
             <label class="form-label" for="price">Price</label>
             <input formControlName="price" type="number" id="price" class="form-control form-control-lg" required />
-            <div *ngIf="formControls.price.touched && formControls.price.errors?.required" class="text-danger">
+            <div *ngIf="formControls['price']?.touched && formControls['price']?.errors?.['required']" class="text-danger">
               Price is required.
             </div>
           </div>
@@ -32,7 +40,7 @@
             <label for="image" class="btn btn-primary btn-sm m-2">Select File</label>
             <label class="form-label" for="image">Upload Image</label>
             <span>{{ imageName }}</span>
-            <div *ngIf="formControls.image.touched && formControls.image.errors?.required" class="text-danger">
+           <div *ngIf="formControls['image']?.touched && formControls['image']?.errors?.['required']" class="text-danger">
               Image is required.
             </div>
           </div>
@@ -42,7 +50,7 @@
           <div class="form-outline form-white mb-4">
             <label class="form-label" for="description">Description</label>
             <textarea formControlName="description" id="description" class="form-control form-control-lg" rows="1" required></textarea>
-            <div *ngIf="formControls.description.touched && formControls.description.errors?.required" class="text-danger">
+            <div *ngIf="formControls['description']?.touched && formControls['description']?.errors?.['required']" class="text-danger">
               Description is required.
             </div>
           </div>
@@ -50,7 +58,7 @@
           <div class="form-outline form-white mb-4">
             <label class="form-label" for="startDate">Start Date</label>
             <input formControlName="startDate" type="date" id="startDate" class="form-control form-control-lg" required />
-            <div *ngIf="formControls.startDate.touched && formControls.startDate.errors?.required" class="text-danger">
+            <div *ngIf="formControls['startDate']?.touched && formControls['startDate']?.errors?.['required']" class="text-danger">
               Start Date is required.
             </div>
           </div>
@@ -58,7 +66,7 @@
           <div class="form-outline form-white mb-4">
             <label class="form-label" for="duration">Duration (days)</label>
             <input formControlName="duration" type="number" id="duration" class="form-control form-control-lg" required />
-            <div *ngIf="formControls.duration.touched && formControls.duration.errors?.required" class="text-danger">
+            <div *ngIf="formControls['duration']?.touched && formControls['duration']?.errors?.['required']" class="text-danger">
               Duration is required.
             </div>
           </div>
@@ -76,3 +84,6 @@
     </div>
   </div>
 </form>
+
+
+         

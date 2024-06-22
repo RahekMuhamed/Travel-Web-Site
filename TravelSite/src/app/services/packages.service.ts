@@ -27,5 +27,7 @@ export class PackagesService {
   getPackageById(id: number): Observable<Package> {
     return this.http.get<Package>(`${this.baseUrl}${id}`);
   }
-
+  update(pack: Package): Observable<Package> {
+    return this.http.put<Package>(`${this.baseUrl}${pack.id}`, pack);
+  }
 }

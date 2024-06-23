@@ -30,4 +30,8 @@ export class PackagesService {
   update(pack: Package): Observable<Package> {
     return this.http.put<Package>(`${this.baseUrl}${pack.id}`, pack);
   }
+  deletePackage(packageId: number): Observable<void> {
+    const url = `${this.baseUrl}${packageId}`; 
+    return this.http.delete<void>(url);
+  }
 }

@@ -1,8 +1,6 @@
 <app-navbar></app-navbar>
 
-
-
-
+<!-- slider -->
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -29,4 +27,77 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
+<!-- end of slider -->
+
+<!-- service cards -->
+
+
+ <!-- end of service cards -->
+
+
+
+    <div class="container">
+       <h1>Services </h1>
+      <!-- <div class="row"> -->
+<!--
+        <div class="cardcontainer">
+            <div class="photo">
+                <img src="https://images.pexels.com/photos/2346006/pexels-photo-2346006.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=1&w=500">
+                <div class="photos">Photos</div>
+            </div>
+            <div class="content">
+                <p class="txt4">City Lights In Newyork</p>
+                <p class="txt5">A city that never sleeps</p>
+                <p class="txt2">New York, the largest city in the U.S., is an architectural marvel with plenty of historic monuments, magnificent buildings and countless dazzling skyscrapers.</p>
+            </div>
+            <div class="footer">
+                <p><a class="waves-effect waves-light btn" href="#">Read More</a><a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a></p>
+                <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p>
+            </div>
+        </div> -->
+         <div class="cardcontainer">
+            <div class="photo">
+                <img src="https://images.pexels.com/photos/2346006/pexels-photo-2346006.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=1&w=500">
+                <div class="photos">Photos</div>
+            </div>
+            <div class="content">
+                <p class="txt4">City Lights In Newyork</p>
+                <p class="txt5">A city that never sleeps</p>
+                <p class="txt2">New York, the largest city in the U.S., is an architectural marvel with plenty of historic monuments, magnificent buildings and countless dazzling skyscrapers.</p>
+            </div>
+            <div class="footer">
+                <p><a class="waves-effect waves-light btn" href="#">Read More</a><a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a></p>
+                <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p>
+            </div>
+        </div>
+        </div>
+    <!-- </div> -->
+
+    <!-- hhhhhhhhhhh -->
+
+<p-card header="Advanced Card" subheader="Card Subheader" [style]="{ width: '360px' }">
+    <ng-template pTemplate="header">
+        <img alt="Card" src="../../assets/umrah3.jpeg" />
+    </ng-template>
+    <p>
+        Lorem ipsum dolor sit amet...
+    </p>
+    <ng-template pTemplate="footer">
+        <div class="flex gap-3 mt-1">
+            <p-button label="Cancel" severity="secondary" class="w-full" styleClass="w-full" />
+            <p-button label="Save" class="w-full" styleClass="w-full" />
+        </div>
+    </ng-template>
+</p-card>
+
+
+<!-- src/app/home/home.component.html -->
+<div *ngFor="let service of services" class="service">
+  <h1>hiiiiii</h1>
+  <h3>{{ service.name }} hell</h3>
+  <p>{{ service.description }}</p>
+  <p>Price: {{ service.price }}</p>
+  <a [routerLink]="['/booking', service.id]">Book Now</a>
+</div>
+
 <app-footer></app-footer>

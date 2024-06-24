@@ -15,4 +15,10 @@ export class ServicesService {
   getAll(): Observable<Services[]> {
     return this.http.get<Services[]>(this.baseUrl);
   }
+  getserviceById(id: number): Observable<Services> {
+    return this.http.get<Services>(`${this.baseUrl}${id}`);
+  }
+  add(serv: Services): Observable<Services> {
+    return this.http.post<Services>(this.baseUrl, serv);
+  }
 }

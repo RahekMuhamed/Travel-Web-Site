@@ -18,16 +18,16 @@
         <td>{{ item.name}}</td>
         <td>{{ item.quantityAvailable}}</td>
         <td>
-          <button class="btn btn-info">Details</button>
+          <button class="btn btn-info" (click)="viewDetails(item.id)">Details</button>
         </td>
         <td>
-          <button class="btn btn-warning">Update</button>
+          <button class="btn btn-warning" (click)="updateService(item.id)">Update</button>
         </td>
-        <td>
-          <button class="btn btn-danger">Remove</button>
-        </td>
+        <!-- <td>
+           <button class="btn btn-danger" (click)="removePackage(item.id)">Remove</button>
+        </td> -->
       </tr>
     }
     </tbody>
   </table>
-  <button class="btn btn-info">Add</button>
+  <button class="btn btn-info" (click)="addService()">Add</button>

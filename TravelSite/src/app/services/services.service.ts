@@ -21,4 +21,12 @@ export class ServicesService {
   add(serv: Services): Observable<Services> {
     return this.http.post<Services>(this.baseUrl, serv);
   }
+  uploadImage(formData: FormData): Observable<string> {
+    const uploadUrl = `${this.baseUrl}upload`;
+    return this.http.post<string>(uploadUrl, formData);
+  }
+
+  update(serv:  Services): Observable<Services> {
+    return this.http.put<Services>(`${this.baseUrl}${serv.id}`, serv);
+  }
 }

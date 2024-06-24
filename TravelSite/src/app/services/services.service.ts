@@ -29,4 +29,8 @@ export class ServicesService {
   update(serv:  Services): Observable<Services> {
     return this.http.put<Services>(`${this.baseUrl}${serv.id}`, serv);
   }
+  deleteService(pserviceId: number): Observable<void> {
+    const url = `${this.baseUrl}${pserviceId}`;
+    return this.http.delete<void>(url);
+  }
 }

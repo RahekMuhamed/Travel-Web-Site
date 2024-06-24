@@ -8,6 +8,7 @@ import { ContactUSComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { SuperAdminLayoutComponent } from "../../SuperAdmin/super-admin-layout/super-admin-layout.component";
 
 @Component({
     selector: 'app-root',
@@ -16,7 +17,7 @@ import { FooterComponent } from './footer/footer.component';
     styleUrl: './app.component.css',
     imports: [RouterOutlet, LoginComponent, SignUpComponent,ForgetPasswordComponent
       ,ResetPasswordComponent,ContactUSComponent
-      ,HomeComponent,NavbarComponent,FooterComponent]
+      ,HomeComponent,NavbarComponent, SuperAdminLayoutComponent]
 })
 export class AppComponent {
   title = 'TravelSite';

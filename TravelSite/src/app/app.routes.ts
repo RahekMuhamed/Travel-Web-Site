@@ -1,3 +1,4 @@
+
 import { Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
@@ -12,5 +13,11 @@ export const routes: Routes = [
   }
  ,
   { path: 'booking', component: BookingServiceComponent },
-  
+  {path: 'SuperAdmin',
+    loadChildren: () => import('../../SuperAdmin/SuperAdmin.routes').then(m => m.SuperAdminroutes)
+
+  }
 ];
+    
+
+

@@ -121,6 +121,7 @@ body{
         margin-left: auto;
         margin-right: auto;
         transition: 0.3s;
+        display: inline-block;
     }
     .cardcontainer:hover{
         box-shadow: 0 0 45px gray;

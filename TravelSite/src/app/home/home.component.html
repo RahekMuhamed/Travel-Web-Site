@@ -39,10 +39,10 @@
     <div class="container ">
        <h1 class="headline">Services </h1>
       <!-- <div class="row"> -->
+  <div  class="cardcontainer m-2" *ngFor="let item of services | slice:-3; let i = index">
+        <!-- @for (item of services; track $index) { -->
 
-        @for (item of services; track $index) {
-
-         <div class="cardcontainer m-5">
+       
             <div class="photo">
                 <img src="../../assets/umrah3.jpeg">
                  <!-- <img src="{{ item.image}}"> -->
@@ -68,10 +68,11 @@
                 <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
             </div>
      
-        </div>
+       
 
       
-        } 
+        <!-- }  -->
+        </div>
         </div>
   
 
@@ -84,9 +85,9 @@
        <h1 class="headline">Packages </h1>
       <!-- <div class="row"> -->
 
-        @for (item of packages; track $index) {
+       
 
-         <div class="cardcontainer m-5">
+      <div  class="cardcontainer m-2" *ngFor="let item of packages | slice:-3; let i = index">
             <div class="photo">
                 <img src="../../assets/umrah1.jpeg">
                 
@@ -114,7 +115,7 @@
         </div>
 
       
-        } 
+       
         </div>
 
 <!-- <p-card header="Advanced Card" subheader="Card Subheader" [style]="{ width: '360px' }">

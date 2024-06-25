@@ -21,7 +21,7 @@ export class EditServiceComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private ServicesService: ServicesService
+    private servicesService: ServicesService // Adjust service name as per your actual service
   ) {
     this.ServiceForm = this.fb.group({
       name: ['', Validators.required],
@@ -40,15 +40,15 @@ export class EditServiceComponent implements OnInit {
   }
 
   loadServiceData(): void {
-    const ServiceId = this.route.snapshot.paramMap.get('id');
-    if (ServiceId) {
-      this.ServiceId = +ServiceId;
-      this.ServicesService.getserviceById(this.ServiceId).subscribe(ServiceData => {
-        if (ServiceData.startDate) {
-          ServiceData.startDate = new Date(ServiceData.startDate); // Ensure startDate is converted to Date object if needed
+    const serviceId = this.route.snapshot.paramMap.get('id');
+    if (serviceId) {
+      this.ServiceId = +serviceId;
+      this.servicesService.getserviceById(this.ServiceId).subscribe(serviceData => {
+        if (serviceData.startDate) {
+          serviceData.startDate = new Date(serviceData.startDate);
         }
-        this.ServiceForm.patchValue(ServiceData); // Patch retrieved Service data to the form
-        this.imageName = ServiceData.image || ''; // Set the imageName to display the current image name
+        this.ServiceForm.patchValue(serviceData);
+        this.imageName = serviceData.image || '';
       });
     }
   }
@@ -60,12 +60,12 @@ export class EditServiceComponent implements OnInit {
   imageUpload(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      this.imageName = file.name; // Update the imageName to show the newly uploaded image name
+      this.imageName = file.name;
 
       this.convertToBase64(file).then((base64: string) => {
-        this.base64Image = base64; // Update the base64Image with the converted image data
+        this.base64Image = base64;
         this.ServiceForm.patchValue({
-          base64Image: base64 // Patch the base64Image field in the form with the converted image data
+          base64Image: base64
         });
       }).catch(error => console.error('Base64 conversion failed:', error));
     }
@@ -97,11 +97,10 @@ export class EditServiceComponent implements OnInit {
   updateService(): void {
     const formData = this.ServiceForm.value;
     formData.id = this.ServiceId;
-    this.ServicesService.update(formData).subscribe(
+    this.servicesService.update(formData).subscribe(
       () => {
-        alert('Service added successfully!');
-
-        this.router.navigateByUrl('Admin/Servicelist');
+        alert('Service updated successfully!');
+        this.router.navigateByUrl('/Admin/servicelist'); 
       },
       (error) => {
         console.error('Service update failed:', error);

@@ -23,7 +23,6 @@ export class PackageDetailsComponent implements OnInit {
       this.packageId = Number(idParam);
       if (!Number.isFinite(this.packageId)) {
         console.error('Invalid packageId:', idParam);
-        // Redirect to a default page or show an error message
       } else {
         this.fetchPackageDetails();
       }
@@ -44,7 +43,7 @@ export class PackageDetailsComponent implements OnInit {
     this.router.navigate(['/Admin/Packagelist']);
   }
 
-  redirectToEditPackage(): void {
-    this.router.navigate(['/Admin/EditPackage', this.packageId]);
+  redirectToEditPackage(packageId: number): void {
+    this.router.navigate(['/Admin/updatePackage', packageId]);
   }
 }

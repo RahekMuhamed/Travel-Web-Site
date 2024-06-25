@@ -1,0 +1,25 @@
+<section class="services-list">
+  <article class="card">
+    <div class="article-wrapper">
+      <figure>
+        <img *ngIf="serviceDetails.image" [src]="serviceDetails.image" [alt]="serviceDetails.name" class="card-img-top">
+      </figure>
+      <div class="article-body card-body">
+        <h2 class="text-center">{{ serviceDetails.name }}</h2>
+        <h6 class="text-center">{{ serviceDetails.description }}</h6>
+        <p><strong>Price:</strong> {{ serviceDetails.price }}</p>
+        <p><strong>Quantity Available:</strong> {{ serviceDetails.quantityAvailable }}</p>
+        <p><strong>Start Date:</strong> {{ serviceDetails.startDate }}</p>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+              <button class="btn btn-info mx-2" (click)="redirectToserviceList()">Back</button>
+              <button class="btn btn-info mx-2" (click)="redirectToEditservice(serviceDetails.id)">Edit</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>

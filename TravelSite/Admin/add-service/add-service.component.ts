@@ -1,40 +1,39 @@
 import { Component, OnInit } from '@angular/core';
+import { Services } from '../../src/app/models/services';
 import { FormGroup, Validators, FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Package } from '../../src/app/models/packages';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { PackagesService } from '../../src/app/services/packages.service';
+import { ServicesService } from '../../src/app/services/services.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-package',
-  standalone:true,
-  imports:[ReactiveFormsModule,[FormsModule],CommonModule],
-  templateUrl: './add-package.component.html',
-  styleUrls: ['./add-package.component.css']
+  selector: 'app-add-service',
+  standalone: true,
+  imports: [ReactiveFormsModule,FormsModule,CommonModule],
+  templateUrl: './add-service.component.html',
+  styleUrl: './add-service.component.css'
 })
-export class AddPackageComponent implements OnInit {
-  newpackage: Package = new Package(0, "", false, "", "", 0, 0);
-  packageForm!: FormGroup;
+export class AddServiceComponent implements OnInit {
+  newservice: Services = new Services(0, "", 0,"",);
+  serviceForm!: FormGroup;
   imageName: string | null = null;
   base64Image: string | null = null;
 
-  constructor(private formBuilder: FormBuilder, private packageservice: PackagesService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private serviceservice: ServicesService, private router: Router) { }
 
   ngOnInit(): void {
-    this.packageForm = this.formBuilder.group({
+    this.serviceForm = this.formBuilder.group({
       name: ['', Validators.required],
       quantityAvailable: [''],
       price: ['', Validators.required],
       description: ['', Validators.required],
       startDate: ['', Validators.required],
-      duration: ['', Validators.required],
       image: [''],
       isDeleted: [false]
     });
   }
 
   get formControls() {
-    return this.packageForm.controls;
+    return this.serviceForm.controls;
   }
 
   imageUpload(event: any): void {
@@ -44,7 +43,7 @@ export class AddPackageComponent implements OnInit {
 
       this.convertToBase64(file).then((base64: string) => {
         this.base64Image = base64;
-        this.packageForm.patchValue({
+        this.serviceForm.patchValue({
           image: base64
         });
       }).catch(error => console.error('Base64 conversion failed:', error));
@@ -68,24 +67,21 @@ export class AddPackageComponent implements OnInit {
   }
 
   save(): void {
-    if (this.packageForm.valid) {
-      this.addPackage();
+    if (this.serviceForm.valid) {
+      this.addservice();
     } else {
-      this.packageForm.markAllAsTouched();
+      this.serviceForm.markAllAsTouched();
     }
   }
 
-  addPackage(): void {
-    console.log('Adding package with data:', this.packageForm.value);
-    this.packageservice.add(this.packageForm.value).subscribe(
+  addservice(): void {
+    console.log('Adding service with data:', this.serviceForm.value);
+    this.serviceservice.add(this.serviceForm.value).subscribe(
       () => {
-        alert('Package added successfully!');
-        this.router.navigateByUrl("Admin/packagelist");
-
-
-
+        alert('service added successfully!');
+        this.router.navigateByUrl("Admin/servicelist");
       },
-      (error) => console.error('Package save failed:', error)
+      (error) => console.error('service save failed:', error)
     );
   }
 }

@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable ,throwError} from 'rxjs';
 import { Services } from '../models/services';
-
+import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -29,8 +29,8 @@ export class ServicesService {
   update(serv:  Services): Observable<Services> {
     return this.http.put<Services>(`${this.baseUrl}${serv.id}`, serv);
   }
-  deleteService(pserviceId: number): Observable<void> {
-    const url = `${this.baseUrl}${pserviceId}`;
+  deleteService(serviceId: number): Observable<void> {
+    const url = `${this.baseUrl}${serviceId}`;
     return this.http.delete<void>(url);
   }
 }

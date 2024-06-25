@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Package } from '../../src/app/models/packages';
-import { PackagesService } from '../../src/app/services/packages.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PackagesService } from '../../src/app/services/packages.service';
 
 @Component({
   selector: 'app-add-package',
@@ -28,7 +28,7 @@ export class AddPackageComponent implements OnInit {
       description: ['', Validators.required],
       startDate: ['', Validators.required],
       duration: ['', Validators.required],
-      image: [''], // This will store the base64 string of the image
+      image: [''],
       isDeleted: [false]
     });
   }
@@ -43,9 +43,9 @@ export class AddPackageComponent implements OnInit {
       this.imageName = file.name;
 
       this.convertToBase64(file).then((base64: string) => {
-        this.base64Image = base64; // Store base64 string
+        this.base64Image = base64;
         this.packageForm.patchValue({
-          image: base64 // Set the 'image' form control to the base64 string
+          image: base64
         });
       }).catch(error => console.error('Base64 conversion failed:', error));
     }
@@ -58,12 +58,10 @@ export class AddPackageComponent implements OnInit {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        // Resolve with the base64 string
         resolve(reader.result as string);
       };
 
       reader.onerror = (error) => {
-        // Reject if FileReader encountered an error
         reject(error);
       };
     });
@@ -78,11 +76,14 @@ export class AddPackageComponent implements OnInit {
   }
 
   addPackage(): void {
-    console.log('Adding package with data:', this.packageForm.value); // Debugging line
+    console.log('Adding package with data:', this.packageForm.value);
     this.packageservice.add(this.packageForm.value).subscribe(
       () => {
         alert('Package added successfully!');
-        this.router.navigateByUrl("Admin/Packagelist");
+        this.router.navigateByUrl("Admin/packagelist");
+
+
+
       },
       (error) => console.error('Package save failed:', error)
     );

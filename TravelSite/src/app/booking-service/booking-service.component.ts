@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiServiceService } from '../services/api-service.service';
+
 import { BookingService } from '../models/bookingService.model';
 import { CommonModule } from '@angular/common';
 @Component({
@@ -19,7 +19,7 @@ export class BookingServiceComponent  {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private apiService: ApiServiceService,
+   
     private router: Router
   ) {
     this.bookingForm = this.fb.group({

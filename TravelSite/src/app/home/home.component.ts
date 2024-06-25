@@ -4,8 +4,6 @@ import { FooterComponent } from '../footer/footer.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { ApiServiceService } from '../services/api-service.service';
-import { Service } from '../models/service.model';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Services } from '../models/services';

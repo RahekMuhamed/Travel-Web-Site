@@ -1,6 +1,52 @@
 
 <app-navbar></app-navbar>
-<p>travel-service works!</p>
+
+
+    <div class="container ">
+       <h1 class="headline">Services </h1>
+      <!-- <div class="row"> -->
+  <div  class="cardcontainer m-2" *ngFor="let item of services; let i = index">
+        <!-- @for (item of services; track $index) { -->
+
+
+            <div class="photo">
+                <img src="../../assets/umrah3.jpeg">
+                 <!-- <img src="{{ item.image}}"> -->
+            </div>
+
+
+            <div class="content">
+                <p class="txt4">{{ item.name}}</p>
+                <!-- <p class="date">{{ item.startDate}}</p> -->
+
+                <p class="txt5">{{ item.price}}$</p>
+                <p class="txt2">{{ item.description}}</p>
+              </div>
+
+            <div class="footer">
+                <p>
+                  <!-- <a class="waves-effect waves-light btn" href="/srviceDetails">Read More</a> -->
+                   <!-- <a class="waves-effect waves-light btn" [routerLink]="['/serviceDetails', item.id]">Read More</a>
+                 <button class="btn btn-info" (click)="viewDetails(item.id)">Details</button> -->
+  <a class="waves-effect waves-light btn" [routerLink]="['/serviceDetails', item.id]">Read More</a>
+                   <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
+
+                </p>
+                 <button  class="book-btn">book now</button>
+                <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
+            </div>
+
+
+
+
+        <!-- }  -->
+        </div>
+        </div>
+
+
+
+
+<app-footer></app-footer>
 
 <!-- <div *ngFor="let service of services" class="service">
   <h1>{{ service.name }}</h1>
@@ -17,15 +63,3 @@
   <a [routerLink]="['/', service.id]" class="btn btn-info">Details</a>
   <a [routerLink]="['/update-service', service.id]" class="btn btn-warning">Update</a> -->
 <!-- </div> -->
- <table>
- 
-      @for (item of services; track $index) {
-      <tr >
-        <td>{{item.id}}</td>
-        <td>{{ item.name}}</td>
-        <td>{{ item.quantityAvailable}}</td>
-     
-      </tr>
-    }
-    </table>
-<app-footer></app-footer>

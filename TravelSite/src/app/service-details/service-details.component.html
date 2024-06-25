@@ -1,1 +1,27 @@
-<p>service-details works!</p>
+<app-navbar></app-navbar>
+<section class="packages-list">
+  <article class="card">
+    <div class="article-wrapper">
+      <figure>
+        <img *ngIf="serviceDetails?.image" [src]="serviceDetails?.image" [alt]="serviceDetails?.name" class="card-img-top">
+      </figure>
+      <div class="article-body card-body">
+        <h2 class="text-center">{{ serviceDetails.name }}</h2>
+        <h6 class="text-center">{{ serviceDetails.description }}</h6>
+        <p><strong>Price:</strong> {{ serviceDetails.price }}</p>
+        <p><strong>Quantity Available:</strong> {{ serviceDetails.quantityAvailable }}</p>
+        <p><strong>Start Date:</strong> {{ serviceDetails.startDate }}</p>
+        <!-- <p><strong>Duration:</strong> {{ serviceDetails.duration }} days</p> -->
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+              <button class="btn btn-info mx-2" (click)="redirectToPackageList()">Back</button>
+                <button class="btn btn-info mx-2" >Book Now!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+<app-footer></app-footer>

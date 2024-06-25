@@ -16,7 +16,7 @@ export class ServicesService {
     return this.http.get<Services[]>(this.baseUrl);
   }
 
-  getPackageById(id: number): Observable<Services> {
+  getServiceById(id: number): Observable<Services> {
     return this.http.get<Services>(`${this.baseUrl}${id}`);
   }
 }

@@ -4,15 +4,19 @@ import { Observable } from 'rxjs';
 import { Services } from '../models/services';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ServicesService {
+  private baseUrl: string = 'https://localhost:7062/api/Service/';
 
-  private baseUrl: string = "https://localhost:44331/api/Service/";
-
+  services: Services[] | null = null;
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Services[]> {
     return this.http.get<Services[]>(this.baseUrl);
+  }
+
+  getPackageById(id: number): Observable<Services> {
+    return this.http.get<Services>(`${this.baseUrl}${id}`);
   }
 }

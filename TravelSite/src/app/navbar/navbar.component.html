@@ -21,18 +21,20 @@
           <li class="nav-item">
           <a class="nav-link" routerLink="/about">About</a>
         </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/booking">booking</a>
-        </li>
+        </li> -->
 
 
 
       </ul>
-      <form class="d-flex">
+      <!-- <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success " type="submit">Search</button>
-      </form>
-
+        <button class="btn btn-outline-success " type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
+      </form> -->
+<div>    
+      <button routerLink="/userBooking" class="btn cart-btn " type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
+</div>
 
 	<div class="dropdown-container">
 				<details class="dropdown right">
@@ -43,31 +45,31 @@
 						<!-- Optional: user details area w/ gray bg -->
 						<li>
 							<p>
-								<span class="block bold">Jane Doe</span>
-								<span class="block italic">jane.com</span>
+								<span class="block bold">nada</span>
+								<span class="block italic">ali</span>
 							</p>
 						</li>
 						<!-- Menu links -->
 						<li>
-							<a href="#">
-								<span class="material-symbols-outlined">account_circle</span> Account
+							<a routerLink="/profile">
+								<span class="material-symbols-outlined">account</span> 
 							</a>
 						</li>
 						<li>
 							<a href="#">
-								<span class="material-symbols-outlined">settings</span> Settings
+								<span class="material-symbols-outlined">settings</span> 
 							</a>
 						</li>
 						<li>
 							<a href="#">
-								<span class="material-symbols-outlined">help</span> Help
+								<span class="material-symbols-outlined">help</span>
 							</a>
 						</li>
 						<!-- Optional divider -->
 						<li class="divider"></li>
 						<li>
 							<a href="#">
-								<span class="material-symbols-outlined">logout</span> Logout
+								<span class="material-symbols-outlined">logout</span> 
 							</a>
 						</li>
 					</ul>

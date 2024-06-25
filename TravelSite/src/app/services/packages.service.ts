@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { Package } from '../models/packages';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PackagesService {
   //private baseUrl: string = `${environment.apiUrl}/Packages/`;
-  private baseUrl: string = "https://localhost:44331/api/Packages/";
+  private baseUrl: string = 'https://localhost:7062/api/Packages/';
 
   constructor(private http: HttpClient) {}
 
@@ -31,7 +31,7 @@ export class PackagesService {
     return this.http.put<Package>(`${this.baseUrl}${pack.id}`, pack);
   }
   deletePackage(packageId: number): Observable<void> {
-    const url = `${this.baseUrl}${packageId}`; 
+    const url = `${this.baseUrl}${packageId}`;
     return this.http.delete<void>(url);
   }
 }

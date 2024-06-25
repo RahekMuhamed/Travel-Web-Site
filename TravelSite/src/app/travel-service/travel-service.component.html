@@ -1,0 +1,31 @@
+
+<app-navbar></app-navbar>
+<p>travel-service works!</p>
+
+<!-- <div *ngFor="let service of services" class="service">
+  <h1>{{ service.name }}</h1>
+  <h3>{{ service.description }}</h3>
+  <p>Price: {{ service.price }}</p> -->
+  <!-- <button [routerLink]="['/booking', service.id]">Book Now</button> -->
+<!-- </div> -->
+
+<!-- <div *ngFor="let service of services" class="service">
+  <h1>{{ service.name }}</h1>
+  <h3>{{ service.description }}</h3>
+  <p>Price: {{ service.price }}</p> -->
+  <!-- <a [routerLink]="['/booking', service.id]" class="btn btn-primary">Book Now</a>
+  <a [routerLink]="['/', service.id]" class="btn btn-info">Details</a>
+  <a [routerLink]="['/update-service', service.id]" class="btn btn-warning">Update</a> -->
+<!-- </div> -->
+ <table>
+ 
+      @for (item of services; track $index) {
+      <tr >
+        <td>{{item.id}}</td>
+        <td>{{ item.name}}</td>
+        <td>{{ item.quantityAvailable}}</td>
+     
+      </tr>
+    }
+    </table>
+<app-footer></app-footer>

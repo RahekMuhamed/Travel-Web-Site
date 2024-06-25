@@ -88,7 +88,7 @@ h2 {
 
 
 .container {
-  width: 660px;
+  width: 500px;
   position: relative;
   margin: 0 auto;
 }
@@ -161,9 +161,9 @@ h2 {
   margin-bottom: 5px;
 }
 
-.loginhere-link {
+.loginhere-link ,.term-service{
   font-weight: 700;
-  color: #222;
+  color:#95a2db
 }
 
 .field-icon {

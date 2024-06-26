@@ -15,45 +15,44 @@ import { Package } from '../../src/app/models/packages';
   styleUrls: ['./edit-package.component.css'],
 })
 export class EditPackageComponent implements OnInit {
-  packageForm!: FormGroup;
+  packageForm: FormGroup;
   imageName: string | null = null;
   packageId: number | undefined;
+  base64Image: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private packagesService: PackagesService
-  ) {}
-
-  ngOnInit(): void {
-    this.initForm();
-    this.loadPackageData();
-  }
-
-  initForm() {
+  ) {
     this.packageForm = this.fb.group({
       name: ['', Validators.required],
-      quantityAvailable: [0, Validators.min(0)],
+      quantityAvailable: [0],
       price: [0, Validators.required],
-      image: [''],
-      base64Image: ['', Validators.required],
       description: ['', Validators.required],
       startDate: ['', Validators.required],
       duration: [0, Validators.required],
+      image: [''], // For displaying the current image, if needed
+      base64Image: ['', Validators.required], // For handling the uploaded image
       isDeleted: [false]
     });
   }
 
-  loadPackageData() {
+  ngOnInit(): void {
+    this.loadPackageData();
+  }
+
+  loadPackageData(): void {
     const packageId = this.route.snapshot.paramMap.get('id');
     if (packageId) {
       this.packageId = +packageId;
       this.packagesService.getPackageById(this.packageId).subscribe(packageData => {
         if (packageData.startDate) {
-          packageData.startDate = new Date(packageData.startDate); 
-        }        this.packageForm.patchValue(packageData);
-        this.imageName = packageData.image || '';
+          packageData.startDate = new Date(packageData.startDate); // Ensure startDate is converted to Date object if needed
+        }
+        this.packageForm.patchValue(packageData); // Patch retrieved package data to the form
+        this.imageName = packageData.image || ''; // Set the imageName to display the current image name
       });
     }
   }
@@ -65,11 +64,12 @@ export class EditPackageComponent implements OnInit {
   imageUpload(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      this.imageName = file.name;
+      this.imageName = file.name; // Update the imageName to show the newly uploaded image name
 
       this.convertToBase64(file).then((base64: string) => {
+        this.base64Image = base64; // Update the base64Image with the converted image data
         this.packageForm.patchValue({
-          base64Image: base64 
+          base64Image: base64 // Patch the base64Image field in the form with the converted image data
         });
       }).catch(error => console.error('Base64 conversion failed:', error));
     }
@@ -99,11 +99,12 @@ export class EditPackageComponent implements OnInit {
   }
 
   updatePackage(): void {
-    console.log('Updating package with data:', this.packageForm.value);
     const formData = this.packageForm.value;
-    formData.id = this.packageId; // Assign the packageId to formData
+    formData.id = this.packageId;
     this.packagesService.update(formData).subscribe(
       () => {
+        alert('Package updated successfully!');
+
         this.router.navigateByUrl('Admin/Packagelist');
       },
       (error) => {

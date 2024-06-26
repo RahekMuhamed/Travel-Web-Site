@@ -70,7 +70,7 @@ h2 {
   clear: both;
 }
 
-body {
+.main {
   font-size: 14px;
   line-height: 1.8;
   color: #222;
@@ -81,20 +81,21 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  padding: 115px 0;
+  padding: 20px 0;
 }
 
 
 
 
 .container {
-  width: 660px;
+  width: 500px;
   position: relative;
   margin: 0 auto;
 }
 
 .signup-content {
-  background: #fff;
+  background-color: #d3d0d0;
+  /* color: #ebebeb; */
   border-radius: 10px;
   padding: 50px 85px;
 }
@@ -160,9 +161,9 @@ body {
   margin-bottom: 5px;
 }
 
-.loginhere-link {
+.loginhere-link ,.term-service{
   font-weight: 700;
-  color: #222;
+  color:#95a2db
 }
 
 .field-icon {
@@ -173,6 +174,12 @@ body {
   z-index: 2;
   color: #555;
 }
+.error {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 5px;
+}
+
 
 @media screen and (max-width: 768px) {
   .container {

@@ -1,0 +1,12 @@
+<p>add-booking-package works!</p>
+<form (ngSubmit)="booking()" class="form-control">
+  <!--<div class="form-group">
+      <label for="clientId">Client ID:</label>
+        <input type="text" id="clientId" [(ngModel)]="clientId" name="clientId" class="form-control"  />
+    </div>-->
+    <div class="form-group">
+        <label for="packageId">Package ID:</label>
+        <input type="number" id="packageId" [(ngModel)]="packageId" name="packageId" class="form-control"  />
+    </div>
+    <button type="submit" class="btn btn-info">Book</button>
+</form>

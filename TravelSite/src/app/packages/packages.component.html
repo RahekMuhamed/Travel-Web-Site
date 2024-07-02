@@ -1,3 +1,45 @@
-<app-navbar></app-navbar>
-<p>packages works!</p>
-<app-footer></app-footer>
+
+
+      <div class="container ">
+       <h1 class="headline">Packages </h1>
+      <!-- <div class="row"> -->
+
+       
+
+      <div  class="cardcontainer m-2" *ngFor="let item of packages; let i = index">
+            <div class="photo">
+                <img src="../../assets/umrah1.jpeg">
+                
+            </div>
+     
+   
+            <div class="content">
+                <p class="txt4">{{ item.name}}</p>
+                <!-- <p class="date">{{ item.startDate}}</p> -->
+
+                <p class="txt5">{{ item.price}}$</p>
+                <p class="txt2">{{ item.description}}</p>
+              </div>
+
+            <div class="footer">
+                <p>
+                   <a class="waves-effect waves-light btn" [routerLink]="['/packageDetails', item.id]">Read More</a>
+                 
+                   <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
+              
+                </p>
+                 <button class="book-btn">book now</button>
+                <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
+            </div>
+     
+        </div>
+
+      
+       
+        </div>
+
+<div class="pagination">
+  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+</div>

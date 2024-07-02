@@ -1,0 +1,101 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div class="Container flex-grow">
+    <div class="card d-flex flex-column flex-shrink-0 p-3 text-black" style="width: 280px; position: fixed;">
+      <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-black text-decoration-none">
+        <div *ngIf="user">
+          <p class="fs-5"><span>Hi:</span> {{ user.fname }}</p>
+        </div>
+      </div>
+      <hr>
+      <ul class="nav nav-pills flex-column my-5">
+        <!-- Common links for all users -->
+        <li>
+          <a routerLink="/Admin/userinfo" class="nav-link">
+            <i class="fa-solid fa-circle-info"></i>
+            <svg class="bi me-2" width="16" height="16"></svg>
+            Info
+          </a>
+        </li>
+        <li *ngIf="userRole === 'client' || userRole === 'customerService'">
+          <a routerLink="/Admin/chat" class="nav-link">
+            <i class="fa-solid fa-headset"></i>
+            <svg class="bi me-2" width="16" height="16"></svg>
+            Chat
+          </a>
+        </li>
+
+        <!-- Links for super admin -->
+        <ng-container *ngIf="userRole === 'superAdmin'">
+          <li>
+            <a routerLink="/Admin/superservicelist" class="nav-link">
+              <i class="fa-solid fa-hand-holding-heart"></i>
+              <svg class="bi me-2" width="16" height="16"></svg>
+              Services
+            </a>
+          </li>
+          <li>
+            <a routerLink="/Admin/superpackagelist" class="nav-link">
+              <i class="fa-solid fa-boxes-stacked"></i>
+              <svg class="bi me-2" width="16" height="16"></svg>
+              Packages 
+            </a>
+          </li>
+          <li>
+            <a routerLink="/Admin/adminslist" class="nav-link">
+              <i class="fa-solid fa-users-rectangle"></i>
+              <svg class="bi me-2" width="16" height="16"></svg>
+              Admins
+            </a>
+          </li>
+          <li>
+            <a routerLink="/Admin/Customers" class="nav-link">
+              <i class="fa-solid fa-users"></i>
+              <svg class="bi me-2" width="16" height="16"></svg>
+              Customers
+            </a>
+          </li>
+          <li>
+            <a routerLink="/Admin/ServiceProvider" class="nav-link">
+              <i class="fa-solid fa-headset"></i>
+              <svg class="bi me-2" width="16" height="16"></svg>
+              Service Provider
+            </a>
+          </li>
+        </ng-container>
+
+        <!-- Links for admin -->
+        <ng-container *ngIf="userRole === 'admin'">
+          <li>
+            <a routerLink="/Admin/servicelist" class="nav-link">
+              <i class="fa-solid fa-hand-holding-heart"></i>
+              <svg class="bi me-2" width="16" height="16"></svg>
+              Services (Admin)
+            </a>
+          </li>
+          <li>
+            <a routerLink="/Admin/packagelist" class="nav-link">
+              <i class="fa-solid fa-boxes-stacked"></i>
+              <svg class="bi me-2" width="16" height="16"></svg>
+              Packages (Admin)
+            </a>
+          </li>
+        </ng-container>
+
+      </ul>
+
+      <div class="mt-auto">
+        <a (click)="onLogoutClick()" class="nav-link">
+          <i class="fa-solid fa-sign-out"></i>
+          <svg class="bi me-2" width="16" height="16"></svg>
+          Log Out
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content area -->
+  <div class="flex-grow-1">
+    <router-outlet></router-outlet>
+  </div>
+</div>

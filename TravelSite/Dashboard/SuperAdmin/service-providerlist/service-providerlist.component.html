@@ -1,0 +1,31 @@
+<div class="container">
+  <h2>Service Provider List</h2>
+  <br>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Details</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of ServiceProvider; track $index) {
+      <tr >
+        <td>{{item.id}}</td>
+        <td>{{ item.name}}</td>
+        <td>
+          <button class="btn btn-info" (click)="viewDetails(item.id)">Details</button>
+</td>
+<td>
+  <button class="btn btn-warning" (click)="updateServiceProvider(item.id)">Update</button>
+</td>
+<td>
+   <button class="btn btn-danger" (click)="removeServiceProvider(item.id)">Remove</button>
+</td>
+      </tr>
+    }
+    </tbody>
+  </table>
+  <button class="btn btn-info" (click)="addServiceProvider()">Add</button>

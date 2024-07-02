@@ -7,26 +7,28 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { PaginationComponent } from "../pagination/pagination.component";
+import { SpinnerComponent } from "../spinner/spinner.component";
 
 @Component({
-  selector: 'app-travel-service',
-  standalone: true,
-  templateUrl: './travel-service.component.html',
-  styleUrls: ['./travel-service.component.css', '../home/home.component.css'],
-  providers: [ServicesService,HttpClientModule],
-  imports: [
-    HttpClientModule,
-    NavbarComponent,
-    FooterComponent,
-    RouterLink,
-    CommonModule,
-    RouterModule,
-    PaginationComponent,
-  ],
+    selector: 'app-travel-service',
+    standalone: true,
+    templateUrl: './travel-service.component.html',
+    styleUrls: ['./travel-service.component.css', '../home/home.component.css'],
+    providers: [ServicesService, HttpClientModule],
+    imports: [
+        HttpClientModule,
+        NavbarComponent,
+        FooterComponent,
+        RouterLink,
+        CommonModule,
+        RouterModule,
+        PaginationComponent,
+        SpinnerComponent
+    ]
 })
 export class TravelServiceComponent implements OnInit {
   services: any[] = [];
-
+  isLoading = false;
 
   currentPage: number = 1;
   itemsPerPage: number = 10;
@@ -39,6 +41,9 @@ export class TravelServiceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.servicesService.loading$.subscribe(
+        (isLoading) => (this.isLoading = isLoading)
+      );
     this.loadData(this.currentPage, this.itemsPerPage);
   }
 
@@ -46,6 +51,7 @@ export class TravelServiceComponent implements OnInit {
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
+
     this.servicesService.getAll(page, pageSize).subscribe(
       (response) => {
         //

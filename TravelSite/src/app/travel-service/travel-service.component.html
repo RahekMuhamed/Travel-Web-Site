@@ -1,10 +1,23 @@
 
 
+<!-- <div *ngIf="!isLoading">
+  <div *ngFor="let service of services">
+
+    {{ service | json }}
+  </div>
+
+
+</div> -->
+
 
 
 
 
  <h1 class="headline">Services </h1>
+
+ <div *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</div>
   <section class="ezy__travel4_dv0tjLKH">
   <div class="container">
     <!-- header portion -->
@@ -92,6 +105,7 @@
       <!-- <div class="row"> -->
 
 
+<div *ngIf="!isLoading">
 
       <div  class="cardcontainer m-2" *ngFor="let item of services; let i = index">
             <div class="photo">
@@ -119,6 +133,7 @@
                 <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
             </div>
 
+        </div>
         </div>
 
 

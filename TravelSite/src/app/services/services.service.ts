@@ -1,25 +1,31 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable ,throwError} from 'rxjs';
+import { BehaviorSubject, Observable ,throwError} from 'rxjs';
 import { Services } from '../models/services';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, finalize, map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
 export class ServicesService {
   private baseUrl: string = 'https://localhost:7062/api/Service/';
 
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient) {}
 
-  
+  get loading$() {
+    return this.loadingSubject.asObservable();
+  }
 
   getAll(page?: number, pageSize?: number): Observable<any> {
-    return this.http.get<any>(
-      `${this.baseUrl}?pageNumber=${page}&pageSize=${pageSize}`).pipe(
+    this.loadingSubject.next(true);
+    return this.http
+      .get<any>(`${this.baseUrl}?pageNumber=${page}&pageSize=${pageSize}`)
+      .pipe(
         map((response) => response),
-             catchError(this.handleError
-      )
-    );
+        catchError(this.handleError),
+        finalize(() => this.loadingSubject.next(false))
+      );
   }
 
   private handleError(error: HttpErrorResponse) {

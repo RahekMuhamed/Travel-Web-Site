@@ -1,0 +1,69 @@
+<div class="Container">
+  <form [formGroup]="addAdminForm" (ngSubmit)="addAdmin()">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-sm-3">
+              <h6 class="mb-0" for="name">Full Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input id="name" type="text" formControlName="name" />
+              <div *ngIf="addAdminForm.get('name')?.touched && addAdminForm.get('name')?.invalid">
+                <small *ngIf="addAdminForm.get('name')?.errors?.['required']">Name is required.</small>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-3">
+              <h6 class="mb-0" for="email">Email</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input id="email" type="email" formControlName="email" />
+              <div *ngIf="addAdminForm.get('email')?.touched && addAdminForm.get('email')?.invalid">
+                <small *ngIf="addAdminForm.get('email')?.errors?.['required']">Email is required.</small>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-3">
+              <h6 class="mb-0" for="password">Password</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input id="password" type="password" formControlName="password" />
+              <div *ngIf="addAdminForm.get('password')?.touched && addAdminForm.get('password')?.invalid">
+                <small *ngIf="addAdminForm.get('password')?.errors?.['required']">Password is required.</small>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-3">
+              <h6 class="mb-0" for="confirmPassword">Confirm Password</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+              <div *ngIf="addAdminForm.get('confirmPassword')?.touched && addAdminForm.get('confirmPassword')?.invalid">
+                <small *ngIf="addAdminForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</small>
+              </div>
+            </div>
+          </div>
+          <!-- Hidden role input -->
+          <div style="display: none;">
+            <select id="role" formControlName="role">
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9 text-secondary">
+              <button type="submit" class="btn btn-primary px-4" [disabled]="addAdminForm.invalid">Add Admin</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+  </div>
+</div>

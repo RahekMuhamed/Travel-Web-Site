@@ -2,12 +2,40 @@
   border-top: #022027 solid 6px;
   border-bottom: #022027 solid 6px;
 } */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 0 ;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+#copy {
+  width: 100%;
+  background-color: #f8f8f8;
+  text-align: center;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+
+#copy h3 {
+  margin: 0;
+}
 
 
 .container, .container2{
   background-color: #18638f;
   color: #f6fbfe;
   justify-content: center;
+  margin: 0 auto;
 
 }
 .container .section{

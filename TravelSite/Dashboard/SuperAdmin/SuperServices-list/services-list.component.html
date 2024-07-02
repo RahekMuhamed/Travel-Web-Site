@@ -18,7 +18,7 @@
         <td>{{ item.name}}</td>
         <td>{{ item.quantityAvailable}}</td>
         <td>
-          <button class="btn btn-info">Details</button>
+          <button class="btn btn-info"  (click)="viewDetails(item.id)">Details</button>
 
       </tr>
     }

@@ -43,6 +43,6 @@ export class SuperpackageDetailsComponent implements OnInit {
   }
 
   redirectToPackageList(): void {
-    this.router.navigate(['/SuperAdmin/Packagelist']);
+    this.router.navigate(['/Admin/superPackagelist']);
   }
 }

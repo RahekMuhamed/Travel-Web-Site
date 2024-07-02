@@ -14,7 +14,6 @@ import { ServicesListComponent } from './services-list/services-list.component';
 // import { DeleteCustomerComponent } from '../SuperAdmin/delete-customer/delete-customer.component';
 
 export const SuperAdminroutes: Routes = [
-
   {
   //   path: 'Admin ',
   //   component: AdminLayoutComponent,

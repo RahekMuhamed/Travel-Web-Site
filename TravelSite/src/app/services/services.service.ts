@@ -13,9 +13,14 @@ export class ServicesService {
 
   constructor(private http: HttpClient) {}
 
+<<<<<<< HEAD
   get loading$() {
     return this.loadingSubject.asObservable();
   }
+=======
+
+  
+>>>>>>> 89944655bdb5aa9378d6ca160fe1ee9d2f85d50d
 
   getAll(page?: number, pageSize?: number): Observable<any> {
     this.loadingSubject.next(true);
@@ -39,6 +44,7 @@ export class ServicesService {
     }
     console.error(errorMessage);
     return throwError(errorMessage);
+
   }
   getserviceById(id: number): Observable<Services> {
     return this.http.get<Services>(`${this.baseUrl}${id}`);

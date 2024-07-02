@@ -1,13 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
+
 import { Package } from '../models/packages';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PackagesService {
-  //private baseUrl: string = `${environment.apiUrl}/Packages/`;
   private baseUrl: string = 'https://localhost:7062/api/Packages/';
 
   constructor(private http: HttpClient) {}
@@ -20,12 +20,7 @@ export class PackagesService {
         catchError(this.handleError)
       );
   }
-  // getAll(): Observable<Package[]> {
-  //   return this.http.get<any>(this.baseUrl).pipe(
-  //     map((response) => response.data.$values),
-  //     catchError(this.handleError)
-  //   );
-  // }
+ 
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';

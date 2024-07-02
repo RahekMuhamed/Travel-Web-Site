@@ -4,8 +4,6 @@ import { FooterComponent } from '../footer/footer.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { ApiServiceService } from '../services/api-service.service';
-import { Service } from '../models/service.model';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Services } from '../models/services';
@@ -29,34 +27,72 @@ import { PackagesService } from '../services/packages.service';
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
-  providers: [ServicesService,PackagesService],
+  providers: [ServicesService, PackagesService],
 })
 export class HomeComponent {
-  // services: Services[] | null = null;
-  // constructor(private servicesService: ServicesService) {}
-  // ngOnInit(): void {
-  //   this.servicesService.getAll().subscribe({
-  //     next: (response: any) => {
-  //       this.services = response;
-  //     },
-  //     error: (err) => {
-  //       console.error('Error fetching services', err);
-  //     },
-  //   });
-  // }
   services: Services[] | null = null;
   packages: Package[] | null = null;
-  constructor(private serviceservice: ServicesService, private packageService:PackagesService) {}
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalItems: number = 100;
+  constructor(
+    private serviceservice: ServicesService,
+    private packageService: PackagesService
+  ) {}
   ngOnInit(): void {
-    this.serviceservice.getAll().subscribe({
-      next: (response: any) => {
-        this.services = response.$values;
+
+
+     this.loadServiceData(this.currentPage, this.itemsPerPage);
+      this.loadPackageData(this.currentPage, this.itemsPerPage);
+    // this.serviceservice.getAll().subscribe({
+    //   next: (response: Services[]) => {
+    //     this.services = response;
+    //   },
+    //   error: (err) => {
+    //     console.error('Error fetching services', err);
+    //   },
+    // });
+    // this.packageService.getAll().subscribe({
+    //   next: (response: Package[]) => {
+    //     this.packages = response;
+    //   },
+    //   error: (err) => {
+    //     console.error('Error fetching packages', err);
+    //   },
+    // });
+  }
+  loadServiceData(
+    page: number = this.currentPage,
+    pageSize: number = this.itemsPerPage
+  ): void {
+    this.serviceservice.getAll(page, pageSize).subscribe(
+      (response) => {
+        //
+        this.services = response.data.$values;
+        this.totalItems = response.totalCount;
+        this.currentPage = response.pageNumber;
+        this.itemsPerPage = response.pageSize; // Assuming the response contains the total number of pages
       },
-    });
-    this.packageService.getAll().subscribe({
-      next: (response: any) => {
-        this.packages = response.$values;
+      (error) => {
+        console.error('Error loading data:', error);
+      }
+    );
+  }
+  loadPackageData(
+    page: number = this.currentPage,
+    pageSize: number = this.itemsPerPage
+  ): void {
+    this.packageService.getAll(page, pageSize).subscribe(
+      (response) => {
+        //
+        this.packages = response.data.$values;
+        this.totalItems = response.totalCount;
+        this.currentPage = response.pageNumber;
+        this.itemsPerPage = response.pageSize; // Assuming the response contains the total number of pages
       },
-    });
+      (error) => {
+        console.error('Error loading data:', error);
+      }
+    );
   }
 }

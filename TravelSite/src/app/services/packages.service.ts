@@ -1,19 +1,38 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
+
 import { Package } from '../models/packages';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PackagesService {
-  //private baseUrl: string = `${environment.apiUrl}/Packages/`;
   private baseUrl: string = 'https://localhost:7062/api/Packages/';
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Package[]> {
-    return this.http.get<Package[]>(this.baseUrl);
+  getAll(page?: number, pageSize?: number): Observable<any> {
+    return this.http
+      .get<any>(`${this.baseUrl}?pageNumber=${page}&pageSize=${pageSize}`)
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+ 
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side errors
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side errors
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 
   add(pack: Package): Observable<Package> {

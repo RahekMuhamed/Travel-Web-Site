@@ -1,20 +1,22 @@
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { SignUpComponent } from "./sign-up/sign-up.component";
-import { ForgetPasswordComponent } from './forget-password/forget-password.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgetPasswordComponent } from '../../Authenticaion/forget-password/forget-password.component';
+import { ResetPasswordComponent } from '../../Authenticaion/reset-password/reset-password.component';
 import { ContactUSComponent } from './contact-us/contact-us.component';
-//import { NavbarComponent } from './Core/navbar/navbar.component';
-import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { SuperAdminLayoutComponent } from "../../SuperAdmin/super-admin-layout/super-admin-layout.component";
 import { HttpClientModule } from '@angular/common/http';
 import { TravelServiceComponent } from './travel-service/travel-service.component';
 import { ButtonModule } from 'primeng/button';
-import { AddPackageComponent } from '../../Admin/add-package/add-package.component';
-
+import { PackagesListComponent } from '../../Dashboard/SuperAdmin/SuperPackages-list/packages-list.component';
+import { AdminPackagesComponent } from '../../Dashboard/Admin/admin-packages/admin-packages.component';
+import { AdminServicesComponent } from '../../Dashboard/Admin/admin-services/admin-services.component';
+import { PackageDetailsComponent } from '../../Dashboard/Admin/package-details/package-details.component';
+import { AdminsListComponent } from '../../Dashboard/SuperAdmin/admins-list/admins-list.component';
+import { SignUpComponent } from '../../Authenticaion/sign-up/sign-up.component';
+import { LoginComponent } from '../../Authenticaion/login/login.component';
+import { HomeComponent } from './home/home.component';
+import { AddPackageComponent } from '../../Dashboard/Admin/add-package/add-package.component';
 
 @Component({
     selector: 'app-root',
@@ -22,21 +24,25 @@ import { AddPackageComponent } from '../../Admin/add-package/add-package.compone
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
   imports: [
-    RouterOutlet,
-    LoginComponent,
-    SignUpComponent,
-    ForgetPasswordComponent,
-    ResetPasswordComponent,
-    ContactUSComponent,
+    // RouterOutlet,
+    // LoginComponent,
+    // SignUpComponent,
+    // ForgetPasswordComponent,
+    // ResetPasswordComponent,
+    // ContactUSComponent,
+    // NavbarComponent,
+    // HomeComponent,
+    // NavbarComponent,
+    // SuperAdminLayoutComponent,
+    // HttpClientModule,
+    // TravelServiceComponent, RouterModule,
+    // ButtonModule,
+    // AddPackageComponent,
+    FooterComponent,
     NavbarComponent,
-    HomeComponent,
-    NavbarComponent,
-    SuperAdminLayoutComponent,
-    HttpClientModule,
-    TravelServiceComponent, RouterModule,
-    ButtonModule,
-    AddPackageComponent
-  ]
+     RouterOutlet,
+  ],
+   
 })
 export class AppComponent {
   title = 'TravelSite';

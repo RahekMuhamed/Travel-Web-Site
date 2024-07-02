@@ -1,3 +1,166 @@
+.ezy__travel1 {
+  /* Bootstrap variables */
+  --bs-body-color: #15191e;
+  --bs-body-bg: rgb(255, 255, 255);
+
+  /* Easy Frontend variables */
+  --ezy-theme-color: rgb(13, 110, 253);
+  --ezy-theme-color-rgb: 13, 110, 253;
+  --ezy-body-color-invert: rgb(246, 246, 246);
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+  padding: 60px 0;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .ezy__travel1 {
+    padding: 100px 0;
+  }
+}
+
+.ezy__travel1-heading {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.2;
+}
+
+@media (min-width: 991px) {
+  .ezy__travel1-heading {
+    font-size: 80px;
+  }
+}
+
+.ezy__travel1-sub-heading {
+  font-size: 18px;
+  line-height: 32px;
+  opacity: 0.7;
+}
+
+/* arrows */
+.ezy__travel1-arrows {
+  position: absolute;
+  bottom: -65px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@media (min-width: 991px) {
+  .ezy__travel1-arrows {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    right: 0;
+    transform: translateY(-50%);
+  }
+}
+.ezy__travel1-arrow-left,
+.ezy__travel1-arrow-right {
+  position: relative;
+  font-size: 24px;
+  border: 1px solid #fff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.ezy__travel1-arrow-left:hover,
+.ezy__travel1-arrow-right:hover {
+  color: var(--ezy-theme-color);
+  border-color: var(--ezy-theme-color);
+}
+@media (min-width: 991px) {
+  .ezy__travel1-arrow-left,
+  .ezy__travel1-arrow-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* search bar */
+.ezy__travel1-search-bar {
+  margin-top: 100px;
+}
+@media (min-width: 768px) {
+  .ezy__travel1-search-bar {
+    margin-top: 200px;
+  }
+}
+
+.ezy__travel1-search-bar .card {
+  border-radius: 5px;
+}
+
+.ezy__travel1-search-bar form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.ezy__travel1-search-bar form div:last-child {
+  grid-column-end: span 2;
+}
+@media (min-width: 991px) {
+  .ezy__travel1-search-bar form {
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .ezy__travel1-search-bar form div {
+    grid-column-end: span 1 !important;
+  }
+}
+
+.ezy__travel1-refresh-icon {
+  cursor: pointer;
+  color: var(--bs-body-color);
+}
+
+.ezy__travel1-search-bar .form-control,
+.ezy__travel1-search-bar .form-select {
+  min-height: 40px;
+  line-height: 36px;
+  border: 1px solid #eaeaea;
+  background-color: transparent;
+  color: #3b3b3b;
+  border-radius: 5px;
+}
+.ezy__travel1-search-bar .form-control::placeholder,
+.ezy__travel1-search-bar .form-select::placeholder {
+  color: #3b3b3b;
+}
+
+.ezy__travel1-search-bar .form-control:focus {
+  border-color: var(--ezy-theme-color);
+  box-shadow: none;
+  color: #3a3a3a;
+}
+
+.ezy__travel1-search-btn {
+  padding: 5px 30px;
+  background-color: var(--ezy-theme-color);
+  color: #ffffff;
+  border-radius: 5px;
+  height: 48px;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.ezy__travel1-search-btn:hover {
+  color: #ffffff;
+  background-color: rgba(var(--ezy-theme-color-rgb), 0.9);
+}
+
 .slider{
 
   height: 450px;
@@ -122,6 +285,7 @@ body{
         margin-right: auto;
         transition: 0.3s;
         display: inline-block;
+
     }
     .cardcontainer:hover{
         box-shadow: 0 0 45px gray;
@@ -258,7 +422,7 @@ body{
         font-size: 22px;
         position: relative;
         top: 20px;
-        
+
         color: #333333;
     }
     .fa-gratipay{
@@ -281,4 +445,124 @@ body{
     .fa-clock, .fa-comments{
         margin-right: 7px;
     }
-    /* html and css website */
+    /* our services style*/
+.ezy__service2 {
+	/* Bootstrap variables */
+	--bs-body-color: #2B323C;
+	--bs-body-bg: rgb(255, 255, 255);
+
+	/* Easy Frontend variables */
+	--ezy-theme-color: rgb(13, 110, 253);
+	--ezy-theme-color-rgb: 13, 110, 253;
+
+	--ezy-item-bg: #ffffff;
+	--ezy-item-shadow: 0px 8px 44px rgba(227, 238, 255, 0.48);
+
+	background: var(--bs-body-bg);
+	overflow: hidden;
+	padding: 60px 0;
+}
+
+@media (min-width: 768px) {
+	.ezy__service2 {
+		padding: 100px 0;
+	}
+}
+
+/* Gray Block Style */
+.gray .ezy__service2,
+.ezy__service2.gray {
+	/* Bootstrap variables */
+	--bs-body-bg: rgb(246, 246, 246);
+
+	/* Easy Frontend variables */
+	--ezy-item-bg: #fff;
+	--ezy-item-shadow: 0px 8px 44px rgba(182, 198, 222, 0.48);
+}
+
+/* Dark Gray Block Style */
+.dark-gray .ezy__service2,
+.ezy__service2.dark-gray {
+	/* Bootstrap variables */
+	--bs-body-color: #ffffff;
+	--bs-body-bg: rgb(30, 39, 53);
+
+	/* Easy Frontend variables */
+	--ezy-item-bg: #25313f;
+	--ezy-item-shadow: none;
+}
+
+/* Dark Block Style */
+.dark .ezy__service2,
+.ezy__service2.dark {
+	/* Bootstrap variables */
+	--bs-body-color: #ffffff;
+	--bs-body-bg: rgb(11, 23, 39);
+
+	/* Easy Frontend variables */
+	--ezy-item-bg: #162231;
+	--ezy-item-shadow: none;
+}
+
+.ezy__service2-heading {
+	font-weight: bold;
+	font-size: 25px;
+	line-height: 25px;
+	color: var(--bs-body-color);
+}
+
+@media (min-width: 768px) {
+	.ezy__service2-heading {
+		font-size: 45px;
+		line-height: 45px;
+	}
+}
+
+.ezy__service2-sub-heading {
+	font-size: 18px;
+	line-height: 25px;
+	color: var(--bs-body-color);
+	opacity: .8;
+}
+
+.ezy__service2-item {
+	background-color: var(--ezy-item-bg);
+	box-shadow: var(--ezy-item-shadow);
+	border-radius: 20px;
+	height: 100%;
+	border: none;
+}
+
+.ezy__service2-card [class*="col-"]:nth-of-type(1n) .ezy__service2-icon {
+	background-color: rgba(252, 110, 92, .10);
+	color: rgba(252, 110, 92, 1);
+}
+
+.ezy__service2-card [class*="col-"]:nth-of-type(2n) .ezy__service2-icon {
+	background-color: rgba(4, 121, 193, .10);
+	color: rgba(4, 121, 193, 1);
+}
+
+.ezy__service2-card [class*="col-"]:nth-of-type(3n) .ezy__service2-icon {
+	background-color: rgba(255, 214, 0, .10);
+	color: rgba(255, 214, 0, 1);
+}
+
+.ezy__service2-icon {
+	width: 94px;
+	height: 94px;
+	border-radius: 50%;
+	font-size: 32px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.ezy__service2-title {
+	color: var(--bs-body-color);
+}
+
+.ezy__service2-content {
+	color: var(--bs-body-color);
+	opacity: .8;
+}

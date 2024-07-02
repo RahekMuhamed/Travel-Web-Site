@@ -1,0 +1,62 @@
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+
+
+
+.card {
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+.Container
+{
+  padding: 10px;
+}
+
+.card {
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  padding: 10px;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
+}
+
+
+
+
+
+.flex-grow-1 {
+
+  margin-left: 280px;
+}
+.nav-link:hover {
+color: #007bff;
+}
+
+.nav-link:active {
+  color: white !important;
+  background-color: #007bff !important;
+}
+
+
+.nav-link {
+  color: black;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}

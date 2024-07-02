@@ -1,21 +1,40 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable ,throwError} from 'rxjs';
 import { Services } from '../models/services';
 import { catchError, map } from 'rxjs/operators';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ServicesService {
-
-  private baseUrl: string = "https://localhost:7062/api/Service/";
+  private baseUrl: string = 'https://localhost:7062/api/Service/';
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Services[]> {
-    return this.http.get<any>(this.baseUrl).pipe(
-      map(response => response.data) 
+
+  
+
+  getAll(page?: number, pageSize?: number): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}?pageNumber=${page}&pageSize=${pageSize}`).pipe(
+        map((response) => response),
+             catchError(this.handleError
+      )
     );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side errors
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side errors
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
+
   }
   getserviceById(id: number): Observable<Services> {
     return this.http.get<Services>(`${this.baseUrl}${id}`);
@@ -28,7 +47,7 @@ export class ServicesService {
     return this.http.post<string>(uploadUrl, formData);
   }
 
-  update(serv:  Services): Observable<Services> {
+  update(serv: Services): Observable<Services> {
     return this.http.put<Services>(`${this.baseUrl}${serv.id}`, serv);
   }
   deleteService(serviceId: number): Observable<void> {

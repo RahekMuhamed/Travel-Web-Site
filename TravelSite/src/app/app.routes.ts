@@ -37,7 +37,7 @@ export const routes: Routes = [
   { path: 'services', component: TravelServiceComponent },
   { path: 'packages', component: PackagesComponent },
   { path: 'serviceDetails/:id', component: ServiceDetailsComponent },
-    { path: 'serviceDetails/:id', component: PackageDetailsComponent },
+    { path: 'packageDetails/:id', component: PackageDetailsComponent },
 
   {
     path: 'SuperAdmin',

@@ -21,51 +21,25 @@ import { RouterOutlet } from '@angular/router';
 import { AdminLayoutComponent } from '../../Admin/admin-layout/admin-layout.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  imports: [
-    RouterOutlet,
-    LoginComponent,
-    SignUpComponent,
-    ForgetPasswordComponent,
-    ResetPasswordComponent,
-    ContactUSComponent,
-    HomeComponent,
-    NavbarComponent,
-    SuperAdminLayoutComponent,
-    HttpClientModule,
-    TravelServiceComponent,RouterModule
-  ],
-  selector: 'app-root',
-  standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  imports:[RouterOutlet,
-    LoginComponent,
-    SignUpComponent,
-    PackagesListComponent,
-    AdminPackagesComponent,
-    AdminServicesComponent,
-    AdminLayoutComponent
-  ],
-  // imports: [
-  //   RouterOutlet,
-  //   LoginComponent,
-  //   SignUpComponent,
-  //   ForgetPasswordComponent,
-  //   ResetPasswordComponent,
-  //   ContactUSComponent,
-  //   SuperAdminLayoutComponent,
-  //   SidebarComponent,
-  //   PackagesListComponent,
-  //   AdminPackagesComponent,
-  //   AdminServicesComponent,
-  //   SuperAdminContainerComponent,
-  //   AddPackageComponent,
-  //   PackageDetailsComponent,
-  // ],
+    selector: 'app-root',
+    standalone: true,
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    imports: [
+        RouterOutlet,
+        LoginComponent,
+        SignUpComponent,
+        ForgetPasswordComponent,
+        ResetPasswordComponent,
+        ContactUSComponent,
+        HomeComponent,
+        NavbarComponent,
+        SuperAdminLayoutComponent,
+        HttpClientModule,
+        TravelServiceComponent, RouterModule,
+        FooterComponent
+    ]
+
 })
 export class AppComponent {
   title = 'TravelSite';

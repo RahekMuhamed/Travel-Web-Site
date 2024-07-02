@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { DecodedToken } from '../models/decoded-token';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthServiceService {
   private apiUrl = 'https://localhost:7062/api/Account';
@@ -19,6 +19,7 @@ export class AuthServiceService {
   }
 
   login(loginData: any): Observable<any> {
+
     return this.http.post<any>(`${this.apiUrl}/login`, loginData)
       .pipe(
         tap(response => {

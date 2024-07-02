@@ -1,0 +1,21 @@
+<p>get-all-booking-package works!</p>
+<input type="text" [(ngModel)]="clientId" placeholder="Enter Client ID" id="clientId" />
+<button (click) ="fetchBookings(clientId)">Fetch Bookings</button>
+<h1>Number of bookings: {{ this.AllBookingPackages.length }}</h1>
+<h1>Client ID:{{ clientId }}</h1>
+
+    <div *ngFor="let booking of this.AllBookingPackages ; let i = index" class="booking-card">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Booking ID: {{ booking.id }}</h5>
+                <p class="card-text">Package ID: {{ booking.packageId }}</p>
+                <p class="card-text">Client ID: {{ booking.clientId }}</p>
+                <p class="card-text">price: {{ booking.price }}</p>
+            </div>
+        </div>
+    </div>
+    <h2>total price ={{Total_Amount}}</h2>
+ <div class="w-75 m-auto">
+    <button class="btn btn-info" (click)="payment()"> Pay With Paypal<i class="fa fa-cc-paypal" aria-hidden="true"></i></button>
+</div>
+

@@ -1,37 +1,69 @@
 import { Component } from '@angular/core';
-import { BookingPackageService } from '../../Services/booking-package.service';
+import { BookingPackageService } from '../../services/booking-package.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs'; 
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-add-booking-package',
   standalone: true,
   imports: [FormsModule],
   templateUrl: './add-booking-package.component.html',
-  styleUrl: './add-booking-package.component.css'
+  styleUrls: ['./add-booking-package.component.css']
 })
 export class AddBookingPackageComponent {
   clientId: string = "1";
   packageId: number = 1010;
-  bookingPackageId: number = 1;
-  price: number = 10;
-  constructor(public bookingPackageService: BookingPackageService ,public router:Router){}
-  booking()
-  {
+  id: number = 10;
+  price: number = .5;
+ isSubmitting = false;
+
+  constructor(
+    public bookingPackageService: BookingPackageService,
+    public router: Router
+  ) {}
+
+  booking() {
+    this.isSubmitting = true;
     this.bookingPackageService.AddBookingPackage(this.clientId, this.packageId).subscribe(
-      bookingPackagobj =>// the result after adding booking package object
-      {
-        console.log("booking added successfully", bookingPackagobj);
-        this.router.navigate(['/payment'], { 
-          queryParams: { 
-            bookingPackageId:bookingPackagobj.bookingPackageId, 
-            amount:this.price 
-          }  });
-        },
-      error =>// if failed to make request
-      {
-        console.log("error adding booking", error);
-      }  )// end of subscribe   
-  }
+      bookingPackagobj => { // the result after adding booking package object
+        console.log("Booking added successfully", bookingPackagobj);
+        if (bookingPackagobj.id !== undefined) {
+        this.id = bookingPackagobj.id;
+        } else {
+          console.error("Booking package ID is undefined.");
+        }
+        // Show the modal
+        const modalElement = document.getElementById("bookingmodal");
+        if (modalElement) {
+          const modal = new bootstrap.Modal(modalElement);
+          modal.show();
+        }
+        this.isSubmitting = false; // Re-enable button
+      },
+      error => { // if failed to make request
+        alert(`Error: ${error.message}`);
+        console.log("Error adding booking", error);
+       this.isSubmitting = false; // Re-enable button
+      }
+    ); // end of subscribe   
+  }// end of booking
+
+  checkout() {
+    // Hide the modal before navigating
+    const modalElement = document.getElementById("bookingmodal");
+    const btnBook = document.getElementById("btn-book");
+    if (modalElement) {
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      modal?.hide();
+    }
+    // Navigate to the payment page
+    this.router.navigate(['/payment'], { 
+      queryParams: { 
+        bookingPackageId:this.id, 
+        amount: this.price 
+      } 
+    });
+  }// end of checkout
+  
 }

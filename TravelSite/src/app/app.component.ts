@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TravelServiceComponent } from './travel-service/travel-service.component';
+import { ButtonModule } from 'primeng/button';
 import { PackagesListComponent } from '../../Dashboard/SuperAdmin/SuperPackages-list/packages-list.component';
 import { AdminPackagesComponent } from '../../Dashboard/Admin/admin-packages/admin-packages.component';
 import { AdminServicesComponent } from '../../Dashboard/Admin/admin-services/admin-services.component';
@@ -22,22 +23,22 @@ import { HomeComponent } from './home/home.component';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [
-
-        RouterOutlet,
-        LoginComponent,
-        SignUpComponent,
-        HomeComponent,
-        NavbarComponent,
-        FooterComponent,
-        RouterModule,
-        ForgetPasswordComponent,
-        ResetPasswordComponent,
-        ContactUSComponent,
-        HttpClientModule,
-        TravelServiceComponent,
-    ]
-
+  imports: [
+    RouterOutlet,
+    LoginComponent,
+    SignUpComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
+    ContactUSComponent,
+    NavbarComponent,
+    HomeComponent,
+    NavbarComponent,
+    SuperAdminLayoutComponent,
+    HttpClientModule,
+    TravelServiceComponent, RouterModule,
+    ButtonModule
+  ]
+   
 })
 export class AppComponent {
   title = 'TravelSite';

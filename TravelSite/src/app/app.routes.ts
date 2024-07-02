@@ -1,3 +1,4 @@
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -25,12 +26,8 @@ import { SignUpComponent } from '../../Authenticaion/sign-up/sign-up.component';
 import { LoginComponent } from '../../Authenticaion/login/login.component';
 import { TravelServiceComponent } from './travel-service/travel-service.component';
 
+
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
   {
     path: 'home',
     component: HomeComponent,
@@ -38,6 +35,33 @@ export const routes: Routes = [
     },
      { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'services', component: TravelServiceComponent },
+  { path: 'packages', component: PackagesComponent },
+  { path: 'serviceDetails/:id', component: ServiceDetailsComponent },
+  { path: 'serviceDetails/:id', component: PackageDetailsComponent },
+  {
+    path: 'SuperAdmin',
+    loadChildren: () =>
+      import('../../SuperAdmin/SuperAdmin.routes').then(
+        (m) => m.SuperAdminroutes
+      ),
+    },
+    {
+        path: "payment",
+        component: PaymentComponent,
+        title:"checkout"
+    },
+  { path: "AddBookingPackage", component: AddBookingPackageComponent, title: "Booking Package" },
+  { path: "GetAllPackageBooking", component: GetAllBookingPackageComponent, title: "All Booking" },
+  { path: "SignUp", component: SignUpComponent, title: "Register" },
+    {path:"login" ,component:LoginComponent,title:"login"},
+      {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+];
+    
+
 
 
   { path: 'SuperAdmin/Packagelist', component: PackagesListComponent },

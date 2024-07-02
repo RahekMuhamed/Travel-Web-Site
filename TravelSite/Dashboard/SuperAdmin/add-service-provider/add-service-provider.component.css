@@ -1,0 +1,17 @@
+.card {
+  background-color: #d6cfcf;
+  position: relative;
+  z-index: 1;
+}
+label,p{
+  color: rgb(11, 77, 121);
+}
+
+
+
+#isDelete{
+  margin-top: 40px;
+}
+button:hover{
+  color: black;
+}

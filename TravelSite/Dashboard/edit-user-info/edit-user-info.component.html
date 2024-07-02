@@ -1,0 +1,70 @@
+<div class="Container">
+
+  <form [formGroup]="editForm" (ngSubmit)="updateUser()">
+
+
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-sm-3">
+              <h6 class="mb-0"for="Fname">Full Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input id="Fname" type="text" formControlName="fname" />
+              <div *ngIf="editForm.get('fname')?.touched && editForm.get('fname')?.invalid">
+                <small *ngIf="editForm.get('fname')?.errors?.['required']">Name is required.</small>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-3">
+              <h6 class="mb-0"for="email">Email</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input id="email" formControlName="email" />
+            </div>
+          </div>
+
+
+
+
+
+          <div class="row mb-3">
+            <div class="col-sm-3">
+              <h6 class="mb-0" for="gender">Gender:</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <select id="gender" formControlName="gender">
+                <option value="" disabled>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>            </div>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9 text-secondary">
+              <button type="submit" class="btn btn-primary px-4"[disabled]="editForm.invalid">Save Changes</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+</div>
+
+  </form>
+
+  <div *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+  </div>
+</div>
+
+
+

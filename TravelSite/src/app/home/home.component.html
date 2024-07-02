@@ -1,7 +1,95 @@
-<app-navbar></app-navbar>
-
+<section
+  class="ezy__travel1"
+  style="
+    background-image: url(https://cdn.easyfrontend.com/pictures/hero/header35-img.png);
+  "
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div
+          id="ezy__travel1-controls"
+          class="carousel slide"
+          data-ride="carousel"
+        >
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row justify-content-center">
+                <div class="col-12 col-lg-10 col-xl-8 text-center">
+                  <h2 class="ezy__travel1-heading mb-4">Your Journey Begins</h2>
+                  <div class="row justify-content-center">
+                    <div class="col-12 col-lg-11 col-xl-9">
+                      <p class="ezy__travel1-sub-heading">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Nulla posuere ipsum molestie sem volutpat, non imperdiet
+                        leo porttitor. Nullam tortor nibh, dictum vitae
+                        porttitor eu, pharetra nec tellus.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="row justify-content-center">
+                <div class="col-12 col-lg-10 col-xl-8 text-center">
+                  <h2 class="ezy__travel1-heading mb-4">Your Journey Begins</h2>
+                  <div class="row justify-content-center">
+                    <div class="col-12 col-lg-11 col-xl-9">
+                      <p class="ezy__travel1-sub-heading">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Nulla posuere ipsum molestie sem volutpat, non imperdiet
+                        leo porttitor. Nullam tortor nibh, dictum vitae
+                        porttitor eu, pharetra nec tellus.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="row justify-content-center">
+                <div class="col-12 col-lg-10 col-xl-8 text-center">
+                  <h2 class="ezy__travel1-heading mb-4">Your Journey Begins</h2>
+                  <div class="row justify-content-center">
+                    <div class="col-12 col-lg-11 col-xl-9">
+                      <p class="ezy__travel1-sub-heading">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Nulla posuere ipsum molestie sem volutpat, non imperdiet
+                        leo porttitor. Nullam tortor nibh, dictum vitae
+                        porttitor eu, pharetra nec tellus.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ezy__travel1-arrows d-flex align-items-center">
+            <button
+              class="carousel-control-prev ezy__travel1-arrow-left me-4"
+              type="button"
+              data-bs-target="#ezy__travel1-controls"
+              data-bs-slide="prev"
+            >
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <button
+              class="carousel-control-next ezy__travel1-arrow-right"
+              type="button"
+              data-bs-target="#ezy__travel1-controls"
+              data-bs-slide="next"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- slider -->
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+<!-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -26,93 +114,159 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-</div>
+</div> -->
 <!-- end of slider -->
 
 <!-- service cards -->
 
-    <div class="container ">
-       <h1 class="headline">Services </h1>
-      <!-- <div class="row"> -->
-  <div  class="cardcontainer m-2" *ngFor="let item of services | slice:-3; let i = index">
-        <!-- @for (item of services; track $index) { -->
+<div class="container">
+  <h1 class="headline">Services</h1>
+  <!-- <div class="row"> -->
+  <div
+    class="cardcontainer m-2"
+    *ngFor="let item of services | slice : -3; let i = index"
+  >
+    <!-- @for (item of services; track $index) { -->
 
-       
-            <div class="photo">
-                <img src="../../assets/umrah3.jpeg">
-                 <!-- <img src="{{ item.image}}"> -->
-            </div>
-     
-   
-            <div class="content">
-                <p class="txt4">{{ item.name}}</p>
-                <!-- <p class="date">{{ item.startDate}}</p> -->
+    <div class="photo">
+      <img src="{{ item.image }}" />
+      <!-- <img src="{{ item.image}}"> -->
+    </div>
 
-                <p class="txt5">{{ item.price}}$</p>
-                <p class="txt2">{{ item.description}}</p>
-              </div>
+    <div class="content">
+      <p class="txt4">{{ item.name }}</p>
+      <!-- <p class="date">{{ item.startDate}}</p> -->
 
-            <div class="footer">
-                <p>
-                  <!-- <a class="waves-effect waves-light btn" href="/srviceDetails">Read More</a> -->
-                   <a class="waves-effect waves-light btn" [routerLink]="['/serviceDetails', item.id]">Read More</a>
-                  <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
-              
-                </p>
-                 <button  class="book-btn">book now</button>
-                <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
-            </div>
-     
-       
+      <p class="txt5">{{ item.price }}$</p>
+      <p class="txt2">{{ item.description }}</p>
+    </div>
 
-      
-        <!-- }  -->
-        </div>
-        </div>
-  
+    <div class="footer">
+      <p>
+        <!-- <a class="waves-effect waves-light btn" href="/srviceDetails">Read More</a> -->
+        <a
+          class="waves-effect waves-light btn"
+          [routerLink]="['/serviceDetails', item.id]"
+          >Read More</a
+        >
+        <a id="heart"
+          ><span class="like"><i class="fab fa-gratipay"></i>Like</span></a
+        >
+      </p>
+      <button class="book-btn">book now</button>
+      <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
+    </div>
+
+    <!-- }  -->
+  </div>
+</div>
+
 <!-- end of service cards -->
-      
-    <!-- </div> -->
 
-    <!-- hhhhhhhhhhh -->
+<!-- </div> -->
 
-        <div class="container ">
-       <h1 class="headline">Packages </h1>
-      <!-- <div class="row"> -->
+<!-- hhhhhhhhhhh -->
 
-       
+<div class="container">
+  <h1 class="headline">Packages</h1>
+  <!-- <div class="row"> -->
 
-      <div  class="cardcontainer m-2" *ngFor="let item of packages | slice:-3; let i = index">
-            <div class="photo">
-                <img src="../../assets/umrah1.jpeg">
-                
-            </div>
-     
-   
-            <div class="content">
-                <p class="txt4">{{ item.name}}</p>
-                <!-- <p class="date">{{ item.startDate}}</p> -->
+  <div
+    class="cardcontainer m-2"
+    *ngFor="let item of packages | slice : -3; let i = index"
+  >
+    <div class="photo">
+      <img src="{{ item.image }}" />
+    </div>
 
-                <p class="txt5">{{ item.price}}$</p>
-                <p class="txt2">{{ item.description}}</p>
+    <div class="content">
+      <p class="txt4">{{ item.name }}</p>
+      <!-- <p class="date">{{ item.startDate}}</p> -->
+
+      <p class="txt5">{{ item.price }}$</p>
+      <p class="txt2">{{ item.description }}</p>
+    </div>
+
+    <div class="footer">
+      <p>
+        <a
+          class="waves-effect waves-light btn"
+          [routerLink]="['/packageDetails', item.id]"
+          >Read More</a
+        >
+        <a id="heart"
+          ><span class="like"><i class="fab fa-gratipay"></i>Like</span></a
+        >
+      </p>
+      <button class="book-btn">book now</button>
+      <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
+    </div>
+  </div>
+
+  <!-- our services -->
+</div>
+
+<div>
+  <section class="ezy__service2">
+    <div class="container">
+      <div class="row justify-content-center mb-md-5">
+        <div class="col-lg-6 text-center">
+          <h2 class="ezy__service2-heading mb-4">Services We Provide</h2>
+          <p class="ezy__service2-sub-heading mb-0">
+            Assumenda non repellendus distinctio nihil dicta sapiente, quibusdam
+            maiores, illum at, aliquid blanditiis eligendi qui.
+          </p>
+        </div>
+      </div>
+      <div class="row text-center ezy__service2-card">
+        <div class="col-md-4 mt-5 mt-md-0">
+          <div class="card ezy__service2-item">
+            <div class="card-body px-lg-4 py-lg-5">
+              <div class="ezy__service2-icon mb-4">
+                <i class="fa-solid fa-plane"></i>
               </div>
-
-            <div class="footer">
-                <p>
-                   <a class="waves-effect waves-light btn" [routerLink]="['/packageDetails', item.id]">Read More</a>
-                  <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
-              
-                </p>
-                 <button class="book-btn">book now</button>
-                <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
+              <h4 class="ezy__service2-title fs-4 mb-3">Flight</h4>
+              <p class="ezy__service2-content mb-0">
+                Assumenda non repellendus distinctio nihil dicta sapiente,
+                quibusdam maiores, illum at, aliquid blanditiis eligendi qui.
+              </p>
             </div>
-     
+          </div>
         </div>
-
-      
-       
+        <div class="col-md-4 mt-5 mt-md-0">
+          <div class="card ezy__service2-item">
+            <div class="card-body px-lg-4 py-lg-5">
+              <div class="ezy__service2-icon mb-4">
+                <i class="fa-solid fa-hotel"></i>
+              </div>
+              <h4 class="ezy__service2-title fs-4 mb-3">Hotels</h4>
+              <p class="ezy__service2-content mb-0">
+                It’s easier to reach yours have the right savings account. It’s
+                easier to reach your savings goals when you have the right
+                savings account
+              </p>
+            </div>
+          </div>
         </div>
-
+        <div class="col-md-4 mt-5 mt-md-0">
+          <div class="card ezy__service2-item">
+            <div class="card-body px-lg-4 py-lg-5">
+              <div class="ezy__service2-icon mb-4">
+                <i class="fa-solid fa-car-side"></i>
+              </div>
+              <h4 class="ezy__service2-title fs-4 mb-3">Transfers</h4>
+              <p class="ezy__service2-content mb-0">
+                Sed ut in perspiciatis unde omnis iste natus error sit on i
+                tatem accusantium doloremque laudantium, totam rem aperiam,
+                eaque ipsa quae.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 <!-- <p-card header="Advanced Card" subheader="Card Subheader" [style]="{ width: '360px' }">
     <ng-template pTemplate="header">
         <img alt="Card" src="../../assets/umrah3.jpeg" />
@@ -127,7 +281,7 @@
         </div>
     </ng-template>
 </p-card> -->
- <!-- @for (item of services; track $index) {
+<!-- @for (item of services; track $index) {
       <tr >
         <td>{{item.id}}</td>
         <td>{{ item.name}}</td>
@@ -160,7 +314,5 @@
   <a [routerLink]="['/booking', service.id]" class="btn btn-primary">Book Now</a>
   <a [routerLink]="['/service-details', service.id]" class="btn btn-info">Details</a>
   <a [routerLink]="['/update-service', service.id]" class="btn btn-warning">Update</a>
- 
-</div> -->
 
-<app-footer></app-footer>
+</div> -->

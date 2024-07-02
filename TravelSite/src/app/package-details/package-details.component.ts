@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
 import { Package } from '../models/packages';
@@ -13,7 +13,7 @@ import { NavbarComponent } from "../navbar/navbar.component";
     standalone: true,
     templateUrl: './package-details.component.html',
     styleUrl: './package-details.component.css',
-    imports: [CommonModule, FooterComponent, NavbarComponent]
+    imports: [CommonModule, FooterComponent, NavbarComponent,RouterLink]
 })
 export class PackageDetailsComponent implements OnInit {
   packageId: number | undefined;
@@ -39,12 +39,12 @@ export class PackageDetailsComponent implements OnInit {
   }
 
   fetchPackageDetails(): void {
-    // this.packagesService.getPackageById(this.packageId!).subscribe({
-    //   next: (data: Package) => {
-    //     this.packageDetails = data;
-    //   },
-    //   error: (error) => console.error('Error fetching package details:', error),
-    // });
+    this.packagesService.getPackageById(this.packageId!).subscribe({
+      next: (data: Package) => {
+        this.packageDetails = data;
+      },
+      error: (error) => console.error('Error fetching package details:', error),
+    });
   }
 
   redirectToPackageList(): void {

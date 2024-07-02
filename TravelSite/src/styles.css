@@ -5,3 +5,13 @@
 @import "primeng/resources/primeng.css";
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* :host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+} */
+
+/* .content {
+  flex: 1;
+  overflow: auto;
+} */

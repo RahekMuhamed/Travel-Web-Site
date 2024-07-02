@@ -13,23 +13,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { TravelServiceComponent } from './travel-service/travel-service.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  imports: [
-    RouterOutlet,
-    LoginComponent,
-    SignUpComponent,
-    ForgetPasswordComponent,
-    ResetPasswordComponent,
-    ContactUSComponent,
-    HomeComponent,
-    NavbarComponent,
-    SuperAdminLayoutComponent,
-    HttpClientModule,
-    TravelServiceComponent,RouterModule
-  ],
+    selector: 'app-root',
+    standalone: true,
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    imports: [
+        RouterOutlet,
+        LoginComponent,
+        SignUpComponent,
+        ForgetPasswordComponent,
+        ResetPasswordComponent,
+        ContactUSComponent,
+        HomeComponent,
+        NavbarComponent,
+        SuperAdminLayoutComponent,
+        HttpClientModule,
+        TravelServiceComponent, RouterModule,
+        FooterComponent
+    ]
 })
 export class AppComponent {
   title = 'TravelSite';

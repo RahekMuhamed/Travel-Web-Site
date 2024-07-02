@@ -1,5 +1,4 @@
-<app-navbar></app-navbar>
-<p>packages works!</p>
+
 
       <div class="container ">
        <h1 class="headline">Packages </h1>
@@ -25,7 +24,7 @@
             <div class="footer">
                 <p>
                    <a class="waves-effect waves-light btn" [routerLink]="['/packageDetails', item.id]">Read More</a>
-                  <button class="btn btn-info" (click)="viewDetails(item.id)">Details</button>
+                 
                    <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
               
                 </p>
@@ -39,4 +38,8 @@
        
         </div>
 
-<app-footer></app-footer>
+<div class="pagination">
+  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+</div>

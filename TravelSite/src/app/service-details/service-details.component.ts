@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Services } from '../models/services';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PackagesService } from '../services/packages.service';
 import { ServicesService } from '../services/services.service';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,7 @@ import { FooterComponent } from "../footer/footer.component";
     templateUrl: './service-details.component.html',
     styleUrl: './service-details.component.css',
     providers: [ServicesService],
-    imports: [CommonModule, NavbarComponent, FooterComponent]
+    imports: [CommonModule, NavbarComponent, FooterComponent,RouterLink,CommonModule]
 })
 export class ServiceDetailsComponent implements OnInit{
   serviceId: number | undefined;
@@ -61,7 +61,7 @@ export class ServiceDetailsComponent implements OnInit{
   }
 
   fetchServiceDetails(): void {
-    this.serviceService.getServiceById(this.serviceId!).subscribe({
+    this.serviceService.getserviceById(this.serviceId!).subscribe({
       next : (data: Services) => {
         this.serviceDetails = data;
       },

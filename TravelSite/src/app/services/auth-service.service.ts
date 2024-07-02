@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthServiceService {
   private apiUrl = 'https://localhost:7062/api/Account';
@@ -18,20 +18,19 @@ export class AuthServiceService {
   }
 
   login(loginData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, loginData)
-      .pipe(
-        tap(response => {
-          const token = response.token;
-          localStorage.setItem('authToken', token);
-          localStorage.setItem('userRole', response.role);
+    return this.http.post<any>(`${this.apiUrl}/login`, loginData).pipe(
+      tap((response) => {
+        const token = response.token;
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('userRole', response.role);
 
-          const decodedToken: any = jwtDecode(token);
-          const userId = decodedToken.userId;
-          console.log('Decoded Token:', decodedToken); // للتحقق من محتوى التوكن
-          console.log('User ID:', userId); // للتحقق من تخزين userId
-          localStorage.setItem('userId', userId);
-        })
-      );
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+        console.log('Decoded Token:', decodedToken); // للتحقق من محتوى التوكن
+        console.log('User ID:', userId); // للتحقق من تخزين userId
+        localStorage.setItem('userId', userId);
+      })
+    );
   }
 
   logout(): void {

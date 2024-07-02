@@ -1,0 +1,21 @@
+<div class="container">
+  <h2>Clients List</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of clients">
+        <td>{{ client.fname }}</td>
+        <td>{{ client.email }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="removeClient(client.id)">Remove</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

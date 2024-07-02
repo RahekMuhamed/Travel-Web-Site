@@ -1,0 +1,25 @@
+<section class="packages-list">
+  <article class="card">
+    <div class="article-wrapper">
+      <figure>
+        <img *ngIf="packageDetails.image" [src]="packageDetails.image" [alt]="packageDetails.name" class="card-img-top">
+      </figure>
+      <div class="article-body card-body">
+        <h2 class="text-center">{{ packageDetails.name }}</h2>
+        <h6 class="text-center">{{ packageDetails.description }}</h6>
+        <p><strong>Price:</strong> {{ packageDetails.price }}</p>
+        <p><strong>Quantity Available:</strong> {{ packageDetails.quantityAvailable }}</p>
+        <p><strong>Start Date:</strong> {{ packageDetails.startDate }}</p>
+        <p><strong>Duration:</strong> {{ packageDetails.duration }} days</p>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+              <button class="btn btn-info mx-2" (click)="redirectToPackageList()">Back</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>

@@ -4,7 +4,7 @@ export class BookingPackage {
 
     // from backend i receive Dto Which i represent the necceray data here 
     // for adding from front i need clientId, and PackageId only, so the remainging are optional
-    constructor(public packageId: number,public id?: number,public clientId?:string ,public price?:number)//clientId
+    constructor(public packageId: number,public id?: number,public clientId?:string ,public price?:number,public image?:string)//clientId
     {
         
     }

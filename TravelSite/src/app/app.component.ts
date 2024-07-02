@@ -13,6 +13,7 @@ import { SuperAdminLayoutComponent } from "../../SuperAdmin/super-admin-layout/s
 import { HttpClientModule } from '@angular/common/http';
 import { TravelServiceComponent } from './travel-service/travel-service.component';
 import { ButtonModule } from 'primeng/button';
+import { AddPackageComponent } from '../../Admin/add-package/add-package.component';
 
 
 @Component({
@@ -33,7 +34,8 @@ import { ButtonModule } from 'primeng/button';
     SuperAdminLayoutComponent,
     HttpClientModule,
     TravelServiceComponent, RouterModule,
-    ButtonModule
+    ButtonModule,
+    AddPackageComponent
   ]
 })
 export class AppComponent {

@@ -1,8 +1,6 @@
 <p>get-all-booking-package works!</p>
 <input type="text" [(ngModel)]="clientId" placeholder="Enter Client ID" id="clientId" />
 <button (click) ="fetchBookings(clientId)">Fetch Bookings</button>
-<h1>Number of bookings: {{ this.AllBookingPackages.length }}</h1>
-<h1>Client ID:{{ clientId }}</h1>
 
     <div *ngFor="let booking of this.AllBookingPackages ; let i = index" class="booking-card">
         <div class="card">
@@ -11,6 +9,9 @@
                 <p class="card-text">Package ID: {{ booking.packageId }}</p>
                 <p class="card-text">Client ID: {{ booking.clientId }}</p>
                 <p class="card-text">price: {{ booking.price }}</p>
+               
+                <img [src]="'../../../assets/' + booking.image" alt="Image" />
+
             </div>
         </div>
     </div>

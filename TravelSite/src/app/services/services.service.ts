@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable ,throwError} from 'rxjs';
 import { Services } from '../models/services';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +13,9 @@ export class ServicesService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Services[]> {
-    return this.http.get<Services[]>(this.baseUrl);
+    return this.http.get<any>(this.baseUrl).pipe(
+      map(response => response.data) 
+    );
   }
   getserviceById(id: number): Observable<Services> {
     return this.http.get<Services>(`${this.baseUrl}${id}`);

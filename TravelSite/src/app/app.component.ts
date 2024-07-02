@@ -14,6 +14,8 @@ import { AddPackageComponent } from '../../Dashboard/Admin/add-package/add-packa
 import { PackageDetailsComponent } from '../../Dashboard/Admin/package-details/package-details.component';
 import { AdminsListComponent } from '../../Dashboard/SuperAdmin/admins-list/admins-list.component';
 import { SignUpComponent } from '../../Authenticaion/sign-up/sign-up.component';
+import { LoginComponent } from '../../Authenticaion/login/login.component';
+import { HomeComponent } from './home/home.component';
 
 @Component({
     selector: 'app-root',
@@ -21,18 +23,19 @@ import { SignUpComponent } from '../../Authenticaion/sign-up/sign-up.component';
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
     imports: [
+
         RouterOutlet,
         LoginComponent,
         SignUpComponent,
+        HomeComponent,
+        NavbarComponent,
+        FooterComponent,
+        RouterModule,
         ForgetPasswordComponent,
         ResetPasswordComponent,
         ContactUSComponent,
-        HomeComponent,
-        NavbarComponent,
-        SuperAdminLayoutComponent,
         HttpClientModule,
-        TravelServiceComponent, RouterModule,
-        FooterComponent
+        TravelServiceComponent,
     ]
 
 })

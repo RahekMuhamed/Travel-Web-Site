@@ -25,6 +25,6 @@ export class PackagesListComponent implements OnInit {
     });
   }
   viewDetails(packageId: number): void {
-    this.router.navigate(['/SuperAdmin/packageDetail', packageId]);
+    this.router.navigate(['/Admin/superpackageDetail', packageId]);
   }
 }

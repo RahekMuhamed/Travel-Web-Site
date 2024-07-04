@@ -15,7 +15,7 @@ import { FooterComponent } from "../footer/footer.component";
     providers: [ServicesService],
     imports: [CommonModule, NavbarComponent, FooterComponent,RouterLink,CommonModule]
 })
-export class ServiceDetailsComponent implements OnInit{
+export class ClientServiceDetailsComponent implements OnInit{
   serviceId: number | undefined;
   serviceDetails: Services = new Services(
     0,

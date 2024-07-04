@@ -31,7 +31,7 @@ export class TravelServiceComponent implements OnInit {
   isLoading = false;
 
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 5;
   totalItems: number = 100;
 
   constructor(

@@ -10,7 +10,7 @@ import { DecodedToken } from '../models/decoded-token';
   providedIn: 'root',
 })
 export class AuthServiceService {
-  private apiUrl = 'https://localhost:5141/api/Account';
+  private apiUrl = 'https://localhost:7062/api/Account';
 
   constructor(private http: HttpClient, private router: Router) {}
 

@@ -25,44 +25,75 @@ import { AdminLayoutComponent } from '../../Dashboard/layout/admin-layout.compon
 import { SignUpComponent } from '../../Authenticaion/sign-up/sign-up.component';
 import { LoginComponent } from '../../Authenticaion/login/login.component';
 import { TravelServiceComponent } from './travel-service/travel-service.component';
-
+import { PaymentComponent } from './payment/payment.component';
+import { AddBookingPackageComponent } from './BookingPackage/add-booking-package/add-booking-package.component';
+import { GetAllBookingPackageComponent } from './BookingPackage/get-all-booking-package/get-all-booking-package.component';
+import { PackagesComponent } from './packages/packages.component';
+import { ClientServiceDetailsComponent } from './service-details/service-details.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
     title: 'home',
-    },
-     { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'services', component: TravelServiceComponent },
-  { path: 'packages', component: PackagesComponent },
-  { path: 'serviceDetails/:id', component: ServiceDetailsComponent },
-  { path: 'serviceDetails/:id', component: PackageDetailsComponent },
+    data: { roles: ['client'] },
+  },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
-    path: 'SuperAdmin',
-    loadChildren: () =>
-      import('../../SuperAdmin/SuperAdmin.routes').then(
-        (m) => m.SuperAdminroutes
-      ),
-    },
-    {
-        path: "payment",
-        component: PaymentComponent,
-        title:"checkout"
-    },
-  { path: "AddBookingPackage", component: AddBookingPackageComponent, title: "Booking Package" },
-  { path: "GetAllPackageBooking", component: GetAllBookingPackageComponent, title: "All Booking" },
-  { path: "SignUp", component: SignUpComponent, title: "Register" },
-    {path:"login" ,component:LoginComponent,title:"login"},
-      {
+    path: 'services',
+    component: TravelServiceComponent,
+    data: { roles: ['client'] },
+  },
+  {
+    path: 'packages',
+    component: PackagesComponent,
+    data: { roles: ['client'] },
+  },
+  {
+    path: 'serviceDetails/:id',
+    component: ClientServiceDetailsComponent,
+    data: { roles: ['client'] },
+  },
+  {
+    path: 'serviceDetails/:id',
+    component: PackageDetailsComponent,
+    data: { roles: ['client'] },
+  },
+  {
+    path: 'wishlist',
+    component: WishlistComponent,
+
+  },
+  // {
+  //   path: 'SuperAdmin',
+  //   loadChildren: () =>
+  //     import('../../SuperAdmin/SuperAdmin.routes').then(
+  //       (m) => m.SuperAdminroutes
+  //     ),
+  //   },
+  {
+    path: 'payment',
+    component: PaymentComponent,
+    title: 'checkout',
+  },
+  {
+    path: 'AddBookingPackage',
+    component: AddBookingPackageComponent,
+    title: 'Booking Package',
+  },
+  {
+    path: 'GetAllPackageBooking',
+    component: GetAllBookingPackageComponent,
+    title: 'All Booking',
+  },
+  { path: 'SignUp', component: SignUpComponent, title: 'Register' },
+  { path: 'login', component: LoginComponent, title: 'login' },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
   },
-];
-    
-
-
 
   { path: 'SuperAdmin/Packagelist', component: PackagesListComponent },
   { path: 'login', component: LoginComponent },

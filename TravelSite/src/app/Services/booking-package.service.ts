@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class BookingPackageService {
 
-  private BaseUrl: string ="http://localhost:5141/api/BookingPackage";
+  private BaseUrl: string ="http://localhost:7062/api/BookingPackage";
   constructor( public http: HttpClient ) {  
   }
   AddBookingPackage(ClientId:string, packageId:number):Observable<BookingPackage>

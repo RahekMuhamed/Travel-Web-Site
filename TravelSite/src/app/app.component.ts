@@ -23,22 +23,22 @@ import { HomeComponent } from './home/home.component';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-  imports: [
-    RouterOutlet,
-    LoginComponent,
-    SignUpComponent,
-    ForgetPasswordComponent,
-    ResetPasswordComponent,
-    ContactUSComponent,
-    NavbarComponent,
-    HomeComponent,
-    NavbarComponent,
-    SuperAdminLayoutComponent,
-    HttpClientModule,
-    TravelServiceComponent, RouterModule,
-    ButtonModule
-  ]
-   
+    imports: [
+        RouterOutlet,
+        LoginComponent,
+        SignUpComponent,
+        ForgetPasswordComponent,
+        ResetPasswordComponent,
+        ContactUSComponent,
+        NavbarComponent,
+        HomeComponent,
+        NavbarComponent,
+        // SuperAdminLayoutComponent,
+        HttpClientModule,
+        TravelServiceComponent, RouterModule,
+        ButtonModule,
+        FooterComponent
+    ]
 })
 export class AppComponent {
   title = 'TravelSite';

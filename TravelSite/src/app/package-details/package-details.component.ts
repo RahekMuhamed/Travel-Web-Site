@@ -7,15 +7,21 @@ import { Package } from '../models/packages';
 import { PackagesService } from '../services/packages.service';
 import { FooterComponent } from "../footer/footer.component";
 import { NavbarComponent } from "../navbar/navbar.component";
-
+import { DividerModule } from 'primeng/divider';
 @Component({
-    selector: 'app-package-details',
-    standalone: true,
-    templateUrl: './package-details.component.html',
-    styleUrl: './package-details.component.css',
-    imports: [CommonModule, FooterComponent, NavbarComponent,RouterLink]
+  selector: 'app-package-details',
+  standalone: true,
+  templateUrl: './package-details.component.html',
+  styleUrl: './package-details.component.css',
+  imports: [
+    CommonModule,
+    FooterComponent,
+    NavbarComponent,
+    RouterLink,
+    DividerModule,
+  ],
 })
-export class PackageDetailsComponent implements OnInit {
+export class ClientPackageDetailsComponent implements OnInit {
   packageId: number | undefined;
   packageDetails: Package = new Package(0, '', false, '', '', 0, 0);
 
@@ -46,10 +52,14 @@ export class PackageDetailsComponent implements OnInit {
       error: (error) => console.error('Error fetching package details:', error),
     });
   }
+  getServiceNamesIds(packageItem: any): number[] {
+    if (packageItem.serviceNames && packageItem.serviceNames.$values) {
+      return packageItem.serviceNames.$values.map((service: any) => service.id);
+    }
+    return [];
+  }
 
   redirectToPackageList(): void {
     this.router.navigate(['/Admin/Packagelist']);
   }
-
- 
 }

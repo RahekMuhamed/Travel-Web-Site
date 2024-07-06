@@ -15,29 +15,9 @@ export class WishlistComponent {
   newFavorite: Partial<Favorite> = {}; // Adjust based on your form inputs
   constructor(private favoritesService: FavoriteService) {}
 
-  ngOnInit(): void {
-    this.loadFavorites();
-  }
 
-  loadFavorites(): void {
-    this.favoritesService.getFavorites().subscribe(
-      (data) => {
-        this.favorites = data;
-      },
-      (error) => {
-        console.error('Error fetching favorites', error);
-      }
-    );
-  }
 
-  addFavorite(): void {
-    this.favoritesService.addFavorite(this.newFavorite as Favorite).subscribe(
-      (data) => {
-        this.favorites.push(data);
-      },
-      (error) => {
-        console.error('Error adding favorite', error);
-      }
-    );
-  }
+  
+
+
 }

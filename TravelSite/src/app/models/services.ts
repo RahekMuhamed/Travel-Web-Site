@@ -10,6 +10,7 @@ export class Services {
   public startDate?: Date,
   public price?: number,
   public isDeleted?: boolean,
+ 
  // public bookingServices: BookingService[],
  //  public loveServices: LoveService[],
    public categoryId?: number | undefined,

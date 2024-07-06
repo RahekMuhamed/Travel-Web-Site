@@ -31,6 +31,7 @@ import { GetAllBookingPackageComponent } from './BookingPackage/get-all-booking-
 import { PackagesComponent } from './packages/packages.component';
 import { ClientServiceDetailsComponent } from './service-details/service-details.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { ClientPackageDetailsComponent } from './package-details/package-details.component';
 
 export const routes: Routes = [
   {
@@ -56,14 +57,13 @@ export const routes: Routes = [
     data: { roles: ['client'] },
   },
   {
-    path: 'serviceDetails/:id',
-    component: PackageDetailsComponent,
+    path: 'clientPackageDetails/:id',
+    component: ClientPackageDetailsComponent,
     data: { roles: ['client'] },
   },
   {
     path: 'wishlist',
     component: WishlistComponent,
-
   },
   // {
   //   path: 'SuperAdmin',

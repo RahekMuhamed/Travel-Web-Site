@@ -15,6 +15,7 @@ import { TagModule } from 'primeng/tag';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { FavoriteService } from '../services/favorite.service';
 
 @Component({
   selector: 'app-packages',
@@ -40,7 +41,11 @@ import { DropdownModule } from 'primeng/dropdown';
   ],
 })
 export class PackagesComponent implements OnInit {
-  packages: Package[] =[];
+  packages: Package[] = [];
+
+  wishlist: Package[] = [];
+  clientId: string = '882b687b-d254-4b1f-b168-17d9233605a9'; // Replace with actual client ID
+
   sortOptions!: SelectItem[];
 
   sortOrder!: number;
@@ -54,17 +59,24 @@ export class PackagesComponent implements OnInit {
   totalItems: number = 100;
   constructor(
     private packageService: PackagesService,
-
+    private favoriteService: FavoriteService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.packageService.loading$.subscribe(
+      (isLoading) => (this.isLoading = isLoading)
+    );
     this.loadData(this.currentPage, this.itemsPerPage);
     this.sortOptions = [
       { label: 'Price High to Low', value: '!price' },
       { label: 'Price Low to High', value: 'price' },
     ];
+
+    this.favoriteService.wishlist$.subscribe(
+      (wishlist) => (this.wishlist = wishlist)
+    );
   }
   loadData(
     page: number = this.currentPage,
@@ -82,6 +94,18 @@ export class PackagesComponent implements OnInit {
         console.error('Error loading data:', error);
       }
     );
+  }
+
+  toggleWishlist(pack: Package): void {
+    if (this.favoriteService.isInWishlist(pack)) {
+      this.favoriteService.removeFromWishlist(pack).subscribe();
+    } else {
+      this.favoriteService.addToWishlist(pack, this.clientId).subscribe();
+    }
+  }
+
+  isInWishlist(pack: Package): boolean {
+    return this.favoriteService.isInWishlist(pack);
   }
 
   onSortChange(event: any) {

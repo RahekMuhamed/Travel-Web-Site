@@ -1,82 +1,77 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light ">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">TRAVELLING</a>
+    <a class="navbar-brand" routerLink="/"  routerLinkActive="active-link">TRAVELLING</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
+          <a class="nav-link" routerLink="/home" routerLinkActive="active-link">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/packages">Packages</a>
+          <a class="nav-link" routerLink="/packages" routerLinkActive="active-link">Packages</a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link" routerLink="/services">Services</a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/services" routerLinkActive="active-link">Services</a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link" routerLink="/contact">Contact</a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active-link">Contact</a>
         </li>
-          <li class="nav-item">
-          <a class="nav-link" routerLink="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active-link">About</a>
         </li>
-          <!-- <li class="nav-item">
-          <a class="nav-link" routerLink="/booking">booking</a>
-        </li> -->
-
-
-
       </ul>
-      <!-- <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success " type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
-      </form> -->
-<div>    
-      <button routerLink="/userBooking" class="btn cart-btn " type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
-</div>
 
-	<div class="dropdown-container">
-				<details class="dropdown right">
-					<summary class="avatar">
-						<img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp">
-					</summary>
-					<ul>
-						<!-- Optional: user details area w/ gray bg -->
-						<li>
-							<p>
-								<span class="block bold">nada</span>
-								<span class="block italic">ali</span>
-							</p>
-						</li>
-						<!-- Menu links -->
-						<li>
-							<a routerLink="/profile">
-								<span class="material-symbols-outlined">account</span> 
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="material-symbols-outlined">settings</span> 
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="material-symbols-outlined">help</span>
-							</a>
-						</li>
-						<!-- Optional divider -->
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<span class="material-symbols-outlined">logout</span> 
-							</a>
-						</li>
-					</ul>
-				</details>
-			</div>
-			<!-- END: Dropdown Container -->
+      <div>
+        <button routerLink="/userBooking" class="btn cart-btn" type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
+      </div>
 
+      <div class="dropdown-container">
+        <details class="dropdown right">
+          <summary class="avatar">
+            <img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp">
+          </summary>
+          <ul>
+            <li>
+              <p>
+                <span class="block bold">nada</span>
+                <span class="block italic">ali</span>
+              </p>
+            </li>
+            <li>
+              <a routerLink="/profile">
+                <span class="material-symbols-outlined">account</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="material-symbols-outlined">settings</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="material-symbols-outlined">help</span>
+              </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a href="#">
+                <span class="material-symbols-outlined">logout</span>
+              </a>
+            </li>
+          </ul>
+        </details>
+      </div>
     </div>
   </div>
 </nav>
+
+<!-- Add this to your CSS -->
+<style>
+  .active-link {
+    color: rgb(152, 211, 243); /* Change this to whatever color you want */
+  }
+</style>
+

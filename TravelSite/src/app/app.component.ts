@@ -37,6 +37,7 @@ import { HomeComponent } from './home/home.component';
         HttpClientModule,
         TravelServiceComponent, RouterModule,
         ButtonModule,
+        
         FooterComponent
     ]
 })

@@ -1,180 +1,42 @@
 
-
-<!-- <div *ngIf="!isLoading">
-  <div *ngFor="let service of services">
-
-    {{ service | json }}
-  </div>
-
-
-</div> -->
-
-
-
-
-
- <h1 class="headline">Services </h1>
-
- <div *ngIf="isLoading">
-  <app-spinner></app-spinner>
-</div>
-  <section class="ezy__travel4_dv0tjLKH">
-  <div class="container">
-    <!-- header portion -->
-
-
-    <!-- body portion -->
-    <div class="row ">
-      <!-- filter -->
-      <!-- <div class="col-lg-3 ps-md-0">
-        <div class="ezy__travel4_dv0tjLKH-filters h-100 rounded pb-4">
-          <div class="ezy__travel4_dv0tjLKH-header p-3 text-center">
-            <h3 class="mb-0">FILTERS</h3>
-          </div>
-
-          <form action="">
-
-            <div class="ezy__travel4_dv0tjLKH-accordion">
-              <a
-                class="btn p-3 p-lg-4 w-100 text-start d-flex justify-content-between align-items-center ezy__travel4_dv0tjLKH-btn-collapse"
-                data-bs-toggle="collapse"
-                href="#ezy__travel4_dv0tjLKH-collapse-1"
-                role="button"
-                aria-expanded="true"
-                aria-controls="ezy__travel4_dv0tjLKH-collapse-1"
-              >
-                <h5 class="mb-0">Price Range</h5>
-                <span class="fas fa-chevron-down"></span>
-              </a>
-              <div class="collapse show" id="ezy__travel4_dv0tjLKH-collapse-1">
-                <div class="ezy__travel4_dv0tjLKH-content px-3 px-lg-4 pb-lg-4 mt-3">
-                  <div>
-                    <label for="ezy__travel4_dv0tjLKH-range1" class="form-label fw-bold mb-2 opacity-75"
-                      >Min Price($200)</label
-                    >
-                    <input type="range" class="form-range" id="ezy__travel4_dv0tjLKH-range1" />
-                  </div>
-                  <div>
-                    <label for="ezy__travel4_dv0tjLKH-range1" class="form-label fw-bold mb-2 opacity-75"
-                      >Max Price($2000)</label
-                    >
-                    <input type="range" class="form-range" id="ezy__travel4_dv0tjLKH-range1" />
-                  </div>
+<app-spinner></app-spinner>
+<div class="container">
+    <p-dataView #dv [value]="services" [sortField]="sortField" [sortOrder]="sortOrder">
+        <ng-template pTemplate="header">
+          <h1 class="headline">Services </h1>
+            <div class="flex flex-column md:flex-row md:justify-content-between">
+                <p-dropdown [options]="sortOptions" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="mb-2 md:mb-0" />
+            </div>
+        </ng-template>
+        <ng-template pTemplate="list" let-services>
+            <div class="cards-container" *ngIf="!isLoading">
+                <div class="cardcontainer m-2" *ngFor="let item of services; let i = index">
+                    <div class="photo">
+                        <img src="../../assets/umrah1.jpeg">
+                    </div>
+                    <div class="content">
+                        <p class="txt4">{{ item.name }}</p>
+                        <p class="txt5">{{ item.price }}$</p>
+                        <p class="txt2">{{ item.description }}</p>
+                    </div>
+                    <div class="footer">
+                        <p>
+                            <a class="waves-effect waves-light btn" [routerLink]="['/serviceDetails', item.id]">Read More</a>
+                            <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
+                        </p>
+                        <button class="book-btn">book now</button>
+                    </div>
                 </div>
-              </div>
             </div>
+        </ng-template>
+    </p-dataView>
+</div>
 
 
 
-            <div class="px-4 mt-4">
-              <button class="btn w-100 ezy__travel4_dv0tjLKH-btn">Applay Filter</button>
-            </div>
-          </form>
-        </div>
-      </div> -->
-      <!-- end filters -->
-
-      <!-- results -->
-      <div class="col-lg-12 mt-4 mt-lg-0">
-        <div class="row justify-content-between">
-          <div class="col-12 col-sm-6">
-            <h4 class="mb-0">{{totalItems}} Results</h4>
-          </div>
-          <!-- category selected -->
-          <div class="col-12 col-sm-4 text-end">
-            <form action="" class="d-flex align-items-center">
-              <h5 class="fw-normal mb-0 me-3 text-nowrap">Category</h5>
-              <select class="form-select" aria-label="Default select example">
-                <option selected>flights</option>
-                <option value="1">hotels</option>
-                 <option value="2">transfers</option>
-
-              </select>
-            </form>
-          </div>
-           <!-- end of category selected -->
-
-<!-- items section -->
-<!-- <div class="row mt-4">
-            <div class="col-12 col-lg-12 pe-lg-0 ">
-              <div class="ezy__travel4_dv0tjLKH-card ezy__travel4_dv0tjLKH-details align-items-center h-100 p-2"> -->
+ 
 
 
-            <div class="container ">
-
-      <!-- <div class="row"> -->
-
-
-<div *ngIf="!isLoading">
-
-      <div  class="cardcontainer m-2" *ngFor="let item of services; let i = index">
-            <div class="photo">
-                <img src="../../assets/umrah1.jpeg">
-
-            </div>
-
-
-            <div class="content">
-                <p class="txt4">{{ item.name}}</p>
-                <!-- <p class="date">{{ item.startDate}}</p> -->
-
-                <p class="txt5">{{ item.price}}$</p>
-                <p class="txt2">{{ item.description}}</p>
-              </div>
-
-            <div class="footer">
-                <p>
-                   <a class="waves-effect waves-light btn"   [routerLink]="['/serviceDetails', item.id]">Read More</a>
-
-                   <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
-
-                </p>
-                 <button class="book-btn">book now</button>
-                <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
-            </div>
-
-        </div>
-        </div>
-
-
-
-        </div>
-          </div>
-            </div>
-              </div>
-
-
- <!-- end of items -->
-
-
-        </div>
-
-
-        <div>
-
-          <!-- item -->
- <!-- <div class="row mt-4">
-            <div class="col-12 col-lg-10 pe-lg-0">
-              <div class="ezy__travel4_dv0tjLKH-card ezy__travel4_dv0tjLKH-details align-items-center h-100 p-2">
-
-
-                <div>
-
-       </div>
-          </div>
-          </div>
-   </div> -->
-
-          </div>
-            <!-- </div>
-          </div>
-
-
-        </div> -->
-
-
-
-</section>
 
 
 
@@ -185,38 +47,7 @@
 
 
 
-<!-- <div *ngFor="let item of services">
 
-  <p>{{ item.name }}</p>
-</div>
-
-<div class="pagination">
-  <button
-    (click)="onPageChange(currentPage - 1)"
-    [disabled]="currentPage === 1"
-  >
-    Previous
-  </button>
-  <button
-    *ngFor="let page of [].constructor(totalPages); let i = index"
-    (click)="onPageChange(i + 1)"
-  >
-    {{ i + 1 }}
-  </button>
-  <button
-    (click)="onPageChange(currentPage + 1)"
-    [disabled]="currentPage === totalPages"
-  >
-    Next
-  </button>
-</div> -->
-<!-- <app-pagination>
-[currentPage]="currentPage"
-  [itemsPerPage]="itemsPerPage"
-  [totalItems]="totalItems"
-  (pageChanged)="onPageChange($event)"
-
-</app-pagination> -->
 
 <div class="pagination">
   <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>

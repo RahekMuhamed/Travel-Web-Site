@@ -1,19 +1,53 @@
 
 
+
+<div class="container">
+    <p-dataView #dv [value]="packages" [sortField]="sortField" [sortOrder]="sortOrder">
+        <ng-template pTemplate="header">
+          <h1 class="headline">Services </h1>
+            <div class="flex flex-column md:flex-row md:justify-content-between">
+                <p-dropdown [options]="sortOptions" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="mb-2 md:mb-0" />
+            </div>
+        </ng-template>
+        <ng-template pTemplate="list" let-packages>
+            <div class="cards-container" *ngIf="!isLoading">
+                <div class="cardcontainer m-2" *ngFor="let item of packages; let i = index">
+                    <div class="photo">
+                        <img src="../../assets/umrah1.jpeg">
+                    </div>
+                    <div class="content">
+                        <p class="txt4">{{ item.name }}</p>
+                        <p class="txt5">{{ item.price }}$</p>
+                        <p class="txt2">{{ item.description }}</p>
+                    </div>
+                    <div class="footer">
+                        <p>
+                            <a class="waves-effect waves-light btn" [routerLink]="['/serviceDetails', item.id]">Read More</a>
+                            <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
+                        </p>
+                        <button class="book-btn">book now</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>
+
+
       <div class="container ">
        <h1 class="headline">Packages </h1>
       <!-- <div class="row"> -->
 
-       
+
 
       <div  class="cardcontainer m-2" *ngFor="let item of packages; let i = index">
             <div class="photo">
-                <img src="{{item.image}}">
-                
-                
+                <img [src]=item.imageUrl>
+
+
             </div>
-     
-   
+
+
             <div class="content">
                 <p class="txt4">{{ item.name}}</p>
                 <!-- <p class="date">{{ item.startDate}}</p> -->
@@ -25,18 +59,18 @@
             <div class="footer">
                 <p>
                    <a class="waves-effect waves-light btn" [routerLink]="['/packageDetails', item.id]">Read More</a>
-                 
+
                    <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
-              
+
                 </p>
                  <button class="book-btn">book now</button>
                 <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
             </div>
-     
+
         </div>
 
-      
-       
+
+
         </div>
 
 <div class="pagination">

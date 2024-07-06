@@ -1,34 +1,73 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, NgModule, OnChanges, OnInit } from '@angular/core';
 import { ServicesService } from '../services/services.service';
 import { Services } from '../models/services';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
-import { PaginationComponent } from "../pagination/pagination.component";
-import { SpinnerComponent } from "../spinner/spinner.component";
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterModule,
+} from '@angular/router';
+import { PaginationComponent } from '../pagination/pagination.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { CategoryService } from '../services/category.service';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule,  } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { Category } from '../models/category';
+import { Service } from '../models/bookingService.model';
+import { CategoryDropdownComponent } from '../category-dropdown/category-dropdown.component';
+import { ButtonModule } from 'primeng/button';
+import { SelectItem } from 'primeng/api';
+
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
+
+
 
 @Component({
-    selector: 'app-travel-service',
-    standalone: true,
-    templateUrl: './travel-service.component.html',
-    styleUrls: ['./travel-service.component.css', '../home/home.component.css'],
-    providers: [ServicesService, HttpClientModule],
-    imports: [
-        HttpClientModule,
-        NavbarComponent,
-        FooterComponent,
-        RouterLink,
-        CommonModule,
-        RouterModule,
-        PaginationComponent,
-        SpinnerComponent
-    ]
+  selector: 'app-travel-service',
+  standalone: true,
+  templateUrl: './travel-service.component.html',
+  styleUrls: ['./travel-service.component.css', '../home/home.component.css'],
+  providers: [ServicesService, HttpClientModule, CategoryService],
+  imports: [
+    DataViewModule,
+    ButtonModule,
+    TagModule,
+    CommonModule,
+    DropdownModule,
+    ReactiveFormsModule,
+    DropdownModule,
+    HttpClientModule,
+    NavbarComponent,
+    FooterComponent,
+    RouterLink,
+    CommonModule,
+    RouterModule,
+    PaginationComponent,
+    SpinnerComponent,
+    FormsModule,
+    CategoryDropdownComponent,
+
+  ],
 })
-export class TravelServiceComponent implements OnInit {
-  services: any[] = [];
+export class TravelServiceComponent implements OnInit, OnChanges {
+[x: string]: any;
+  sortOptions!: SelectItem[];
+
+  sortOrder!: number;
+
+  sortField!: string;
+
+  services: any;
   isLoading = false;
+  selectedCategoryId: string = '';
+  @Input() categoryId: string = '';
+
+  categories: Category[] = [];
 
   currentPage: number = 1;
   itemsPerPage: number = 5;
@@ -36,22 +75,27 @@ export class TravelServiceComponent implements OnInit {
 
   constructor(
     private servicesService: ServicesService,
+    private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.servicesService.loading$.subscribe(
-        (isLoading) => (this.isLoading = isLoading)
-      );
+      (isLoading) => (this.isLoading = isLoading)
+    );
     this.loadData(this.currentPage, this.itemsPerPage);
+
+    this.sortOptions = [
+      { label: 'Price High to Low', value: '!price' },
+      { label: 'Price Low to High', value: 'price' },
+    ];
   }
 
   loadData(
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
-
     this.servicesService.getAll(page, pageSize).subscribe(
       (response) => {
         //
@@ -65,6 +109,37 @@ export class TravelServiceComponent implements OnInit {
       }
     );
   }
+  onSortChange(event: any) {
+    let value = event.value;
+
+    if (value.indexOf('!') === 0) {
+      this.sortOrder = -1;
+      this.sortField = value.substring(1, value.length);
+    } else {
+      this.sortOrder = 1;
+      this.sortField = value;
+    }
+  }
+  ngOnChanges(): void {
+    if (this.categoryId) {
+      this.servicesService
+        .getServicesByCategory(this.categoryId)
+        .subscribe((data) => {
+          this.services = data;
+        });
+    }
+  }
+
+  onCategorySelected(categoryId: string): void {
+    this.selectedCategoryId = categoryId;
+  }
+
+  // loadCategories(): void {
+  //   this.categoryService.getCategories().subscribe((data) => {
+  //     this.categories = data;
+  //   });
+  // }
+  // }
 
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {

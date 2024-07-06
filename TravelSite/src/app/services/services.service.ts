@@ -39,10 +39,17 @@ export class ServicesService {
     }
     console.error(errorMessage);
     return throwError(errorMessage);
-
   }
   getserviceById(id: number): Observable<Services> {
     return this.http.get<Services>(`${this.baseUrl}${id}`);
+  }
+  // getProductsByCategoryId(categoryId: number): Observable<any[]> {
+  //   return this.http.get<any[]>(
+  //     `${this.baseUrl}?categoryId=${categoryId}`
+  //   );
+  // }
+  getServicesByCategory(categoryId: string): Observable<Services[]> {
+    return this.http.get<Services[]>(`${this.baseUrl}?category=${categoryId}`);
   }
   add(serv: Services): Observable<Services> {
     return this.http.post<Services>(this.baseUrl, serv);

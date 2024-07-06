@@ -7,6 +7,14 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { PackagesService } from '../services/packages.service';
 import { Package } from '../models/packages';
+import { ButtonModule } from 'primeng/button';
+import { SelectItem } from 'primeng/api';
+
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
+import { SpinnerComponent } from "../spinner/spinner.component";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-packages',
@@ -21,10 +29,26 @@ import { Package } from '../models/packages';
     RouterLink,
     CommonModule,
     RouterModule,
+    SpinnerComponent,
+    FormsModule,
+    DataViewModule,
+    ButtonModule,
+    TagModule,
+
+    DropdownModule,
+    ReactiveFormsModule,
   ],
 })
 export class PackagesComponent implements OnInit {
-  packages: Package[] | null = null;
+  packages: Package[] =[];
+  sortOptions!: SelectItem[];
+
+  sortOrder!: number;
+
+  sortField!: string;
+
+  isLoading = false;
+
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 100;
@@ -37,6 +61,10 @@ export class PackagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData(this.currentPage, this.itemsPerPage);
+    this.sortOptions = [
+      { label: 'Price High to Low', value: '!price' },
+      { label: 'Price Low to High', value: 'price' },
+    ];
   }
   loadData(
     page: number = this.currentPage,
@@ -54,6 +82,18 @@ export class PackagesComponent implements OnInit {
         console.error('Error loading data:', error);
       }
     );
+  }
+
+  onSortChange(event: any) {
+    let value = event.value;
+
+    if (value.indexOf('!') === 0) {
+      this.sortOrder = -1;
+      this.sortField = value.substring(1, value.length);
+    } else {
+      this.sortOrder = 1;
+      this.sortField = value;
+    }
   }
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {

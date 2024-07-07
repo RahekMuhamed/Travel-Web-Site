@@ -32,6 +32,8 @@ import { PackagesComponent } from './packages/packages.component';
 import { ClientServiceDetailsComponent } from './service-details/service-details.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { ClientPackageDetailsComponent } from './package-details/package-details.component';
+import { JoinGroupComponent } from './real-time-chat/join-group/join-group.component';
+import { ChatComponent } from './real-time-chat/chat/chat.component';
 
 export const routes: Routes = [
   {
@@ -39,6 +41,17 @@ export const routes: Routes = [
     component: HomeComponent,
     title: 'home',
     data: { roles: ['client'] },
+  },
+  { path: 'join-group', component: JoinGroupComponent },
+
+  // Route to the 'ChatComponent' when the path is 'chat'
+  { path: 'chat', component: ChatComponent },
+  
+  //chat with css tailwind
+  {
+    path: 'room',
+    loadComponent: () =>
+      import('./chat/room/room.component').then((m) => m.RoomComponent),
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {

@@ -4,35 +4,52 @@ import { CommonModule } from '@angular/common';
 import { ServicesService } from '../../../src/app/services/services.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SearchBarComponent } from '../../search-bar/search-bar.component';
+import { PaginationService } from '../../../src/app/services/pagination.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-services',
   standalone: true,
-  imports: [CommonModule],
+  imports: [SearchBarComponent,
+    CommonModule,FormsModule
+
+  ],
   templateUrl: './admin-services.component.html',
   styleUrl: './admin-services.component.css',
 })
 export class AdminServicesComponent implements OnInit {
-  service: Services[] | null = null;
+  service: Services[]=[];
+  filteredservices: Services[] = [];
+  paginatedServices: Services[] = [];
+  rowsPerPage: number = 10;
+  currentPage: number = 1;
+  pageSizes: number[] = [5, 10, 20, 50];
+
+
   constructor(
     private serviceservice: ServicesService,
-    private router: Router
+    private router: Router,
+    private paginationService: PaginationService
+
   ) {}
   ngOnInit(): void {
     this.serviceservice.getAll().subscribe({
       next: (response: any) => {
         this.service = response.$values;
+        this.filteredservices = response.$values;
+
       },
     });
   }
   viewDetails(serviceId: number): void {
-    this.router.navigate(['/Admin/serviceDetail', serviceId]);
+    this.router.navigate(['/profile/serviceDetail', serviceId]);
   }
   addService(): void {
-    this.router.navigate(['/Admin/AddService']);
+    this.router.navigate(['/profile/AddService']);
   }
   updateService(serviceId: number): void {
-    this.router.navigate(['/Admin/updateservice', serviceId]);
+    this.router.navigate(['/profile/updateservice', serviceId]);
   }
   removeService(serviceId: number): void {
     Swal.fire({
@@ -69,4 +86,27 @@ export class AdminServicesComponent implements OnInit {
       }
     });
   }
+  onSearch(query: string): void {
+    if (this.service) {
+      this.filteredservices = this.service.filter((ser) =>
+        ser.name && ser.name.toLowerCase().includes(query.toLowerCase())
+      );
+      this.currentPage = 1; // Reset to the first page on search
+      this.updatePaginatedServices();
+    }
+  }
+
+  onRowsPerPageChange(event: Event): void {
+    this.rowsPerPage = +(event.target as HTMLSelectElement).value;
+    this.updatePaginatedServices();
+  }
+
+  updatePaginatedServices(): void {
+    this.paginatedServices = this.paginationService.getPaginatedItems(
+      this.filteredservices,
+      this.currentPage,
+      this.rowsPerPage
+    );
+  }
+
 }

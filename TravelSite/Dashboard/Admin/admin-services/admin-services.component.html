@@ -1,6 +1,19 @@
 <div class="container">
-  <h2>Services List</h2>
-  <table class="table table-bordered">
+  <div class="d-flex align-items-center justify-content-between">
+  <app-search-bar (searchQuery)="onSearch($event)"></app-search-bar>
+  <button class="btn btn-info" (click)="addService()">Add service</button>
+</div>
+  <div class="d-flex align-items-center justify-content-between mt-2">
+    <h2>Services List</h2>
+    <div>
+      <label for="rowsPerPage">Rows per page: </label>
+      <select id="rowsPerPage" [(ngModel)]="rowsPerPage" (change)="onRowsPerPageChange($event)">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+
+  </div>
+  <br>  <table class="table table-bordered">
     <thead>
       <tr>
         <th>ID</th>
@@ -12,8 +25,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (item of service; track $index) {
-      <tr >
+      <tr *ngFor="let item of filteredservices">
         <td>{{item.id}}</td>
         <td>{{ item.name}}</td>
         <td>{{ item.quantityAvailable}}</td>
@@ -27,7 +39,6 @@
            <button class="btn btn-danger" (click)="removeService(item.id)">Remove</button>
         </td>
       </tr>
-    }
+
     </tbody>
   </table>
-  <button class="btn btn-info" (click)="addService()">Add</button>

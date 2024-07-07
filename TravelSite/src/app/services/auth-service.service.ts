@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { jwtDecode } from 'jwt-decode';
 import { DecodedToken } from '../models/decoded-token';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,6 @@ export class AuthServiceService {
   }
 
   login(loginData: any): Observable<any> {
-
     return this.http.post<any>(`${this.apiUrl}/login`, loginData)
       .pipe(
         tap(response => {
@@ -54,7 +53,6 @@ export class AuthServiceService {
       }
     };
 
-    // Send logout request to the server
     return this.http.post<any>(`${this.apiUrl}/logout`, {}, httpOptions).pipe(
       catchError(error => {
         console.error('Logout error:', error);
@@ -65,7 +63,7 @@ export class AuthServiceService {
         localStorage.removeItem('userRole');
         localStorage.removeItem('userId');
         console.log('LocalStorage items cleared after logout.');
-        this.router.navigate(['/login']); // Redirect to login page after logout
+        this.router.navigate(['/login']);
       })
     );
   }
@@ -94,6 +92,35 @@ export class AuthServiceService {
   getUserIdFromToken(): string | null {
     const decodedToken = this.decodeToken();
     return decodedToken ? decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] : null;
+  }
+
+  sendResetPasswordEmail(email: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/forget-password`, { email })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  resetPassword(data: { password: string; confirmPassword: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reset-password`, data)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  changePassword(currentPassword: string, newPassword: string): Observable<any> {
+    const token = this.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    const data = { currentPassword, newPassword };
+    return this.http.post<any>(`${this.apiUrl}/change-password`, data, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: any): Observable<never> {

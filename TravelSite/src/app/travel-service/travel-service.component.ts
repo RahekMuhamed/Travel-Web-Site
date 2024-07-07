@@ -46,7 +46,7 @@ export class TravelServiceComponent implements OnInit {
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
-    this.servicesService.getAll(page, pageSize).subscribe(
+    this.servicesService.getAllpag(page, pageSize).subscribe(
       (response) => {
         //
         this.services = response.data.$values;

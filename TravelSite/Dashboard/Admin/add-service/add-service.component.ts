@@ -42,7 +42,7 @@ export class AddServiceComponent implements OnInit {
       price: ['', Validators.required],
       description: ['', Validators.required],
       startDate: ['', Validators.required],
-      image: [''],
+      //image: [''],
       isDeleted: [false],
       serviceProvider: [[]],
     });

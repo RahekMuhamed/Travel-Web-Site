@@ -35,6 +35,7 @@
             </div>
           </div>
 
+
           <div class="form-outline form-white mb-4">
             <label class="form-label" for="services">Services</label>
             <ng-multiselect-dropdown
@@ -79,6 +80,7 @@
         </div>
       </div>
 
+
         <div class="col-md-6">
           <div class="form-outline form-white mb-4">
             <label class="form-label" for="description">Description</label>
@@ -103,6 +105,25 @@
               Duration is required.
             </div>
           </div>
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="firstLocation">First Location</label>
+                <select formControlName="firstLocation" id="firstLocation" class="form-control form-control-lg">
+                  <option *ngFor="let location of packageLocations" [value]="location">{{location}}</option>
+                </select>
+              </div>
+              
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="secondLocation">Second Location</label>
+                <select formControlName="secondLocation" id="secondLocation" class="form-control form-control-lg">
+                  <option *ngFor="let location of packageLocations" [value]="location">{{location}}</option>
+                </select>
+              </div>
+                <div class="form-outline form-white mb-4">
+                  <label class="form-label" for="firstLocationDuration">FirstLocationDuration (days)</label>
+                  <input formControlName="firstLocationDuration" type="number" id="firstLocationDuration" class="form-control form-control-lg" required />
+                  <div *ngIf="formControls['firstLocationDuration']?.touched && formControls['firstLocationDuration']?.errors?.['required']" class="text-danger">
+                    FirstLocationDuration is required.
+                  </div>
 
           <div class="form-outline form-white mb-4">
             <label class="form-label" for="BookingTimeAllowed">Booking Time Allowed (days)</label>
@@ -149,3 +170,4 @@
     </div>
   </div>
 </form>
+

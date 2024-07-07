@@ -9,7 +9,7 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root',
 })
 export class PackagesService {
-  private baseUrl: string = 'https://localhost:7062/api/Packages/';
+  private baseUrl: string = 'http://localhost:5141/api/Packages/';
 
   constructor(private http: HttpClient,private authService:AuthServiceService) {}
 

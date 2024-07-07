@@ -25,6 +25,7 @@ import Swal from 'sweetalert2';
 })
 export class AddPackageComponent implements OnInit {
   newpackage: Package = new Package(0, '', 0, false);
+
   packageForm!: FormGroup;
   imageName: string | null = null;
   base64Image: string | null = null;
@@ -52,14 +53,17 @@ export class AddPackageComponent implements OnInit {
       description: ['', Validators.required],
       startDate: ['', Validators.required],
       duration: ['', Validators.required],
-      image: [''],
+      //image: [''],
       isDeleted: [false],
+
       BookingTimeAllowed: ['', Validators.required],
       services: [[], Validators.required],
       firstLocation: ['', Validators.required],
       secondLocation: ['', Validators.required],
       firstLocationDuration: ['', Validators.required],
       secondLocationDuration: [{ value: '', disabled: true }, Validators.required],
+
+  
     });
     this.fetchServices();
     this.dropdownSettings = {
@@ -90,7 +94,7 @@ export class AddPackageComponent implements OnInit {
   get formControls() {
     return this.packageForm.controls;
   }
-
+/*
   imageUpload(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -119,7 +123,7 @@ export class AddPackageComponent implements OnInit {
         reject(error);
       };
     });
-  }
+  }*/
 
   calculateSecondLocationDuration(): void {
     const duration = this.packageForm.get('duration')?.value;

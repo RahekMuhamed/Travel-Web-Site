@@ -27,13 +27,15 @@ export class AdminServicesComponent implements OnInit {
   pageSizes: number[] = [5, 10, 20, 50];
 
 
+
   constructor(
     private serviceservice: ServicesService,
     private router: Router,
     private paginationService: PaginationService
 
   ) {}
-  ngOnInit(): void {
+  
+ngOnInit(): void {
     this.serviceservice.getAll().subscribe({
       next: (response: any) => {
         this.service = response.$values;
@@ -42,6 +44,8 @@ export class AdminServicesComponent implements OnInit {
       },
     });
   }
+  
+
   viewDetails(serviceId: number): void {
     this.router.navigate(['/profile/serviceDetail', serviceId]);
   }

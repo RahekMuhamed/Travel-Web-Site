@@ -22,6 +22,7 @@ export class AdminPackagesComponent implements OnInit {
   rowsPerPage: number = 10;
   currentPage: number = 1;
   pageSizes: number[] = [5, 10, 20, 50];
+
   constructor(
     private packageservice: PackagesService,
     private router: Router,
@@ -38,7 +39,10 @@ export class AdminPackagesComponent implements OnInit {
         console.error('Error fetching packages:', error);
       }
     });
+      
+
   }
+   
 
   viewDetails(packageId: number): void {
     this.router.navigate(['/profile/packageDetail', packageId]);

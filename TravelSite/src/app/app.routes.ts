@@ -1,3 +1,4 @@
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -33,12 +34,8 @@ import { ForgetPasswordComponent } from '../../Authenticaion/forget-password/for
 import { ChangePasswordComponent } from '../../Dashboard/change-password/change-password.component';
 import { UnauthorizedComponent } from '../../Authenticaion/unauthorized/unauthorized.component';
 
+
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
   {
     path: 'home',
     component: HomeComponent,
@@ -48,7 +45,33 @@ export const routes: Routes = [
      { path: 'services', component: TravelServiceComponent },
      { path: 'packages', component: PackagesComponent },
 
-
+  { path: 'serviceDetails/:id', component: ServiceDetailsComponent },
+  { path: 'serviceDetails/:id', component: PackageDetailsComponent },
+  /*{
+    path: 'SuperAdmin',
+    loadChildren: () =>
+      import('../../SuperAdmin/SuperAdmin.routes').then(
+        (m) => m.SuperAdminroutes
+      ),
+    },*/
+    {
+        path: "payment",
+        component: PaymentComponent,
+        title:"checkout"
+  },
+  { path:"ServicePayment", component: ServicePaymentComponent, title: "Hotels Checkout" },
+  { path:"AddBookingPackage", component: AddBookingPackageComponent, title: "Booking Package" },
+  {path:"AddBookingService" ,component:AddBookingServiceComponent , title :"Booking Hotel"},
+  { path:"GetAllPackageBooking", component: GetAllBookingPackageComponent, title: "All Booking" },
+  {path :"BookingDetails/:id",component:BookingDetailsComponent ,title:"Booking Package"},
+  { path:"SignUp", component: SignUpComponent, title: "Register" },
+  {path:"login" ,component:LoginComponent,title:"login"},
+      {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  { path: 'SuperAdmin/Packagelist', component: PackagesListComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'forgetpassword', component: ForgetPasswordComponent },
@@ -88,8 +111,15 @@ export const routes: Routes = [
         data: { roles: ['admin'] },
       },
       {
-        path: 'updateservice/:id',
-        component: EditServiceComponent,
+        path: 'AddService',
+        component: AddServiceComponent,
+        canActivate: [AuthGuardService],
+        data: { roles: ['admin'] },
+      },
+      {
+        path: 'Packagelist',
+        component: AdminPackagesComponent,
+
         canActivate: [AuthGuardService],
         data: { roles: ['admin'] },
       },
@@ -106,10 +136,20 @@ export const routes: Routes = [
         data: { roles: ['admin'] },
       },
 
-
-      {
+{
         path: 'packageDetail/:id',
         component: PackageDetailsComponent,
+        canActivate: [AuthGuardService],
+        data: { roles: ['admin'] },
+      },
+        path: 'AddPackage',
+        component:AddPackageComponent,
+        canActivate: [AuthGuardService],
+        data: { roles: ['admin'] },
+      },
+      {
+        path: 'superpackageDetail/:id',
+        component: SuperpackageDetailsComponent,
         canActivate: [AuthGuardService],
         data: { roles: ['admin'] },
       },

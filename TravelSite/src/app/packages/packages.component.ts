@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { PackagesService } from '../services/packages.service';
 import { Package } from '../models/packages';
+import { AuthServiceService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-packages',
@@ -28,11 +29,13 @@ export class PackagesComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 100;
+  packageId: number = 1;
   constructor(
     private packageService: PackagesService,
 
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService:AuthServiceService
   ) {}
 
   ngOnInit(): void {
@@ -100,6 +103,20 @@ export class PackagesComponent implements OnInit {
     return item.id; // Replace "id" with the unique identifier of your data item
   }
 
+
+  booking(packageId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/AddBookingPackage'], { queryParams: { packageId: packageId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+      
   // viewDetails(packageId: number): void {
   //   this.router.navigate(['/packageDetails', packageId]);
   // }

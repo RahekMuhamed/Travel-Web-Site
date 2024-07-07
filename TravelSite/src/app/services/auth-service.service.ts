@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -10,16 +10,16 @@ import { DecodedToken } from '../models/decoded-token';
   providedIn: 'root',
 })
 export class AuthServiceService {
-  private apiUrl = 'https://localhost:5141/api/Account';
+  private apiUrl = 'http://localhost:5141/api/Account';
 
   constructor(private http: HttpClient, private router: Router) {}
 
   register(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, data);
+    return this.http.post<any>(`${this.apiUrl}/register`, data)
+      .pipe(catchError(this.handleError));
   }
 
   login(loginData: any): Observable<any> {
-
     return this.http.post<any>(`${this.apiUrl}/login`, loginData)
       .pipe(
         tap(response => {
@@ -27,13 +27,15 @@ export class AuthServiceService {
           localStorage.setItem('authToken', token);
           localStorage.setItem('userRole', response.role);
 
+          // Decode the token and store user ID
           const decodedToken: any = jwtDecode(token);
           console.log('Decoded Token:', decodedToken);
 
           const userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
           console.log('User ID:', userId);
           localStorage.setItem('userId', userId);
-        })
+        }),
+        catchError(this.handleError)
       );
   }
 
@@ -49,25 +51,22 @@ export class AuthServiceService {
     }
 
     const httpOptions = {
-      headers: {
-        Authorization: `Bearer ${authToken}`
-      }
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${authToken}`
+      })
     };
 
-    // Send logout request to the server
-    return this.http.post<any>(`${this.apiUrl}/logout`, {}, httpOptions).pipe(
-      catchError(error => {
-        console.error('Logout error:', error);
-        return throwError(error);
-      }),
-      tap(() => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userRole');
-        localStorage.removeItem('userId');
-        console.log('LocalStorage items cleared after logout.');
-        this.router.navigate(['/login']); // Redirect to login page after logout
-      })
-    );
+    return this.http.post<any>(`${this.apiUrl}/logout`, {}, httpOptions)
+      .pipe(
+        tap(() => {
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('userRole');
+          localStorage.removeItem('userId');
+          console.log('LocalStorage items cleared after logout.');
+          this.router.navigate(['/login']);
+        }),
+        catchError(this.handleError)
+      );
   }
 
   getToken(): string | null {

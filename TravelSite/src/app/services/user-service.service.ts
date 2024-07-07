@@ -5,12 +5,14 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { AuthServiceService } from './auth-service.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
 
-  private apiUrl = 'https://localhost:7062/api/User';
+  private apiUrl = 'http://localhost:5141/api/User';
+   public clientData = {Passport:"",PhoneNumber:'',ResidanceCountry:''}
 
   constructor(private http: HttpClient, private authService: AuthServiceService) {}
   private getHttpOptions() {
@@ -55,7 +57,14 @@ export class UserServiceService {
         map(data => this.extractClientData(data)),
         catchError(this.handleError)
       );
-    }
+  }
+  //update user Data
+  updateUserData(id:string,):Observable<any>// client id
+  {
+    return this.http.put<any>(`${this.apiUrl}/completeInfo/${id}`, this.clientData, this.getHttpOptions()).pipe(
+      map(response => response)     
+    );
+  }
 
     private extractClientData(data: any): User[] {
       console.log('Raw Clients Data:', data);
@@ -103,15 +112,6 @@ export class UserServiceService {
         return [];
       }
     }
-
-
-
-
-
-
-
-
-
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Something went wrong; please try again later.';
     if (error.error instanceof ErrorEvent) {
@@ -137,3 +137,5 @@ function parseJwt(token: string) {
 
   return JSON.parse(jsonPayload);
 }
+
+

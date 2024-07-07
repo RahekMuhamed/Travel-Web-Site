@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ServicesService {
-  private baseUrl: string = 'https://localhost:7062/api/Service/';
+  private baseUrl: string = 'http://localhost:5141/api/Service/';
 
   constructor(private http: HttpClient) {}
 
@@ -22,6 +22,18 @@ export class ServicesService {
       )
     );
   }
+    // New method to fetch all hotel services
+ getAllHotels(page?: number, pageSize?: number): Observable<any> {
+  let url = `${this.baseUrl}HotelServices`;
+  if (page !== undefined && pageSize !== undefined) {
+    url += `?pageNumber=${page}&pageSize=${pageSize}`;
+  }
+  return this.http.get<any>(url).pipe(
+    map((response) => response),
+    catchError(this.handleError)
+  );
+}
+
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';

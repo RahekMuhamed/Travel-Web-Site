@@ -20,6 +20,8 @@ import { PackagesService } from '../../../src/app/services/packages.service';
 })
 export class AddPackageComponent implements OnInit {
   newpackage: Package = new Package(0, '', false, '', '', 0, 0);
+ packageLocations: number[]= [0,1]; // 'Makkah = 0', 'Madinah'=1
+
   packageForm!: FormGroup;
   imageName: string | null = null;
   base64Image: string | null = null;
@@ -38,15 +40,18 @@ export class AddPackageComponent implements OnInit {
       description: ['', Validators.required],
       startDate: ['', Validators.required],
       duration: ['', Validators.required],
-      image: [''],
+      //image: [''],
       isDeleted: [false],
+      firstLocation: [0], // Set default values if needed
+      secondLocation: [1],
+     firstLocationDuration:['']
     });
   }
 
   get formControls() {
     return this.packageForm.controls;
   }
-
+/*
   imageUpload(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -76,7 +81,7 @@ export class AddPackageComponent implements OnInit {
         reject(error);
       };
     });
-  }
+  }*/
 
   save(): void {
     if (this.packageForm.valid) {

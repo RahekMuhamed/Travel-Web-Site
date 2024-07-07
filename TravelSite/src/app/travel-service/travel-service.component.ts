@@ -7,6 +7,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { PaginationComponent } from "../pagination/pagination.component";
+import { AuthServiceService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-travel-service',
@@ -26,8 +27,6 @@ import { PaginationComponent } from "../pagination/pagination.component";
 })
 export class TravelServiceComponent implements OnInit {
   services: any[] = [];
-
-
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 100;
@@ -35,7 +34,9 @@ export class TravelServiceComponent implements OnInit {
   constructor(
     private servicesService: ServicesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+     private authService:AuthServiceService
+
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +47,7 @@ export class TravelServiceComponent implements OnInit {
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
-    this.servicesService.getAll(page, pageSize).subscribe(
+    this.servicesService.getAllHotels(page, pageSize).subscribe(
       (response) => {
         //
         this.services = response.data.$values;
@@ -103,6 +104,20 @@ export class TravelServiceComponent implements OnInit {
   trackByFn(index: number, item: any): any {
     return item.id; // Replace "id" with the unique identifier of your data item
   }
+  
+  booking(serviceId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/AddBookingService'], { queryParams: { serviceId: serviceId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+      
 
   // onPageSizeChange(event: Event): void {
   //   const target = event.target as HTMLSelectElement;

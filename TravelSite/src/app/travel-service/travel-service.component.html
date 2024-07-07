@@ -65,7 +65,7 @@
       <div class="col-lg-12 mt-4 mt-lg-0">
         <div class="row justify-content-between">
           <div class="col-12 col-sm-6">
-            <h4 class="mb-0">{{totalItems}} Results</h4>
+           <!-- <h4 class="mb-0">{{totalItems}} Results</h4>-->
           </div>
           <!-- category selected -->
           <div class="col-12 col-sm-4 text-end">
@@ -96,37 +96,27 @@
       <div  class="cardcontainer m-2" *ngFor="let item of services; let i = index">
             <div class="photo">
                 <img src="../../assets/umrah1.jpeg">
-
             </div>
-
-
             <div class="content">
                 <p class="txt4">{{ item.name}}</p>
                 <!-- <p class="date">{{ item.startDate}}</p> -->
-
                 <p class="txt5">{{ item.price}}$</p>
                 <p class="txt2">{{ item.description}}</p>
               </div>
-
             <div class="footer">
                 <p>
                    <a class="waves-effect waves-light btn"   [routerLink]="['/serviceDetails', item.id]">Read More</a>
-
                    <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
-
                 </p>
-                 <button class="book-btn">book now</button>
+                 <button class="book-btn"(click)="booking(item.id) ">Book now</button>
+
                 <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
             </div>
-
         </div>
-
-
-
         </div>
-          </div>
-            </div>
-              </div>
+      </div>
+    </div>
+  </div>
 
 
  <!-- end of items -->

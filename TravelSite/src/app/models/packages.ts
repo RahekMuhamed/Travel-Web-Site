@@ -11,10 +11,15 @@ export class Package {
     public price?: number,
     public startDate?: Date,
     public duration?: number,
+    public endDate?: Date,// view only
+    public firstLocation?: number,
+    public secondLocation?: number,
+    public firstLocationDuration?: number,
+    public secondLocationDuration?: number,// view only
    // public bookingPackages: BookingPackage[],
    //public lovePackages: LovePackage[],
   // public adminId: string | undefined,
   // public admin: admin,
-   public services: Services[]=[]
+   //public services: Services[]=[]
   ) {}
 }

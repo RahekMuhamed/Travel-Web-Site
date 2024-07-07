@@ -20,6 +20,10 @@ export class BookingPackageService {
 
     return this.http.post<BookingPackage>(this.BaseUrl ,bookingPack);
   }
+  getBookingPackage(id:number) :Observable<BookingPackage> // id:bookingpackage Id
+  {
+    return this.http.get<BookingPackage>(`${this.BaseUrl}/${id}`);
+  }
 
   getAllbookingPackage(clientId:string):Observable<BookingPackage[]>
   {

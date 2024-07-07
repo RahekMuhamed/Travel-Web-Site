@@ -3,35 +3,25 @@
       <div class="container ">
        <h1 class="headline">Packages </h1>
       <!-- <div class="row"> -->
-
-       
-
       <div  class="cardcontainer m-2" *ngFor="let item of packages; let i = index">
             <div class="photo">
-                <img src="../../assets/umrah1.jpeg">
-                
+              <!--<img src="../../assets/umrah1.jpeg"> -->  
+                 <img [src]="'../../../assets/'+item?.image" alt="Dynamic Image" />
             </div>
-     
-   
             <div class="content">
                 <p class="txt4">{{ item.name}}</p>
                 <!-- <p class="date">{{ item.startDate}}</p> -->
-
                 <p class="txt5">{{ item.price}}$</p>
                 <p class="txt2">{{ item.description}}</p>
               </div>
-
             <div class="footer">
                 <p>
                    <a class="waves-effect waves-light btn" [routerLink]="['/packageDetails', item.id]">Read More</a>
-                 
-                   <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
-              
+                   <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>     
                 </p>
-                 <button class="book-btn">book now</button>
+                 <button class="book-btn" (click)="booking(item.id)">Book now</button>
                 <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
             </div>
-     
         </div>
 
       

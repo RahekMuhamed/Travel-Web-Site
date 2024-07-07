@@ -47,6 +47,9 @@ export class UserInfoComponent implements OnInit {
     }
   }
   editUser() {
-    this.router.navigate(['/Admin/EditUserInfo']);
+    this.router.navigate(['/profile/EditUserInfo']);
+  }
+  changepassword() {
+    this.router.navigate(['/profile/changePassword']);
   }
 }

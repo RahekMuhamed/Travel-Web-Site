@@ -44,7 +44,7 @@ export class AddAdminComponent {
           console.log('Admin added successfully:', response);
           Swal.fire('Success', 'Admin added successfully!', 'success').then(
             () => {
-              this.router.navigate(['/Admin/adminslist']);
+              this.router.navigate(['/profile/adminslist']);
             }
           );
         },

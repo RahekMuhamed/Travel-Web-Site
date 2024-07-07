@@ -63,11 +63,11 @@ export class AdminsListComponent implements OnInit {
   }
 
   viewDetails(adminId: string): void {
-    this.router.navigate(['/SuperAdmin/adminDetail', adminId]);
+    this.router.navigate(['/profile/adminDetail', adminId]);
   }
 
   updateAdmin(adminId: string): void {
-    this.router.navigate(['/SuperAdmin/updateAdmin', adminId]);
+    this.router.navigate(['/profile/updateAdmin', adminId]);
   }
   removeAdmin(adminId: string): void {
     Swal.fire({
@@ -107,6 +107,6 @@ export class AdminsListComponent implements OnInit {
   }
 
   addAdmin(): void {
-    this.router.navigate(['/Admin/AddAdmin']);
+    this.router.navigate(['/profile/AddAdmin']);
   }
 }

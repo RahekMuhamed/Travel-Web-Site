@@ -33,7 +33,6 @@ import { HomeComponent } from './home/home.component';
         RouterModule,
         ForgetPasswordComponent,
         ResetPasswordComponent,
-        ContactUSComponent,
         HttpClientModule,
         TravelServiceComponent,
     ]

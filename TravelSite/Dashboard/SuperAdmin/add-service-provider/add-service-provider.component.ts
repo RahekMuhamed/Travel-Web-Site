@@ -11,11 +11,12 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Services } from '../../../src/app/models/services';
 import { ServicesService } from '../../../src/app/services/services.service';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-add-service-provider',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule,NgMultiSelectDropDownModule],
   templateUrl: './add-service-provider.component.html',
   styleUrl: './add-service-provider.component.css',
 })
@@ -24,6 +25,7 @@ export class AddServiceProviderComponent implements OnInit {
   servicesList: Services[] = [];
   imageName: string | null = null;
   base64Image: string | null = null;
+  dropdownSettings = {};
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,6 +44,15 @@ export class AddServiceProviderComponent implements OnInit {
     });
 
     this.fetchServices();
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 1,
+      allowSearchFilter: true,
+    };
   }
 
   fetchServices(): void {
@@ -121,7 +132,7 @@ export class AddServiceProviderComponent implements OnInit {
     this.serviceProviderService.add(formData).subscribe(
       () => {
         alert('Service provider added successfully!');
-        this.router.navigateByUrl('Admin/ServiceProvider');
+        this.router.navigateByUrl('profile/ServiceProvider');
       },
       (error) => {
         console.error('Service provider save failed:', error);

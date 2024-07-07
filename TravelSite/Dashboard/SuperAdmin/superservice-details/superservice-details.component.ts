@@ -42,7 +42,7 @@ export class SuperserviceDetailsComponent implements OnInit {
   }
 
   redirectToserviceList(): void {
-    this.router.navigate(['/Admin/superservicelist']);
+    this.router.navigate(['/profile/superservicelist']);
   }
 
 }

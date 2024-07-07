@@ -2,6 +2,7 @@
   border-top: #022027 solid 6px;
   border-bottom: #022027 solid 6px;
 } */
+
 body, html {
   margin: 0;
   padding: 0;
@@ -9,9 +10,18 @@ body, html {
 }
 
 .wrapper {
+  /* padding: 0 ;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  padding: 0 ;
-  box-sizing: border-box;
+  background-color: #18638f;
+  color: #fff;
+  padding: 10px 20px; */
+  flex-shrink: 0;
+  background-color: #18638f;
+  color: #fff;
+  padding: 10px 20px;
 }
 
 .container {

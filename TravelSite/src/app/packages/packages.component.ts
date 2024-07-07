@@ -45,7 +45,7 @@ export class PackagesComponent implements OnInit {
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
-    this.packageService.getAll(page, pageSize).subscribe(
+    this.packageService.getAllpag(page, pageSize).subscribe(
       (response) => {
         //
         this.packages = response.data.$values;

@@ -1,4 +1,27 @@
 <div class="container">
+  <app-search-bar (searchQuery)="onSearch($event)"></app-search-bar>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Details</th>
+        <th>Update</th>
+        <th>Remove</th>
+          </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of filteredPackages">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>
+          <button class="btn btn-info" (click)="viewDetails(item.id)">Details</button>
+        </td>
+        
+      </tr>
+    </tbody>
+  </table>
   <h2>Packages List</h2>
   <br>
   <table class="table table-bordered">

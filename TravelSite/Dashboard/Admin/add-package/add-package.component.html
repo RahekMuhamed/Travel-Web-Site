@@ -35,17 +35,52 @@
             </div>
           </div>
 
-        <!--  <div class="form-outline form-white mb-4">
-            <input formControlName="image" type="file" id="image" name="image" class="form-control form-control-lg visually-hidden" accept="image/*" (change)="imageUpload($event)" />
-            <label for="image" class="btn btn-primary btn-sm m-2">Select File</label>
-            <label class="form-label" for="image">Upload Image</label>
-            <span>{{ imageName }}</span>
-           <div *ngIf="formControls['image']?.touched && formControls['image']?.errors?.['required']" class="text-danger">
-              Image is required.
+
+          <div class="form-outline form-white mb-4">
+            <label class="form-label" for="services">Services</label>
+            <ng-multiselect-dropdown
+              [placeholder]="'Select Services'"
+              [data]="servicesList"
+              formControlName="services"
+              [settings]="dropdownSettings">
+            </ng-multiselect-dropdown>
+            <div *ngIf="formControls['services'].touched && formControls['services'].errors?.['required']" class="text-danger">
+              At least one service is required.
             </div>
           </div>
+
+
+          <div class="form-outline form-white mb-4">
+            <label class="form-label" for="firstLocation">First Location</label>
+            <select formControlName="firstLocation" id="firstLocation" class="form-control form-control-lg" (change)="onFirstLocationChange()">
+              <option *ngFor="let location of locationEnum" [value]="location.value">{{ location.label }}</option>
+            </select>
+            <div *ngIf="formControls['firstLocation']?.touched && formControls['firstLocation']?.errors?.['required']" class="text-danger">
+              First Location is required.
+            </div>
+          </div>
+
+          <div class="form-outline form-white mb-4">
+            <label class="form-label" for="firstLocationDuration">First Location Duration (days)</label>
+            <input formControlName="firstLocationDuration" type="number" id="firstLocationDuration" class="form-control form-control-lg" required (input)="calculateSecondLocationDuration()" />
+            <div *ngIf="formControls['firstLocationDuration']?.touched && formControls['firstLocationDuration']?.errors?.['required']" class="text-danger">
+              First Location Duration is required.
+            </div>
+          </div>
+
+
+        <div class="form-outline form-white mb-4">
+          <input formControlName="image" type="file" id="image" name="image" class="form-control form-control-lg visually-hidden" accept="image/*" (change)="imageUpload($event)" />
+          <label for="image" class="btn btn-primary btn-sm m-2">Select File</label>
+          <label class="form-label" for="image">Upload Image</label>
+          <span>{{ imageName }}</span>
+         <div *ngIf="formControls['image']?.touched && formControls['image']?.errors?.['required']" class="text-danger">
+            Image is required.
+          </div>
         </div>
--->
+      </div>
+
+
         <div class="col-md-6">
           <div class="form-outline form-white mb-4">
             <label class="form-label" for="description">Description</label>
@@ -91,6 +126,38 @@
                   </div>
 
           <div class="form-outline form-white mb-4">
+            <label class="form-label" for="BookingTimeAllowed">Booking Time Allowed (days)</label>
+            <input formControlName="BookingTimeAllowed" type="number" id="BookingTimeAllowed" class="form-control form-control-lg" required />
+            <div *ngIf="formControls['BookingTimeAllowed']?.touched && formControls['BookingTimeAllowed']?.errors?.['required']" class="text-danger">
+              Booking Time Allowed is required.
+            </div>
+          </div>
+
+
+
+          <div class="form-outline form-white mb-4">
+            <label class="form-label" for="secondLocation">Second Location</label>
+            <select formControlName="secondLocation" id="secondLocation" class="form-control form-control-lg" required>
+              <option *ngFor="let location of filteredLocationOptions" [value]="location.value">{{ location.label }}</option>
+            </select>
+            <div *ngIf="formControls['secondLocation']?.touched && formControls['secondLocation']?.errors?.['required']" class="text-danger">
+              Second Location is required.
+            </div>
+          </div>
+
+
+
+          <div class="form-outline form-white mb-4">
+            <label class="form-label" for="secondLocationDuration">Second Location Duration (days)</label>
+            <input formControlName="secondLocationDuration" type="number" id="secondLocationDuration" class="form-control form-control-lg" required readonly />
+            <div *ngIf="formControls['secondLocationDuration']?.touched && formControls['secondLocationDuration']?.errors?.['required']" class="text-danger">
+              Second Location Duration is required.
+            </div>
+          </div>
+
+
+
+          <div class="form-outline form-white mb-4">
             <input formControlName="isDeleted" type="checkbox" id="isDeleted" class="form-check-input me-2" />
             <label class="form-label" for="isDeleted">Is Deleted</label>
           </div>
@@ -102,7 +169,5 @@
       </div>
     </div>
   </div>
+</form>
 
-
-
-         

@@ -26,10 +26,10 @@ export class ServiceProviderlistComponent implements OnInit {
     });
   }
   viewDetails(ServiceProviderId: number): void {
-    this.router.navigate(['/Admin/ServiceProviderDetail', ServiceProviderId]);
+    this.router.navigate(['/profile/ServiceProviderDetail', ServiceProviderId]);
   }
   updateServiceProvider(ServiceProviderId: number): void {
-    this.router.navigate(['/Admin/updateServiceProvider', ServiceProviderId]);
+    this.router.navigate(['/profile/updateServiceProvider', ServiceProviderId]);
   }
 
   removeServiceProvider(serviceProviderId: number): void {
@@ -73,6 +73,6 @@ export class ServiceProviderlistComponent implements OnInit {
   }
 
   addServiceProvider(): void {
-    this.router.navigate(['/Admin/AddServiceProvider']);
+    this.router.navigate(['/profile/AddServiceProvider']);
   }
 }

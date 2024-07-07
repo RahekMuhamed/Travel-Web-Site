@@ -22,6 +22,6 @@ export class ServicesListComponent implements OnInit
    })
  }
  viewDetails(serviceId: number): void {
-  this.router.navigate(['/Admin/serviceDetail', serviceId]);
+  this.router.navigate(['/profile/serviceDetail', serviceId]);
 }
 }

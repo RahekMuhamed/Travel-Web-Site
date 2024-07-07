@@ -65,7 +65,7 @@ export class HomeComponent {
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
-    this.serviceservice.getAll(page, pageSize).subscribe(
+    this.serviceservice.getAllpag(page, pageSize).subscribe(
       (response) => {
         //
         this.services = response.data.$values;
@@ -82,7 +82,7 @@ export class HomeComponent {
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
-    this.packageService.getAll(page, pageSize).subscribe(
+    this.packageService.getAllpag(page, pageSize).subscribe(
       (response) => {
         //
         this.packages = response.data.$values;

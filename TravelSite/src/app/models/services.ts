@@ -24,9 +24,9 @@ export class Services {
     public endDate?:Date ,//choose
  // public bookingServices: BookingService[],
  //  public loveServices: LoveService[],
-   public categoryId?: number | undefined,
+   public categoryId?: number | null,
   // public category: Category,
-  public  serviceProviderId?: number | undefined,
+  public  serviceProviderId?: number | null,
  // public  serviceProvider: ServiceProvider,
    public packages: Package[]=[]
   ) {}

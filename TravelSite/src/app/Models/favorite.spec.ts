@@ -1,4 +1,4 @@
-import { Favorite } from './favorite';
+import { Favorite } from './wishlist';
 
 describe('Favorite', () => {
   it('should create an instance', () => {

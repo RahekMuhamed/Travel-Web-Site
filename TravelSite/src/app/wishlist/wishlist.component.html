@@ -1,15 +1,33 @@
-<!-- <div>
-  <h1>Favorites</h1>
-  <form (ngSubmit)="addFavorite()">
-    <input type="text" [(ngModel)]="newFavorite.packageId" name="packageId" placeholder="Package ID" required>
-    <button type="submit">Add to Favorites</button>
-  </form>
-  <ul>
-    <li *ngFor="let favorite of favorites">
-      {{ favorite.packageId }} - {{ favorite.date }}
-    </li>
-  </ul>
+<!-- <div *ngFor="let item of wishlist">
+  <div class="cardcontainer m-2">
+    <div class="photo">
+      <img src="../../assets/umrah1.jpeg">
+    </div>
+    <div class="content">
+      <p class="txt4">{{ item.name }}</p>
+      <p class="txt5">{{ item.price }}$</p>
+      <p class="txt2">{{ item.description }}</p>
+    </div>
+    <div class="footer">
+      <p>
+        <a class="waves-effect waves-light btn" [routerLink]="['/clientPackageDetails', item.id]">Read More</a>
+        <a id="heart" (click)="removeFromWishlist(item)">
+          <span class="like liked"><i class="fab fa-gratipay"></i>Unlike</span>
+        </a>
+      </p>
+      <button class="book-btn">book now</button>
+    </div>
+  </div>
 </div> -->
 
-hi
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="!loading && wishlistPackages.length === 0">No packages in your wishlist.</div>
+<div *ngIf="!loading && wishlistPackages.length > 0">
+  <ul>
+    <li *ngFor="let package of wishlistPackages">
+      <h3>{{ package.name }}</h3>
+      <p>{{ package.description }}</p>
+    </li>
+  </ul>
+</div>
 

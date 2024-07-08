@@ -1,18 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import * as signalR from '@microsoft/signalr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
+  private apiUrl = 'http://localhost:5000/api/Chats'; // Adjust the base URL as needed
   // router = inject(Router);
   // chatService = inject(ChatService);
   public messages$ = new BehaviorSubject<any>([]);
   public activeUsers$ = new BehaviorSubject<string[]>([]);
   public messages: any[] = [];
   public users: string[] = [];
-  constructor() {
+  constructor(private http: HttpClient) {
     // Start the `SignalR` connection when the service is instantiated
     this.start();
 
@@ -38,7 +40,7 @@ export class ChatService {
   // Create a `SignalR` HubConnection and configure it
   public connection: signalR.HubConnection = new signalR.HubConnectionBuilder()
     // Specify the URL of the `SignalR` hub
-    .withUrl('http://localhost:7062/chat')
+    .withUrl('http://localhost:7062/Chat')
 
     // Configure the logging level for `SignalR` (optional)
     .configureLogging(signalR.LogLevel.Information)
@@ -73,4 +75,68 @@ export class ChatService {
     // Stop the `SignalR` connection to leave the chat
     this.connection.stop();
   }
+
+  //###############################################
+  getChats(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/GetChats`);
+  }
+  getChatById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/GetChat/${id}`);
+  }
+   getChatByName(name: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/GetChatByName/${name}`);
+  }
+
+  addChat(chat: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/AddChat`, chat);
+  }
+
+  deleteChat(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/DeleteChat/${id}`);
+  }
+
+  sendMessageToClient(message: string, receiverId: string, senderId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/SendMessageToClient`, { message, receiverId, senderId });
+  }
+
+  sendMessageToCustomerService(message: string, receiverId: string, senderId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/SendMessageToCustomerService`, { message, receiverId, senderId });
+  }
+
+  sendMessageToAll(userId: string, message: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/SendMessageToAll`, { userId, message });
+  }
+
+  notifyUser(userId: string, message: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/NotifyUser`, { userId, message });
+  }
+
+  joinGroup1(conn: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/JoinGroup`, conn);
+  }
+
+  sendMessageToGroup(groupName: string, message: string, senderId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/SendMessageToGroup`, { groupName, message, senderId });
+  }
+
+  getAllMessages(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/GetAllMessages`);
+  }
+
+  deleteMessage(messageId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/DeleteMessage/${messageId}`);
+  }
+
+  markMessageAsRead(messageId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/MarkMessageAsRead/${messageId}`, null);
+  }
+
+  updateUserStatus(userId: number, status: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/UpdateUserStatus`, { userId, status });
+  }
+
+  notifyTyping(userId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/NotifyTyping/${userId}`);
+  }
+
 }

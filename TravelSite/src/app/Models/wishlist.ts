@@ -1,4 +1,4 @@
-export class Favorite {
+export class Wishlist {
 
      constructor(
     public id: number,

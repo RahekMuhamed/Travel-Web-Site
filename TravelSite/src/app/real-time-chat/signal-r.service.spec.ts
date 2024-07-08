@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FavoriteService } from './wishlist.service';
+import { SignalRService } from './signal-r.service';
 
-describe('FavoriteService', () => {
-  let service: FavoriteService;
+describe('SignalRService', () => {
+  let service: SignalRService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(FavoriteService);
+    service = TestBed.inject(SignalRService);
   });
 
   it('should be created', () => {

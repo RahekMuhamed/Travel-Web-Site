@@ -1,4 +1,3 @@
-
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -35,6 +34,7 @@ import { ClientPackageDetailsComponent } from './package-details/package-details
 import { JoinGroupComponent } from './real-time-chat/join-group/join-group.component';
 import { ChatComponent } from './real-time-chat/chat/chat.component';
 
+
 export const routes: Routes = [
   {
     path: 'home',
@@ -45,8 +45,10 @@ export const routes: Routes = [
   { path: 'join-group', component: JoinGroupComponent },
 
   // Route to the 'ChatComponent' when the path is 'chat'
-  { path: 'chat', component: ChatComponent },
-  
+  // { path: 'chat', component: ChatComponent },
+  //############################
+
+
   //chat with css tailwind
   {
     path: 'room',

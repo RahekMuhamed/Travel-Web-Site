@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from "../navbar/navbar.component";
-import { FooterComponent } from "../footer/footer.component";
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
 import { ServicesService } from '../services/services.service';
-import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterModule,
+} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { PackagesService } from '../services/packages.service';
@@ -12,10 +17,10 @@ import { SelectItem } from 'primeng/api';
 
 import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
-import { SpinnerComponent } from "../spinner/spinner.component";
+import { SpinnerComponent } from '../spinner/spinner.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
-import { FavoriteService } from '../services/favorite.service';
+import { WishlistService } from '../services/wishlist.service';
 
 @Component({
   selector: 'app-packages',
@@ -59,12 +64,13 @@ export class PackagesComponent implements OnInit {
   totalItems: number = 100;
   constructor(
     private packageService: PackagesService,
-    private favoriteService: FavoriteService,
+    private wishlistService: WishlistService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+     this.packageService.fetchWishlist().subscribe();
     this.packageService.loading$.subscribe(
       (isLoading) => (this.isLoading = isLoading)
     );
@@ -74,7 +80,7 @@ export class PackagesComponent implements OnInit {
       { label: 'Price Low to High', value: 'price' },
     ];
 
-    this.favoriteService.wishlist$.subscribe(
+    this.wishlistService.wishlist$.subscribe(
       (wishlist) => (this.wishlist = wishlist)
     );
   }
@@ -97,15 +103,15 @@ export class PackagesComponent implements OnInit {
   }
 
   toggleWishlist(pack: Package): void {
-    if (this.favoriteService.isInWishlist(pack)) {
-      this.favoriteService.removeFromWishlist(pack).subscribe();
+    if (this.wishlistService.isInWishlist(pack)) {
+      this.wishlistService.removeFromWishlist(pack).subscribe();
     } else {
-      this.favoriteService.addToWishlist(pack, this.clientId).subscribe();
+      this.wishlistService.addToWishlist(pack, this.clientId).subscribe();
     }
   }
 
   isInWishlist(pack: Package): boolean {
-    return this.favoriteService.isInWishlist(pack);
+    return this.wishlistService.isInWishlist(pack);
   }
 
   onSortChange(event: any) {

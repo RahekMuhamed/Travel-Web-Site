@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TravelServiceComponent } from '../travel-service/travel-service.component';
 import { Package } from '../models/packages';
 import { PackagesService } from '../services/packages.service';
+import { AuthServiceService } from '../services/auth-service.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -37,7 +38,10 @@ export class HomeComponent {
   totalItems: number = 100;
   constructor(
     private serviceservice: ServicesService,
-    private packageService: PackagesService
+    private packageService: PackagesService,
+    private router :Router,
+    private authService:AuthServiceService
+
   ) {}
   ngOnInit(): void {
 
@@ -78,6 +82,31 @@ export class HomeComponent {
       }
     );
   }
+  booking(packageId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/AddBookingPackage'], { queryParams: { packageId: packageId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+  sbooking(serviceId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/AddBookingService'], { queryParams: { serviceId: serviceId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+
   loadPackageData(
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
@@ -95,4 +124,5 @@ export class HomeComponent {
       }
     );
   }
+
 }

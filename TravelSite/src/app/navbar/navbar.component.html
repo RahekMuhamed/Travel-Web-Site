@@ -21,62 +21,43 @@
           <li class="nav-item">
           <a class="nav-link" routerLink="/about">About</a>
         </li>
-          <!-- <li class="nav-item">
-          <a class="nav-link" routerLink="/booking">booking</a>
-        </li> -->
-
-
-
       </ul>
-      <!-- <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success " type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
-      </form> -->
-<div>    
-      <button routerLink="/userBooking" class="btn cart-btn " type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
-</div>
 
-	<div class="dropdown-container">
-				<details class="dropdown right">
-					<summary class="avatar">
-						<img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp">
-					</summary>
-					<ul>
-						<!-- Optional: user details area w/ gray bg -->
-						<li>
-							<p>
-								<span class="block bold">nada</span>
-								<span class="block italic">ali</span>
-							</p>
-						</li>
-						<!-- Menu links -->
-						<li>
-							<a routerLink="/profile">
-								<span class="material-symbols-outlined">account</span> 
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="material-symbols-outlined">settings</span> 
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="material-symbols-outlined">help</span>
-							</a>
-						</li>
-						<!-- Optional divider -->
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<span class="material-symbols-outlined">logout</span> 
-							</a>
-						</li>
-					</ul>
-				</details>
-			</div>
-			<!-- END: Dropdown Container -->
+      <div>
+        <button routerLink="/userBooking" class="btn cart-btn" type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
+      </div>
 
+      <div class="dropdown-container">
+        <details class="dropdown right">
+          <summary class="avatar">
+            <img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp">
+          </summary>
+          <ul>
+            <li>
+              <div *ngIf="user">
+                <p class="fs-5"><span>Hi:</span> {{ user.fname }}</p>
+              </div>
+            </li>
+            <li>
+              <a routerLink="/profile" *ngIf="isAuthenticated(); else loginLink">
+                <span class="material-symbols-outlined">account</span>
+              </a>
+              <ng-template #loginLink>
+                <a routerLink="/login">
+                  <span class="material-symbols-outlined">login</span>
+                </a>
+              </ng-template>
+            </li>
+            
+            <li class="divider" *ngIf="isAuthenticated()"></li>
+            <li>
+              <a (click)="onLogoutClick()" *ngIf="isAuthenticated()">
+                <span class="material-symbols-outlined">logout</span>
+              </a>
+            </li>
+          </ul>
+        </details>
+      </div>
     </div>
   </div>
 </nav>

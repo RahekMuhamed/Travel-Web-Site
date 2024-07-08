@@ -4,100 +4,56 @@ import { CommonModule } from '@angular/common';
 import { ServicesService } from '../../../src/app/services/services.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SearchBarComponent } from '../../search-bar/search-bar.component';
+import { PaginationService } from '../../../src/app/services/pagination.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-services',
   standalone: true,
-  imports: [CommonModule],
+  imports: [SearchBarComponent,
+    CommonModule,FormsModule
+
+  ],
   templateUrl: './admin-services.component.html',
   styleUrl: './admin-services.component.css',
 })
 export class AdminServicesComponent implements OnInit {
-  service: Services[] | null = null;
+  service: Services[]=[];
+  filteredservices: Services[] = [];
+  paginatedServices: Services[] = [];
+  rowsPerPage: number = 10;
   currentPage: number = 1;
-  itemsPerPage: number = 10;
-  totalItems: number = 100;
-  packageId: number = 1;
+  pageSizes: number[] = [5, 10, 20, 50];
+
+
 
   constructor(
     private serviceservice: ServicesService,
-    private router: Router
+    private router: Router,
+    private paginationService: PaginationService
+
   ) {}
   
-  ngOnInit(): void {
-        this.loadData(this.currentPage, this.itemsPerPage);
+ngOnInit(): void {
+    this.serviceservice.getAll().subscribe({
+      next: (response: any) => {
+        this.service = response.$values;
+        this.filteredservices = response.$values;
 
-  }
-    loadData(
-    page: number = this.currentPage,
-    pageSize: number = this.itemsPerPage
-  ): void {
-    this.serviceservice.getAll(page, pageSize).subscribe(
-      (response) => {
-        //
-        this.service = response.data.$values;
-        this.totalItems = response.totalCount;
-        this.currentPage = response.pageNumber;
-        this.itemsPerPage = response.pageSize; // Assuming the response contains the total number of pages
       },
-      (error) => {
-        console.error('Error loading data:', error);
-      }
-    );
+    });
   }
-  onPageChange(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-      this.loadData(page, this.itemsPerPage);
-    }
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.totalItems / this.itemsPerPage);
-  }
-  goToPreviousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadData();
-    }
-  }
-
-  goToNextPage(): void {
-    if (this.currentPage < this.totalItems) {
-      this.currentPage++;
-      this.loadData();
-    }
-  }
-
-  goToPage(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    const page = target.value;
-    const pageNumber = parseInt(page, 10);
-    if (
-      pageNumber &&
-      pageNumber >= 1 &&
-      pageNumber <= this.totalItems &&
-      pageNumber !== this.currentPage
-    ) {
-      this.currentPage = pageNumber;
-      this.loadData();
-    }
-  }
-  get pageNumbers(): number[] {
-    return Array.from({ length: this.totalItems }, (_, index) => index + 1);
-  }
-  trackByFn(index: number, item: any): any {
-    return item.id; // Replace "id" with the unique identifier of your data item
-  }
+  
 
   viewDetails(serviceId: number): void {
-    this.router.navigate(['/Admin/serviceDetail', serviceId]);
+    this.router.navigate(['/profile/serviceDetail', serviceId]);
   }
   addService(): void {
-    this.router.navigate(['/Admin/AddService']);
+    this.router.navigate(['/profile/AddService']);
   }
   updateService(serviceId: number): void {
-    this.router.navigate(['/Admin/updateservice', serviceId]);
+    this.router.navigate(['/profile/updateservice', serviceId]);
   }
   removeService(serviceId: number): void {
     Swal.fire({
@@ -134,4 +90,27 @@ export class AdminServicesComponent implements OnInit {
       }
     });
   }
+  onSearch(query: string): void {
+    if (this.service) {
+      this.filteredservices = this.service.filter((ser) =>
+        ser.name && ser.name.toLowerCase().includes(query.toLowerCase())
+      );
+      this.currentPage = 1; // Reset to the first page on search
+      this.updatePaginatedServices();
+    }
+  }
+
+  onRowsPerPageChange(event: Event): void {
+    this.rowsPerPage = +(event.target as HTMLSelectElement).value;
+    this.updatePaginatedServices();
+  }
+
+  updatePaginatedServices(): void {
+    this.paginatedServices = this.paginationService.getPaginatedItems(
+      this.filteredservices,
+      this.currentPage,
+      this.rowsPerPage
+    );
+  }
+
 }

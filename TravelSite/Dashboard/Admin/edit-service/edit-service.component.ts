@@ -110,7 +110,7 @@ export class EditServiceComponent implements OnInit {
     this.servicesService.update(formData).subscribe(
       () => {
         alert('Service updated successfully!');
-        this.router.navigateByUrl('/Admin/servicelist');
+        this.router.navigateByUrl('/profile/servicelist');
       },
       (error) => {
         console.error('Service update failed:', error);

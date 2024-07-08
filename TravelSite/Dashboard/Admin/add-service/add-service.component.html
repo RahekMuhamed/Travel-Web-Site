@@ -34,7 +34,16 @@
               Price is required.
             </div>
           </div>
+          <div class="form-outline form-white mb-4">
+            <label class="form-label" for="servicesprovider">services provider</label>
+            <ng-multiselect-dropdown
+              [placeholder]="'Select services provider'"
+              [data]="servicesproviderList"
+              formControlName="servicesprovider"
+              [settings]="dropdownSettings">
+            </ng-multiselect-dropdown>
 
+          </div>
         </div>
         <div class="col-md-6">
           <div class="form-outline form-white mb-4">

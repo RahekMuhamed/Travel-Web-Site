@@ -11,12 +11,21 @@ import { FooterComponent } from './footer/footer.component';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-  imports: [
-    RouterOutlet,
-    NavbarComponent,
-    FooterComponent
-  ]
-   
+
+    imports: [
+
+        RouterOutlet,
+        LoginComponent,
+        SignUpComponent,
+        HomeComponent,
+        NavbarComponent,
+        FooterComponent,
+        RouterModule,
+        ForgetPasswordComponent,
+        ResetPasswordComponent,
+        HttpClientModule,
+        TravelServiceComponent,
+    ]
 })
 export class AppComponent {
   title = 'TravelSite';

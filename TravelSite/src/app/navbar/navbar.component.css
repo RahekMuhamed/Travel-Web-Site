@@ -4,7 +4,15 @@
 Dropdown Styles
 -----------------
 */
-
+.navbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  padding: 10px 20px;
+  z-index: 1000;
+}
 .dropdown-container {
   display: inline-block;
   padding: 10px;

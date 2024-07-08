@@ -1,22 +1,37 @@
 <div class="container">
-  <h2>Packages List</h2>
-  <table class="table table-bordered">
+  <div class="d-flex align-items-center justify-content-between">
+    <app-search-bar (searchQuery)="onSearch($event)"></app-search-bar>
+    <button class="btn btn-info" (click)="addPackage()">Add Package</button>
+
+  </div>
+
+
+  <div class="d-flex align-items-center justify-content-between mt-2">
+    <h2>Packages List</h2>
+    <div>
+      <label for="rowsPerPage">Rows per page: </label>
+      <select id="rowsPerPage" [(ngModel)]="rowsPerPage" (change)="onRowsPerPageChange($event)">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+  </div>
+  <br>
+    <table class="table table-bordered">
     <thead>
       <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>quantityAvailable</th>
+        <th>Quantity Available</th>
         <th>Details</th>
         <th>Update</th>
         <th>Remove</th>
       </tr>
     </thead>
     <tbody>
-      @for (item of packages; track $index) {
-      <tr >
-        <td>{{item.id}}</td>
-        <td>{{ item.name}}</td>
-        <td>{{ item.quantityAvailable}}</td>
+      <tr *ngFor="let item of filteredPackages">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantityAvailable }}</td>
         <td>
           <button class="btn btn-info" (click)="viewDetails(item.id)">Details</button>
         </td>
@@ -24,10 +39,10 @@
           <button class="btn btn-warning" (click)="updatePackage(item.id)">Update</button>
         </td>
         <td>
-           <button class="btn btn-danger" (click)="removePackage(item.id)">Remove</button> 
+          <button class="btn btn-danger" (click)="removePackage(item.id)">Remove</button>
         </td>
       </tr>
-    }
     </tbody>
   </table>
-  <button class="btn btn-info" (click)="addPackage()">Add</button>
+  
+</div>

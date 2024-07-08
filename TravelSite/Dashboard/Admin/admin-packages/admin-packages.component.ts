@@ -4,97 +4,52 @@ import { PackagesService } from '../../../src/app/services/packages.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SearchBarComponent } from '../../search-bar/search-bar.component';
+import { PaginationService } from '../../../src/app/services/pagination.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-packages',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, SearchBarComponent,FormsModule],
   templateUrl: './admin-packages.component.html',
-  styleUrl: './admin-packages.component.css',
+  styleUrls: ['./admin-packages.component.css']
 })
 export class AdminPackagesComponent implements OnInit {
-  packages: Package[] | null = null;
+  packages: Package[] = [];
+  filteredPackages: Package[] = [];
+  paginatedPackages: Package[] = [];
+  rowsPerPage: number = 10;
   currentPage: number = 1;
-  itemsPerPage: number = 10;
-  totalItems: number = 100;
-  packageId: number = 1;
+  pageSizes: number[] = [5, 10, 20, 50];
+
   constructor(
     private packageservice: PackagesService,
-    private router: Router
+    private router: Router,
+    private paginationService: PaginationService
   ) {}
+
   ngOnInit(): void {
-        this.loadData(this.currentPage, this.itemsPerPage);
-
-  }
-    loadData(
-    page: number = this.currentPage,
-    pageSize: number = this.itemsPerPage
-  ): void {
-    this.packageservice.getAll(page, pageSize).subscribe(
-      (response) => {
-        //
-        this.packages = response.data.$values;
-        this.totalItems = response.totalCount;
-        this.currentPage = response.pageNumber;
-        this.itemsPerPage = response.pageSize; // Assuming the response contains the total number of pages
+    this.packageservice.getAll().subscribe({
+      next: (response: any) => {
+        this.packages = response.$values;
+        this.filteredPackages = response.$values;
       },
-      (error) => {
-        console.error('Error loading data:', error);
+      error: (error) => {
+        console.error('Error fetching packages:', error);
       }
-    );
-  }
-  onPageChange(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-      this.loadData(page, this.itemsPerPage);
-    }
-  }
+    });
+      
 
-  get totalPages(): number {
-    return Math.ceil(this.totalItems / this.itemsPerPage);
   }
-  goToPreviousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadData();
-    }
-  }
-
-  goToNextPage(): void {
-    if (this.currentPage < this.totalItems) {
-      this.currentPage++;
-      this.loadData();
-    }
-  }
-
-  goToPage(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    const page = target.value;
-    const pageNumber = parseInt(page, 10);
-    if (
-      pageNumber &&
-      pageNumber >= 1 &&
-      pageNumber <= this.totalItems &&
-      pageNumber !== this.currentPage
-    ) {
-      this.currentPage = pageNumber;
-      this.loadData();
-    }
-  }
-  get pageNumbers(): number[] {
-    return Array.from({ length: this.totalItems }, (_, index) => index + 1);
-  }
-  trackByFn(index: number, item: any): any {
-    return item.id; // Replace "id" with the unique identifier of your data item
-  }
-
+   
 
   viewDetails(packageId: number): void {
-    this.router.navigate(['/Admin/packageDetail', packageId]);
+    this.router.navigate(['/profile/packageDetail', packageId]);
   }
 
   updatePackage(packageId: number): void {
-    this.router.navigate(['/Admin/updatePackage', packageId]);
+    this.router.navigate(['/profile/updatePackage', packageId]);
   }
 
   removePackage(packageId: number): void {
@@ -104,27 +59,18 @@ export class AdminPackagesComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it',
+      cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.isConfirmed) {
         this.packageservice.deletePackage(packageId).subscribe(
           () => {
-            if (this.packages) {
-              this.packages = this.packages.filter((p) => p.id !== packageId);
-              Swal.fire(
-                'Deleted!',
-                'Your package has been deleted.',
-                'success'
-              );
-            }
+            this.packages = this.packages.filter((p) => p.id !== packageId);
+            this.filteredPackages = this.filteredPackages.filter((p) => p.id !== packageId);
+            Swal.fire('Deleted!', 'Your package has been deleted.', 'success');
           },
           (error) => {
             console.error('Error removing package:', error);
-            Swal.fire(
-              'Error!',
-              'Failed to delete package. Please try again later.',
-              'error'
-            );
+            Swal.fire('Error!', 'Failed to delete package. Please try again later.', 'error');
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -134,6 +80,24 @@ export class AdminPackagesComponent implements OnInit {
   }
 
   addPackage(): void {
-    this.router.navigate(['/Admin/AddPackage']);
+    this.router.navigate(['/profile/AddPackage']);
   }
+  onRowsPerPageChange(event: Event): void {
+    this.rowsPerPage = +(event.target as HTMLSelectElement).value;
+    this.updatePaginatedPackages();
+  }
+
+  updatePaginatedPackages(): void {
+    this.paginatedPackages = this.paginationService.getPaginatedItems(this.filteredPackages, this.currentPage, this.rowsPerPage);
+  }
+
+  onSearch(query: string): void {
+    this.filteredPackages = this.packages.filter(pkg =>
+      pkg.name.toLowerCase().includes(query.toLowerCase())
+    );
+    this.currentPage = 1;
+    this.updatePaginatedPackages();
+  }
+
+
 }

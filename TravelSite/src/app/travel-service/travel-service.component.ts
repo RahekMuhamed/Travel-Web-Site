@@ -47,6 +47,19 @@ export class TravelServiceComponent implements OnInit {
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
+    this.servicesService.getAllpag(page, pageSize).subscribe(
+(response) => {
+        //
+        this.services = response.data.$values;
+        this.totalItems = response.totalCount;
+        this.currentPage = response.pageNumber;
+        this.itemsPerPage = response.pageSize; // Assuming the response contains the total number of pages
+      },
+      (error) => {
+        console.error('Error loading data:', error);
+      }
+    );
+  }
     this.servicesService.getAllHotels(page, pageSize).subscribe(
       (response) => {
         //

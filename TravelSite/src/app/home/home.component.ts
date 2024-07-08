@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TravelServiceComponent } from '../travel-service/travel-service.component';
 import { Package } from '../models/packages';
 import { PackagesService } from '../services/packages.service';
+import { AuthServiceService } from '../services/auth-service.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -37,13 +38,15 @@ export class HomeComponent {
   totalItems: number = 100;
   constructor(
     private serviceservice: ServicesService,
-    private packageService: PackagesService
-  ) {}
+    private packageService: PackagesService,
+    public router: Router,
+    public authService: AuthServiceService
+  ) { }
   ngOnInit(): void {
 
 
-     this.loadServiceData(this.currentPage, this.itemsPerPage);
-      this.loadPackageData(this.currentPage, this.itemsPerPage);
+    this.loadServiceData(this.currentPage, this.itemsPerPage);
+    this.loadPackageData(this.currentPage, this.itemsPerPage);
     // this.serviceservice.getAll().subscribe({
     //   next: (response: Services[]) => {
     //     this.services = response;
@@ -94,5 +97,31 @@ export class HomeComponent {
         console.error('Error loading data:', error);
       }
     );
+  }
+
+  bookservice(serviceId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/AddBookingService'], { queryParams: { serviceId: serviceId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+  bookPackage(packageId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/AddBookingPackage'], { queryParams: { packageId: packageId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+      this.router.navigate(['/login']);
+    }
+     
   }
 }

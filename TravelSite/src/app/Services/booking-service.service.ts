@@ -23,17 +23,17 @@ export class BookingServiceService {
     
     return this.http.post<BookingService>(this.BaseUrl ,bookingService);
   }
-  /*prepareAndAddBooking(clientId: string, serviceId: number, startDate: Date, endDate: Date, duration: number, numberOfPersons: number): Observable<BookingService> {
+  /*prepareAndAddBooking(clientId: string, serviceId: number,startDate: Date, endDate: Date, duration: number, numberOfPersons: number,price:number): Observable<BookingService> {
     const bookingDetails = {
       clientId,
       serviceId,
       startDate,
       endDate,
       duration,
-      numberOfPersons
+      numberOfPersons,
+      price
     };
-
-    return this.http.post<any>(`${this.BaseUrl}`, bookingDetails);
+    return this.http.post<any>(`${this.BaseUrl}/hotels`, bookingDetails);
   }*/
   getBookingService(id:number) :Observable<BookingService> // id:bookingpackage Id
   {

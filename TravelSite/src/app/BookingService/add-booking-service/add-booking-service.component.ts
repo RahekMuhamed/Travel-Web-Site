@@ -28,10 +28,11 @@ export class AddBookingServiceComponent implements OnInit {
   id: number = 0; // bookingServiceId
   numberOFAvailableRooms: number = 0;
   price: number = 0; // service price
-  endDate?: Date | null;
-  startDate?: Date | null;
+  endDate: Date  = new Date();
+  startDate: Date  = new Date;
   numberOFPersons: number = 2;
   totalServicePrice: number = 0; // Calculated service price
+  duration: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -98,7 +99,7 @@ export class AddBookingServiceComponent implements OnInit {
 }
   continue() {
     // Use totalServicePrice instead of price for payment
-    this.bookingServiceService.AddBookingService(this.clientId, this.serviceId).subscribe(
+    this.bookingServiceService.AddBookingService(this.clientId,this.serviceId).subscribe(
       bookingserviceobj => {
         this.bookingService = bookingserviceobj;
         if (bookingserviceobj.id !== undefined) {
@@ -132,3 +133,4 @@ export class AddBookingServiceComponent implements OnInit {
     this.router.navigateByUrl("/services");
   }
 }
+

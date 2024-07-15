@@ -18,7 +18,7 @@ export class PaymentService {
   {
      return this.http.post<Payment>(this.baseUrl, payment);
   }
-  
+
    // AddMultiplePayments(paymentRequest: { amount: number; currency: string; bookingPackageIds: number[] }): Observable<any> {
    // return this.http.post<any>(`${this.baseUrl}/multiple`, paymentRequest);
   //}

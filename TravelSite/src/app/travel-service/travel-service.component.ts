@@ -59,7 +59,7 @@ export class TravelServiceComponent implements OnInit {
         console.error('Error loading data:', error);
       }
     );
-  }
+
     this.servicesService.getAllHotels(page, pageSize).subscribe(
       (response) => {
         //
@@ -117,7 +117,7 @@ export class TravelServiceComponent implements OnInit {
   trackByFn(index: number, item: any): any {
     return item.id; // Replace "id" with the unique identifier of your data item
   }
-  
+
   booking(serviceId: number): void {
     if (this.authService.isAuthenticated()) {
       const clientId = this.authService.getUserIdFromToken();
@@ -130,8 +130,8 @@ export class TravelServiceComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
-      
 
+}
   // onPageSizeChange(event: Event): void {
   //   const target = event.target as HTMLSelectElement;
   //   const size = target.value;
@@ -182,4 +182,4 @@ export class TravelServiceComponent implements OnInit {
   // viewDetails(serviceId: number): void {
   //   this.router.navigate(['/serviceDetails', serviceId]);
   // }
-}
+

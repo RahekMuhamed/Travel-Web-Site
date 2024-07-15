@@ -83,11 +83,11 @@ export class AddBookingPackageComponent implements OnInit {
                   this.id = bookingPackagobj.id;
                   this.price = bookingPackagobj.price;
                  console.log(`Navigating to payment with id: ${this.id} and amount: ${this.price}`); // Log to verify
-                  this.router.navigate(['/payment'], { 
-                      queryParams: { 
-                        bookingPackageId:this.id, 
-                        amount: this.price 
-                      } 
+                  this.router.navigate(['/payment'], {
+                      queryParams: {
+                        bookingPackageId:this.id,
+                        amount: this.price
+                      }
                     });
                 } else {
                   console.error("Booking package ID is undefined.");
@@ -112,7 +112,7 @@ export class AddBookingPackageComponent implements OnInit {
         console.warn('Form is invalid');
       }
     }
-  
+
     complteBooking(): Promise<void> {
       return new Promise((resolve, reject) => {
         // Assuming complete booking logic
@@ -125,7 +125,7 @@ export class AddBookingPackageComponent implements OnInit {
         }, 1000); // Adjust the timeout as needed for actual async operation
       });
     }
-  
+
     updateClientData(): Promise<void> {
       return new Promise((resolve, reject) => {
         this.userService.clientData = {
@@ -133,7 +133,7 @@ export class AddBookingPackageComponent implements OnInit {
           Passport: this.updateForm.value.passportNumber,
           ResidanceCountry: this.updateForm.value.residenceCountry
         };
-  
+
         this.userService.updateUserData(this.clientId).subscribe(
           response => {
             console.log('User data updated successfully', response);
@@ -461,7 +461,7 @@ export class AddBookingPackageComponent implements OnInit {
     // Use your preferred method to display error
     alert(errorMessage);
   }
-  
+
   Back() {
     this.router.navigateByUrl("home");
   }

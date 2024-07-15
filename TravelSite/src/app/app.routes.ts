@@ -33,6 +33,13 @@ import { AddPackageComponent } from '../../Dashboard/Admin/add-package/add-packa
 import { ForgetPasswordComponent } from '../../Authenticaion/forget-password/forget-password.component';
 import { ChangePasswordComponent } from '../../Dashboard/change-password/change-password.component';
 import { UnauthorizedComponent } from '../../Authenticaion/unauthorized/unauthorized.component';
+import { GetAllBookingPackageComponent } from './BookingPackage/get-all-booking-package/get-all-booking-package.component';
+import { AddBookingServiceComponent } from './BookingService/add-booking-service/add-booking-service.component';
+import { BookingDetailsComponent } from './BookingPackage/booking-details/booking-details.component';
+import { AddBookingPackageComponent } from './BookingPackage/add-booking-package/add-booking-package.component';
+import { ServicePaymentComponent } from './service-payment/service-payment.component';
+import { PaymentComponent } from './payment/payment.component';
+import { EmailVerificationComponent } from '../../Authenticaion/email-verification/email-verification.component';
 
 
 export const routes: Routes = [
@@ -64,8 +71,9 @@ export const routes: Routes = [
   {path:"AddBookingService" ,component:AddBookingServiceComponent , title :"Booking Hotel"},
   { path:"GetAllPackageBooking", component: GetAllBookingPackageComponent, title: "All Booking" },
   {path :"BookingDetails/:id",component:BookingDetailsComponent ,title:"Booking Package"},
-  { path:"SignUp", component: SignUpComponent, title: "Register" },
+  { path:"signup", component: SignUpComponent, title: "Register" },
   {path:"login" ,component:LoginComponent,title:"login"},
+  { path: 'email-verification', component: EmailVerificationComponent },
       {
     path: '',
     redirectTo: 'home',
@@ -141,7 +149,7 @@ export const routes: Routes = [
         component: PackageDetailsComponent,
         canActivate: [AuthGuardService],
         data: { roles: ['admin'] },
-      },
+      },{
         path: 'AddPackage',
         component:AddPackageComponent,
         canActivate: [AuthGuardService],

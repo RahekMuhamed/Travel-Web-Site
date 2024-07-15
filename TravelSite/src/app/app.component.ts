@@ -5,6 +5,10 @@ import { ResetPasswordComponent } from '../../Authenticaion/reset-password/reset
 import { ContactUSComponent } from './contact-us/contact-us.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { LoginComponent } from '../../Authenticaion/login/login.component';
+import { SignUpComponent } from '../../Authenticaion/sign-up/sign-up.component';
+import { HomeComponent } from './home/home.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
     selector: 'app-root',
@@ -13,19 +17,27 @@ import { FooterComponent } from './footer/footer.component';
     styleUrl: './app.component.css',
 
     imports: [
+      // RouterOutlet,
+
+        // LoginComponent,
+        // SignUpComponent,
+        // HomeComponent,
+        // NavbarComponent,
+        // FooterComponent,
+        // RouterModule,
+        // ForgetPasswordComponent,
+        // ResetPasswordComponent,
+        // HttpClientModule,
+        // TravelServiceComponent,
 
         RouterOutlet,
         LoginComponent,
         SignUpComponent,
         HomeComponent,
         NavbarComponent,
-        FooterComponent,
-        RouterModule,
-        ForgetPasswordComponent,
-        ResetPasswordComponent,
         HttpClientModule,
-        TravelServiceComponent,
-    ]
+
+          ]
 })
 export class AppComponent {
   title = 'TravelSite';

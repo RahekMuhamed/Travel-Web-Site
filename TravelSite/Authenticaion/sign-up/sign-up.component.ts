@@ -74,24 +74,23 @@ export class SignUpComponent implements OnInit {
 
     return password === confirmPassword ? null : { passwordMismatch: true };
   }
-
   onSubmit() {
     if (this.submitting) {
       return;
     }
-
+  
     this.submitting = true;
     this.errorMessage = null;
     this.successMessage = null;
-
+  
     if (this.signUpForm.invalid) {
       this.markFormGroupTouched(this.signUpForm);
       this.submitting = false;
       return;
     }
-
+  
     const formValue = this.signUpForm.value;
-
+  
     const requestBody = {
       name: formValue.name,
       email: formValue.email,
@@ -99,17 +98,17 @@ export class SignUpComponent implements OnInit {
       confirmPassword: formValue.confirmPassword,
       role: 'client',
     };
-
+  
     this.authService.register(requestBody).subscribe(
       () => {
-        this.successMessage = 'Registration successful! You can now log in.';
+        this.successMessage = 'Registration successful! A verification code has been sent to your email.';
         setTimeout(() => {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/email-verification']);
         }, 2000);
       },
       (error) => {
         console.error('Error during sign up', error);
-
+  
         if (error.status === 400 && error.error) {
           if (typeof error.error === 'string') {
             this.errorMessage = error.error; // Display general error message
@@ -128,11 +127,70 @@ export class SignUpComponent implements OnInit {
         } else {
           this.errorMessage = 'Error during sign up. Please try again later.';
         }
-
+  
         this.submitting = false;
       }
     );
   }
+  
+  // onSubmit() {
+  //   if (this.submitting) {
+  //     return;
+  //   }
+
+  //   this.submitting = true;
+  //   this.errorMessage = null;
+  //   this.successMessage = null;
+
+  //   if (this.signUpForm.invalid) {
+  //     this.markFormGroupTouched(this.signUpForm);
+  //     this.submitting = false;
+  //     return;
+  //   }
+
+  //   const formValue = this.signUpForm.value;
+
+  //   const requestBody = {
+  //     name: formValue.name,
+  //     email: formValue.email,
+  //     password: formValue.password,
+  //     confirmPassword: formValue.confirmPassword,
+  //     role: 'client',
+  //   };
+
+  //   this.authService.register(requestBody).subscribe(
+  //     () => {
+  //       this.successMessage = 'Registration successful! You can now log in.';
+  //       setTimeout(() => {
+  //         this.router.navigate(['/login']);
+  //       }, 2000);
+  //     },
+  //     (error) => {
+  //       console.error('Error during sign up', error);
+
+  //       if (error.status === 400 && error.error) {
+  //         if (typeof error.error === 'string') {
+  //           this.errorMessage = error.error; // Display general error message
+  //         } else if (typeof error.error === 'object') {
+  //           if (error.error.email) {
+  //             this.errorMessage = error.error.email; // Display specific email error
+  //           } else if (error.error.name) {
+  //             this.errorMessage = error.error.name; // Display specific name error
+  //           } else {
+  //             this.errorMessage = 'Validation error. Please check your input.';
+  //             this.validationErrors = error.error; // Display detailed validation errors
+  //           }
+  //         } else {
+  //           this.errorMessage = 'Bad request. Please try again.';
+  //         }
+  //       } else {
+  //         this.errorMessage = 'Error during sign up. Please try again later.';
+  //       }
+
+  //       this.submitting = false;
+  //     }
+  //   );
+  // }
 
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach((control) => {

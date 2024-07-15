@@ -8,7 +8,7 @@ export class Package {
     public secondLocation?: number,
     public services?: string[],
     public description?: string,
-    public image?: string ,
+    public imageUrl?: string ,
     public quantityAvailable?: number,
     public price?: number,
     public startDate?: Date,
@@ -17,5 +17,5 @@ export class Package {
     public firstLocationDuration?: number,
     public secondLocationDuration?: number,
 ) {}
-  
+
 }

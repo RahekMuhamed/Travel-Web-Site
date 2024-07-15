@@ -2,7 +2,7 @@
   <article class="card">
     <div class="article-wrapper">
       <figure>
-        <img *ngIf="packageDetails.image" [src]="packageDetails.image" [alt]="packageDetails.name" class="card-img-top">
+        <img *ngIf="packageDetails.imageUrl" [src]="packageDetails.imageUrl" [alt]="packageDetails.name" class="card-img-top">
       </figure>
       <div class="article-body card-body">
         <h2 class="text-center">{{ packageDetails.name }}</h2>

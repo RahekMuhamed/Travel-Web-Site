@@ -1,0 +1,28 @@
+import { Component } from '@angular/core';
+import {  ElementRef, inject, input, output } from '@angular/core';
+import { ChatMessage } from '../../message.interface';
+import { CommonModule, NgClass } from '@angular/common';
+@Component({
+  selector: 'app-chat',
+  standalone: true,
+  imports: [NgClass, CommonModule],
+  templateUrl: './chat.component.html',
+  styleUrl: './chat.component.css',
+})
+export class ChatComponent {
+  messages = input.required<ChatMessage[]>();
+  myId = input.required<string>();
+  messageDeleted = output<string>();
+  elRef = inject(ElementRef);
+  get scrollContainer() {
+    return this.elRef.nativeElement;
+  }
+
+  deleteMessage(messageId: string) {
+    const resp = confirm('Do you want to delete this message?');
+    if (!resp) {
+      return;
+    }
+    this.messageDeleted.emit(messageId);
+  }
+}

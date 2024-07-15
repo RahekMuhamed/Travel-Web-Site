@@ -14,13 +14,13 @@ export class BookingServiceService {
 
   private BaseUrl: string = "http://localhost:5141/api/BookingService";
   service: Services | null = null;
- 
-   constructor( public http: HttpClient ) {  
+
+   constructor( public http: HttpClient ) {
   }
    AddBookingService(ClientId:string, serviceId:number):Observable<BookingService>
   {
     const bookingService = { ClientId, serviceId };
-    
+
     return this.http.post<BookingService>(this.BaseUrl ,bookingService);
   }
   /*prepareAndAddBooking(clientId: string, serviceId: number, startDate: Date, endDate: Date, duration: number, numberOfPersons: number): Observable<BookingService> {

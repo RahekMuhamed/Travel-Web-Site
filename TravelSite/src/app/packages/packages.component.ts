@@ -22,24 +22,55 @@ import { AuthServiceService } from '../services/auth-service.service';
     RouterLink,
     CommonModule,
     RouterModule,
+    SpinnerComponent,
+    FormsModule,
+    DataViewModule,
+    ButtonModule,
+    TagModule,
+
+    DropdownModule,
+    ReactiveFormsModule,
   ],
 })
 export class PackagesComponent implements OnInit {
-  packages: Package[] | null = null;
+  packages: Package[] = [];
+
+  wishlist: Package[] = [];
+  clientId: string = '882b687b-d254-4b1f-b168-17d9233605a9'; // Replace with actual client ID
+
+  sortOptions!: SelectItem[];
+
+  sortOrder!: number;
+
+  sortField!: string;
+
+  isLoading = false;
+
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 100;
   packageId: number = 1;
   constructor(
     private packageService: PackagesService,
-
+    private favoriteService: FavoriteService,
     private route: ActivatedRoute,
     private router: Router,
     private authService:AuthServiceService
   ) {}
 
   ngOnInit(): void {
+    this.packageService.loading$.subscribe(
+      (isLoading) => (this.isLoading = isLoading)
+    );
     this.loadData(this.currentPage, this.itemsPerPage);
+    this.sortOptions = [
+      { label: 'Price High to Low', value: '!price' },
+      { label: 'Price Low to High', value: 'price' },
+    ];
+
+    this.favoriteService.wishlist$.subscribe(
+      (wishlist) => (this.wishlist = wishlist)
+    );
   }
   loadData(
     page: number = this.currentPage,
@@ -57,6 +88,30 @@ export class PackagesComponent implements OnInit {
         console.error('Error loading data:', error);
       }
     );
+  }
+
+  toggleWishlist(pack: Package): void {
+    if (this.favoriteService.isInWishlist(pack)) {
+      this.favoriteService.removeFromWishlist(pack).subscribe();
+    } else {
+      this.favoriteService.addToWishlist(pack, this.clientId).subscribe();
+    }
+  }
+
+  isInWishlist(pack: Package): boolean {
+    return this.favoriteService.isInWishlist(pack);
+  }
+
+  onSortChange(event: any) {
+    let value = event.value;
+
+    if (value.indexOf('!') === 0) {
+      this.sortOrder = -1;
+      this.sortField = value.substring(1, value.length);
+    } else {
+      this.sortOrder = 1;
+      this.sortField = value;
+    }
   }
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
@@ -116,7 +171,7 @@ export class PackagesComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
-      
+
   // viewDetails(packageId: number): void {
   //   this.router.navigate(['/packageDetails', packageId]);
   // }

@@ -12,7 +12,7 @@ import { map } from 'rxjs';
 })
 export class PaymentService {
   currency: string = "USD";
-  baseUrl:string ="http://localhost:5141/api/Payment";
+  baseUrl:string ="http://localhost:7062/api/Payment";
   constructor(public http: HttpClient) { }
   AddPayment(payment:Payment):Observable<any>
   {

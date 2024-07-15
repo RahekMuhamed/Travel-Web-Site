@@ -1,30 +1,31 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light ">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">TRAVELLING</a>
+    <a class="navbar-brand" routerLink="/"  routerLinkActive="active-link">TRAVELLING</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
+          <a class="nav-link" routerLink="/home" routerLinkActive="active-link">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/packages">Packages</a>
+          <a class="nav-link" routerLink="/packages" routerLinkActive="active-link">Packages</a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link" routerLink="/services">Services</a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/services" routerLinkActive="active-link">Services</a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link" routerLink="/contact">Contact</a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active-link">Contact</a>
         </li>
-          <li class="nav-item">
-          <a class="nav-link" routerLink="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active-link">About</a>
         </li>
       </ul>
 
       <div>
-        <button routerLink="/userBooking" class="btn cart-btn" type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
+        <button routerLink="/wishlist" class="btn cart-btn" type="submit"><i class="fa-solid fa-heart"></i></button>
       </div>
 
       <div class="dropdown-container">
@@ -34,24 +35,29 @@
           </summary>
           <ul>
             <li>
-              <div *ngIf="user">
-                <p class="fs-5"><span>Hi:</span> {{ user.fname }}</p>
-              </div>
+              <p>
+                <span class="block bold">nada</span>
+                <span class="block italic">ali</span>
+              </p>
             </li>
             <li>
-              <a routerLink="/profile" *ngIf="isAuthenticated(); else loginLink">
+              <a routerLink="/profile">
                 <span class="material-symbols-outlined">account</span>
               </a>
-              <ng-template #loginLink>
-                <a routerLink="/login">
-                  <span class="material-symbols-outlined">login</span>
-                </a>
-              </ng-template>
             </li>
-            
-            <li class="divider" *ngIf="isAuthenticated()"></li>
             <li>
-              <a (click)="onLogoutClick()" *ngIf="isAuthenticated()">
+              <a href="#">
+                <span class="material-symbols-outlined">settings</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="material-symbols-outlined">help</span>
+              </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a href="#">
                 <span class="material-symbols-outlined">logout</span>
               </a>
             </li>
@@ -61,3 +67,11 @@
     </div>
   </div>
 </nav>
+
+<!-- Add this to your CSS -->
+<style>
+  .active-link {
+    color: rgb(152, 211, 243); /* Change this to whatever color you want */
+  }
+</style>
+

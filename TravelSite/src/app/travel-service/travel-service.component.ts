@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, NgModule, OnChanges, OnInit } from '@angular/core';
 import { ServicesService } from '../services/services.service';
 import { Services } from '../models/services';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -14,8 +14,15 @@ import { AuthServiceService } from '../services/auth-service.service';
   standalone: true,
   templateUrl: './travel-service.component.html',
   styleUrls: ['./travel-service.component.css', '../home/home.component.css'],
-  providers: [ServicesService,HttpClientModule],
+  providers: [ServicesService, HttpClientModule, CategoryService],
   imports: [
+    DataViewModule,
+    ButtonModule,
+    TagModule,
+    CommonModule,
+    DropdownModule,
+    ReactiveFormsModule,
+    DropdownModule,
     HttpClientModule,
     NavbarComponent,
     FooterComponent,
@@ -23,16 +30,21 @@ import { AuthServiceService } from '../services/auth-service.service';
     CommonModule,
     RouterModule,
     PaginationComponent,
+    SpinnerComponent,
+    FormsModule,
+    CategoryDropdownComponent,
+
   ],
 })
 export class TravelServiceComponent implements OnInit {
   services: any[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 5;
   totalItems: number = 100;
 
   constructor(
     private servicesService: ServicesService,
+    private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router,
      private authService:AuthServiceService
@@ -40,7 +52,15 @@ export class TravelServiceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.servicesService.loading$.subscribe(
+      (isLoading) => (this.isLoading = isLoading)
+    );
     this.loadData(this.currentPage, this.itemsPerPage);
+
+    this.sortOptions = [
+      { label: 'Price High to Low', value: '!price' },
+      { label: 'Price Low to High', value: 'price' },
+    ];
   }
 
   loadData(
@@ -73,6 +93,37 @@ export class TravelServiceComponent implements OnInit {
       }
     );
   }
+  onSortChange(event: any) {
+    let value = event.value;
+
+    if (value.indexOf('!') === 0) {
+      this.sortOrder = -1;
+      this.sortField = value.substring(1, value.length);
+    } else {
+      this.sortOrder = 1;
+      this.sortField = value;
+    }
+  }
+  ngOnChanges(): void {
+    if (this.categoryId) {
+      this.servicesService
+        .getServicesByCategory(this.categoryId)
+        .subscribe((data) => {
+          this.services = data;
+        });
+    }
+  }
+
+  onCategorySelected(categoryId: string): void {
+    this.selectedCategoryId = categoryId;
+  }
+
+  // loadCategories(): void {
+  //   this.categoryService.getCategories().subscribe((data) => {
+  //     this.categories = data;
+  //   });
+  // }
+  // }
 
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {

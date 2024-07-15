@@ -36,7 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
         HomeComponent,
         NavbarComponent,
         HttpClientModule,
-        
+
           ]
 })
 export class AppComponent {

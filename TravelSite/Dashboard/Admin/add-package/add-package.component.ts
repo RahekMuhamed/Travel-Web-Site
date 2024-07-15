@@ -63,7 +63,7 @@ export class AddPackageComponent implements OnInit {
       firstLocationDuration: ['', Validators.required],
       secondLocationDuration: [{ value: '', disabled: true }, Validators.required],
 
-  
+
     });
     this.fetchServices();
     this.dropdownSettings = {
@@ -94,7 +94,6 @@ export class AddPackageComponent implements OnInit {
   get formControls() {
     return this.packageForm.controls;
   }
-/*
   imageUpload(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -123,7 +122,7 @@ export class AddPackageComponent implements OnInit {
         reject(error);
       };
     });
-  }*/
+  }
 
   calculateSecondLocationDuration(): void {
     const duration = this.packageForm.get('duration')?.value;

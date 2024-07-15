@@ -19,7 +19,7 @@ export class PackagesService {
       .pipe(
         map((response) => response),
         catchError(this.handleError),
-        finalize(() => this.loadingSubject.next(false))
+        // finalize(() => this.loadingSubject.next(false))
       );
   }
 

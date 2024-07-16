@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, NgModule, OnChanges, OnInit } from '@angular/core';
 import { ServicesService } from '../services/services.service';
 import { Services } from '../models/services';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -9,14 +9,32 @@ import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/route
 import { PaginationComponent } from "../pagination/pagination.component";
 import { AuthServiceService } from '../services/auth-service.service';
 import Swal from 'sweetalert2';
+import { CategoryService } from '../services/category.service';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FavoriteService } from '../services/favorite.service';
+import { SelectItem } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
+import { CategoryDropdownComponent } from '../category-dropdown/category-dropdown.component';
 
 @Component({
   selector: 'app-travel-service',
   standalone: true,
   templateUrl: './travel-service.component.html',
   styleUrls: ['./travel-service.component.css', '../home/home.component.css'],
-  providers: [ServicesService, HttpClientModule],
+  providers: [ServicesService, HttpClientModule, CategoryService],
   imports: [
+    DataViewModule,
+    ButtonModule,
+    TagModule,
+    CommonModule,
+    DropdownModule,
+    ReactiveFormsModule,
+    DropdownModule,
     HttpClientModule,
     NavbarComponent,
     FooterComponent,
@@ -24,16 +42,27 @@ import Swal from 'sweetalert2';
     CommonModule,
     RouterModule,
     PaginationComponent,
+    SpinnerComponent,
+    FormsModule,
+    CategoryDropdownComponent,
+
   ],
 })
 export class TravelServiceComponent implements OnInit {
   services: any[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 5;
   totalItems: number = 100;
+  sortOrder: number | undefined;
+  sortField: any;
+  categoryId: any;
+  selectedCategoryId: string | undefined;
+  isLoading: any;
+  sortOptions: { label: string; value: string; }[] | undefined;
 
   constructor(
     private servicesService: ServicesService,
+    private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthServiceService
@@ -41,7 +70,15 @@ export class TravelServiceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.servicesService.loading$.subscribe(
+      (isLoading: any) => (this.isLoading = isLoading)
+    );
     this.loadData(this.currentPage, this.itemsPerPage);
+
+    this.sortOptions = [
+      { label: 'Price High to Low', value: '!price' },
+      { label: 'Price Low to High', value: 'price' },
+    ];
   }
 
   loadData(
@@ -61,8 +98,7 @@ export class TravelServiceComponent implements OnInit {
       }
     );
   
-
-    this.servicesService.getAllpag(page, pageSize).subscribe(
+    this.servicesService.getAllHotels(page, pageSize).subscribe(
       (response) => {
         //
         this.services = response.data.$values;
@@ -75,6 +111,38 @@ export class TravelServiceComponent implements OnInit {
       }
     );
   }
+  onSortChange(event: any) {
+    let value = event.value;
+
+    if (value.indexOf('!') === 0) {
+      this.sortOrder = -1;
+      this.sortField = value.substring(1, value.length);
+    } else {
+      this.sortOrder = 1;
+      this.sortField = value;
+    }
+  }
+  /*
+ngOnChanges(): void {
+    if (this.categoryId) {
+      this.servicesService
+        .getServicesByCategory(this.categoryId)
+        .subscribe((data: any[]) => {
+          this.services = data;
+        });
+    }
+  }*/
+
+  onCategorySelected(categoryId: string): void {
+    this.selectedCategoryId = categoryId;
+  }
+
+  // loadCategories(): void {
+  //   this.categoryService.getCategories().subscribe((data) => {
+  //     this.categories = data;
+  //   });
+  // }
+  // }
 
 
   onPageChange(page: number): void {
@@ -120,7 +188,7 @@ export class TravelServiceComponent implements OnInit {
   trackByFn(index: number, item: any): any {
     return item.id; // Replace "id" with the unique identifier of your data item
   }
-  
+
   booking(serviceId: number): void {
     if (this.authService.isAuthenticated()) {
       const clientId = this.authService.getUserIdFromToken();
@@ -145,8 +213,8 @@ export class TravelServiceComponent implements OnInit {
     });
     }
   }
-      
 
+}
   // onPageSizeChange(event: Event): void {
   //   const target = event.target as HTMLSelectElement;
   //   const size = target.value;
@@ -197,4 +265,4 @@ export class TravelServiceComponent implements OnInit {
   // viewDetails(serviceId: number): void {
   //   this.router.navigate(['/serviceDetails', serviceId]);
   // }
-}
+

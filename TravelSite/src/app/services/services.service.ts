@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable ,throwError} from 'rxjs';
+import { BehaviorSubject, Observable ,throwError} from 'rxjs';
 import { Services } from '../models/services';
 import { catchError, map } from 'rxjs/operators';
 import { AuthServiceService } from './auth-service.service';
@@ -8,6 +8,10 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root',
 })
 export class ServicesService {
+  loading$: any;
+  getServicesByCategory(categoryId: any) {
+    throw new Error('Method not implemented.');
+  }
   private baseUrl: string = 'http://localhost:5141/api/Service/';
 
   constructor(private http: HttpClient,private authService:AuthServiceService) {}

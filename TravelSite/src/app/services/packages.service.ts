@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, finalize, map, throwError } from 'rxjs';
 
 import { Package } from '../models/packages';
 import { AuthServiceService } from './auth-service.service';
@@ -10,6 +10,7 @@ import { AuthServiceService } from './auth-service.service';
 })
 export class PackagesService {
   private baseUrl: string = 'http://localhost:5141/api/Packages/';
+  loading$: any;
 
   constructor(private http: HttpClient,private authService:AuthServiceService) {}
 
@@ -18,7 +19,8 @@ export class PackagesService {
       .get<any>(`${this.baseUrl}?pageNumber=${page}&pageSize=${pageSize}`)
       .pipe(
         map((response) => response),
-        catchError(this.handleError)
+        catchError(this.handleError),
+        // finalize(() => this.loadingSubject.next(false))
       );
   }
 

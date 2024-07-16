@@ -9,7 +9,15 @@ import { PackagesService } from '../services/packages.service';
 import { Package } from '../models/packages';
 import { AuthServiceService } from '../services/auth-service.service';
 import Swal from 'sweetalert2';
-
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FavoriteService } from '../services/favorite.service';
+import { SelectItem } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
 @Component({
   selector: 'app-packages',
   standalone: true,
@@ -23,24 +31,54 @@ import Swal from 'sweetalert2';
     RouterLink,
     CommonModule,
     RouterModule,
+    SpinnerComponent,
+    FormsModule,
+    DataViewModule,
+    ButtonModule,
+    TagModule,
+    DropdownModule,
+    ReactiveFormsModule,
   ],
 })
 export class PackagesComponent implements OnInit {
-  packages: Package[] | null = null;
+  packages: Package[] = [];
+
+  wishlist: Package[] = [];
+  clientId: string = '882b687b-d254-4b1f-b168-17d9233605a9'; // Replace with actual client ID
+
+  sortOptions!: SelectItem[];
+
+  sortOrder!: number;
+
+  sortField!: string;
+
+  isLoading = false;
+
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 100;
   packageId: number = 1;
   constructor(
     private packageService: PackagesService,
-
+    private favoriteService: FavoriteService,
     private route: ActivatedRoute,
     private router: Router,
-    private authService:AuthServiceService
-  ) {}
+    private authService: AuthServiceService
+  ) { }
 
   ngOnInit(): void {
+    this.packageService.loading$.subscribe(
+      (isLoading: boolean) => (this.isLoading = isLoading)
+    );
     this.loadData(this.currentPage, this.itemsPerPage);
+    this.sortOptions = [
+      { label: 'Price High to Low', value: '!price' },
+      { label: 'Price Low to High', value: 'price' },
+    ];
+
+    this.favoriteService.wishlist$.subscribe(
+      (wishlist) => (this.wishlist = wishlist)
+    );
   }
   loadData(
     page: number = this.currentPage,
@@ -58,6 +96,30 @@ export class PackagesComponent implements OnInit {
         console.error('Error loading data:', error);
       }
     );
+  }
+
+  toggleWishlist(pack: Package): void {
+    if (this.favoriteService.isInWishlist(pack)) {
+      this.favoriteService.removeFromWishlist(pack).subscribe();
+    } else {
+      this.favoriteService.addToWishlist(pack, this.clientId).subscribe();
+    }
+  }
+
+  isInWishlist(pack: Package): boolean {
+    return this.favoriteService.isInWishlist(pack);
+  }
+
+  onSortChange(event: any) {
+    let value = event.value;
+
+    if (value.indexOf('!') === 0) {
+      this.sortOrder = -1;
+      this.sortField = value.substring(1, value.length);
+    } else {
+      this.sortOrder = 1;
+      this.sortField = value;
+    }
   }
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
@@ -104,7 +166,7 @@ export class PackagesComponent implements OnInit {
     return item.id; // Replace "id" with the unique identifier of your data item
   }
 
-   booking(packageId: number): void {
+  booking(packageId: number): void {
     if (this.authService.isAuthenticated()) {
       const clientId = this.authService.getUserIdFromToken();
       if (clientId) {
@@ -114,22 +176,23 @@ export class PackagesComponent implements OnInit {
       }
     } else {
       Swal.fire({
-      title: 'Not Logged In',
-      text: 'You need to log in to book a package. Do you want to log in now?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, log in',
-      cancelButtonText: 'No, cancel'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.router.navigate(['/login']);
-      }
-    });
+        title: 'Not Logged In',
+        text: 'You need to log in to book a package. Do you want to log in now?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log in',
+        cancelButtonText: 'No, cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
     }
      
   }
 }
-      
+
+
   // viewDetails(packageId: number): void {
   //   this.router.navigate(['/packageDetails', packageId]);
   // }

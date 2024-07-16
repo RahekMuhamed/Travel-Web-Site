@@ -109,6 +109,104 @@
         </div>
   </div>
   </div>
+<<<<<<< HEAD
+=======
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div> -->
+<!-- end of slider -->
+
+<!-- service cards -->
+
+<div class="container">
+  <h1 class="headline">Services</h1>
+  <!-- <div class="row"> -->
+  <div
+    class="cardcontainer m-2"
+    *ngFor="let item of services | slice : -3; let i = index"
+  >
+    <!-- @for (item of services; track $index) { -->
+
+    <div class="photo">
+      <img src="{{ item.image }}" />
+      <!-- <img src="{{ item.image}}"> -->
+    </div>
+
+    <div class="content">
+      <p class="txt4">{{ item.name }}</p>
+      <!-- <p class="date">{{ item.startDate}}</p> -->
+
+      <p class="txt5">{{ item.price }}$</p>
+      <p class="txt2">{{ item.description }}</p>
+    </div>
+
+    <div class="footer">
+      <p>
+        <!-- <a class="waves-effect waves-light btn" href="/srviceDetails">Read More</a> -->
+        <a
+          class="waves-effect waves-light btn"
+          [routerLink]="['/serviceDetails', item.id]"
+          >Read More</a
+        >
+        <a id="heart"
+          ><span class="like"><i class="fab fa-gratipay"></i>Like</span></a
+        >
+      </p>
+      <button class="book-btn">book now</button>
+      <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
+    </div>
+
+    <!-- }  -->
+  </div>
+</div>
+
+<!-- end of service cards -->
+
+<!-- </div> -->
+
+<!-- hhhhhhhhhhh -->
+
+<div class="container">
+  <h1 class="headline">Packages</h1>
+  <!-- <div class="row"> -->
+
+  <div
+    class="cardcontainer m-2"
+    *ngFor="let item of packages | slice : -3; let i = index"
+  >
+    <div class="photo">
+      <img src="{{ item.imageUrl }}" />
+    </div>
+
+    <div class="content">
+      <p class="txt4">{{ item.name }}</p>
+      <!-- <p class="date">{{ item.startDate}}</p> -->
+
+      <p class="txt5">{{ item.price }}$</p>
+      <p class="txt2">{{ item.description }}</p>
+    </div>
+
+    <div class="footer">
+      <p>
+        <a
+          class="waves-effect waves-light btn"
+          [routerLink]="['/packageDetails', item.id]"
+          >Read More</a
+        >
+        <a id="heart"
+          ><span class="like"><i class="fab fa-gratipay"></i>Like</span></a
+        >
+      </p>
+      <button class="book-btn">book now</button>
+      <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
+    </div>
+>>>>>>> 9c9cbe36f31eccb7c477b8f2c4c4cda2697da6a9
   </div>
 
 <!--        pACKAGES -->
@@ -117,9 +215,9 @@
           <div class="row">
             <div *ngFor="let item of packages | slice : -4; let i = index" class="col-12 col-md-4 col-lg-3 mb-4">
               <div class="card">
-                <img [src]="'../../../assets/'+ item?.image" alt="Dynamic Image" />
+                <img [src]="'../../../assets/'+ item?.imageUrl" alt="Dynamic Image" />
                 <div class="card-body">
-                  <h5 class="card-title">Voco Makkah is an IGH Hotel</h5>
+                  <h5 class="card-title">{{item.name}}</h5>
                   <p class="card-text">{{item.description}}</p>
                   <p class="card-text">{{item.price}}$</p>
                   <div class="footer">

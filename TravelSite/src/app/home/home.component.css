@@ -173,6 +173,7 @@
  border-radius: 10px;
  text-align: center;
  background-color: rgba(255, 255, 255, .75);
+ height: 460px;
 transition: all 1s;}
 .card-title
 {

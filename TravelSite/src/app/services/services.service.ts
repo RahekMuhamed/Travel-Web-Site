@@ -8,7 +8,9 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root',
 })
 export class ServicesService {
-  loading$: any;
+  //loading$: any;
+    loading$ = new BehaviorSubject<boolean>(false); // Initialized as a BehaviorSubject
+
   getServicesByCategory(categoryId: any) {
     throw new Error('Method not implemented.');
   }

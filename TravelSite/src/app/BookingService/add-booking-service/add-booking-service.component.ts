@@ -11,11 +11,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
 import { CommonModule } from '@angular/common';
+import { NavbarComponent } from "../../navbar/navbar.component";
+import { FooterComponent } from "../../footer/footer.component";
 
 @Component({
   selector: 'app-add-booking-service',
   standalone: true,
-  imports: [CommonModule, FormsModule, CalendarModule],
+  imports: [CommonModule, FormsModule, CalendarModule, NavbarComponent, FooterComponent],
   templateUrl: './add-booking-service.component.html',
   styleUrls: ['./add-booking-service.component.css']
 })

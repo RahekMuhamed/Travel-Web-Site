@@ -42,7 +42,7 @@ import { CategoryDropdownComponent } from '../category-dropdown/category-dropdow
     CommonModule,
     RouterModule,
     PaginationComponent,
-    SpinnerComponent,
+   SpinnerComponent,
     FormsModule,
     CategoryDropdownComponent,
 
@@ -97,7 +97,7 @@ export class TravelServiceComponent implements OnInit {
         console.error('Error loading data:', error);
       }
     );
-  
+ 
     this.servicesService.getAllHotels(page, pageSize).subscribe(
       (response) => {
         //

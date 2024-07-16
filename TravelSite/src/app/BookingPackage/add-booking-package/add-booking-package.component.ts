@@ -11,11 +11,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserServiceService } from '../../services/user-service.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { FooterComponent } from "../../footer/footer.component";
+import { NavbarComponent } from "../../navbar/navbar.component";
 
 @Component({
   selector: 'app-add-booking-package',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, FooterComponent, NavbarComponent],
   templateUrl: './add-booking-package.component.html',
   styleUrls: ['./add-booking-package.component.css']
 })

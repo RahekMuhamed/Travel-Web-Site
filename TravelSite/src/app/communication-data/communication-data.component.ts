@@ -9,12 +9,13 @@ import { UserServiceService } from '../services/user-service.service';
 import { PackagesService } from '../services/packages.service';
 import { Package } from '../models/packages';
 import Swal from 'sweetalert2';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 
 @Component({
   selector: 'app-communication-data',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, NavbarComponent],
   templateUrl: './communication-data.component.html',
   styleUrl: './communication-data.component.css'
 })

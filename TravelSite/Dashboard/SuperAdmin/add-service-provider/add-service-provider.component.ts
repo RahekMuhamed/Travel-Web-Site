@@ -16,7 +16,10 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @Component({
   selector: 'app-add-service-provider',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule,NgMultiSelectDropDownModule],
+  imports: [ReactiveFormsModule,
+     CommonModule,
+      FormsModule,
+      ],
   templateUrl: './add-service-provider.component.html',
   styleUrl: './add-service-provider.component.css',
 })

@@ -17,14 +17,15 @@
 }
 
 .paybtn button {
-    padding: 10px 120px;
-    border: none;
-    background-color: #ffc436;
+    box-sizing: border-box;
+    padding: 8px 110px;
     border-radius: 5px;
     font-weight: 900px;
     font-size: 40px;
     font-family: 'Futura PT', 'Arial', sans-serif;
+    border: solid 1px #003087;
     /* Use a web-safe font if the exact one isn't available */
+    transition: all 2s;
 
 }
 
@@ -34,4 +35,13 @@
 
 .paybtn button .ldd {
     color: #009cde;
+}
+
+.paybtn button:hover {
+    background-color: #1453ca;
+}
+
+.paybtn button:hover .fdd,
+.paybtn button:hover .ldd {
+    color: white;
 }

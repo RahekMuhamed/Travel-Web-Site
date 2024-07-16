@@ -5,26 +5,17 @@ import { ResetPasswordComponent } from '../../Authenticaion/reset-password/reset
 import { ContactUSComponent } from './contact-us/contact-us.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-
     imports: [
-
         RouterOutlet,
-        LoginComponent,
-        SignUpComponent,
-        HomeComponent,
         NavbarComponent,
         FooterComponent,
-        RouterModule,
-        ForgetPasswordComponent,
-        ResetPasswordComponent,
-        HttpClientModule,
-        TravelServiceComponent,
     ]
 })
 export class AppComponent {

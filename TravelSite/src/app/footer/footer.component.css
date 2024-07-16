@@ -9,7 +9,7 @@ body, html {
   width: 100%;
 }
 
-.wrapper {
+.Wrapper {
   /* padding: 0 ;
   position: fixed;
   bottom: 0;
@@ -22,6 +22,9 @@ body, html {
   background-color: #18638f;
   color: #fff;
   padding: 10px 20px;
+  position: sticky;
+  bottom: 0;
+  
 }
 
 .container {

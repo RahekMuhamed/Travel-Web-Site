@@ -33,19 +33,8 @@ export class PaymentComponent implements OnInit {
       }
     });
   }
-  /*pay() {
-    if (this.multipleBookingIds.length > 0) {
-      if (this.multipleBookingIds.length === 1) {
-        this.processSingleBookingPayment();
-      }
-      else {
-        this.processMultipleBookingsPayment();
-      }
-    }
-    else {
-      alert("there is no objectsb")
-    }
-  }*/
+
+  // i add only with processSingleBookingPayment
   pay() {
     if (this.multipleBookingIds.length > 0) {
       this.processMultipleBookingsPayment();

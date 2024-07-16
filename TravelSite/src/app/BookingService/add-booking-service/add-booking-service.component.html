@@ -39,23 +39,20 @@
                         <div class="d-flex">
                             <div class="me-3">
                                 <div class="ezy__epcheckout4-image">
-                                    <a href="#!">
-                                        <!--<img [src]="service?.image ? '../../../assets/' + service?.image : 'path/to/default-image.jpg'"
-                                            alt="Service Image" class="img-fluid" />-->
-                                    </a>
+                                       <img [src]="'../../../assets/'+ service?.image"/>
                                 </div>
                             </div>
                             <div>
                                 <div class="row">
                                     <div class="col-12 col-xl-6 col-xxl-7">
                                         <div class="ezy__epcheckout4-heading mb-1">
-                                            <a href="#!">{{service?.name}}</a>
+                                            <p class="name">{{service?.name}}</p>
                                         </div>
                                         <p class="ezy__epcheckout4-content mb-2">
-                                            <span class="me-3"><b>Start Date</b>: {{startDate | date:'yyyy-MM-dd
-                                                HH:mm'}}</span>
+                                            <span class="me-3"><b>Start Date</b>: {{startDate | date:'yyyy-MM-dd'
+                                               }}</span>
                                             <span class="me-3"><b>End Date</b>: {{endDate | date:'yyyy-MM-dd
-                                                HH:mm'}}</span>
+                                               '}}</span>
                                             <span class="me-3"><b>Duration</b>: {{calculateNights()}} Nights</span>
                                         </p>
                                     </div>

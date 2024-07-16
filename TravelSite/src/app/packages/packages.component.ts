@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PackagesService } from '../services/packages.service';
 import { Package } from '../models/packages';
 import { AuthServiceService } from '../services/auth-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-packages',
@@ -103,21 +104,33 @@ export class PackagesComponent implements OnInit {
     return item.id; // Replace "id" with the unique identifier of your data item
   }
 
-
-  booking(packageId: number): void {
+   booking(packageId: number): void {
     if (this.authService.isAuthenticated()) {
       const clientId = this.authService.getUserIdFromToken();
       if (clientId) {
-        this.router.navigate(['/AddBookingPackage'], { queryParams: { packageId: packageId, clientId: clientId } });
+        this.router.navigate(['/communicationData'], { queryParams: { packageId: packageId, clientId: clientId } });
       } else {
         console.error('Client ID not found.');
       }
     } else {
-      this.router.navigate(['/login']);
+      Swal.fire({
+      title: 'Not Logged In',
+      text: 'You need to log in to book a package. Do you want to log in now?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, log in',
+      cancelButtonText: 'No, cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/login']);
+      }
+    });
     }
+     
   }
+}
       
   // viewDetails(packageId: number): void {
   //   this.router.navigate(['/packageDetails', packageId]);
   // }
-}
+

@@ -12,7 +12,8 @@ import { AuthServiceService } from './auth-service.service';
 export class UserServiceService {
 
   private apiUrl = 'http://localhost:5141/api/User';
-   public clientData = {Passport:"",PhoneNumber:'',ResidanceCountry:''}
+  public id: string = '';//user id
+   public clientData = {email:"",passportNumber:"",phoneNumber:'',residanceCountry:''}// for communication form in booking package
 
   constructor(private http: HttpClient, private authService: AuthServiceService) {}
   private getHttpOptions() {
@@ -26,6 +27,7 @@ export class UserServiceService {
         'Expires': '0'
       })
     };
+      
   }
 
 
@@ -58,10 +60,10 @@ export class UserServiceService {
         catchError(this.handleError)
       );
   }
-  //update user Data
-  updateUserData(id:string,):Observable<any>// client id
+  //update user Data(for communication Form in package Booking)
+  updateUserData():Observable<any>// client id
   {
-    return this.http.put<any>(`${this.apiUrl}/completeInfo/${id}`, this.clientData, this.getHttpOptions()).pipe(
+    return this.http.put<any>(`${this.apiUrl}/completeInfo`, this.clientData, this.getHttpOptions()).pipe(
       map(response => response)     
     );
   }

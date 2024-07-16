@@ -1,132 +1,19 @@
-
-<section class="ezy__epcheckout4 light" id="ezy__epcheckout4">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card ezy__epcheckout4-card mb-3">
-                    <div class="card-body px-md-4">
-                        <h5 class="fs-6 fw-bold mb-0">Booking {{Package?.name}}</h5>
-                    </div>
-                </div>
-                <div class="card ezy__epcheckout4-card mb-3">
-                    <div class="card-body px-md-4">
-                        <div class="row">
-                        </div>
-                        <div class="d-flex">
-                            <div class="me-3">
-                                <div class="ezy__epcheckout4-image">
-                                    <a href="#!">
-                                     
-                                            <img [src]="'../../../assets/kaaba-icon-vector-39566108.webp '" alt="Dynamic Image" />
-                                    </a>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="row">
-                                    <div class="col-12 col-xl-6 col-xxl-7">
-                                        <div class="ezy__epcheckout4-heading mb-1">
-                                          {{Package?.description}}
-                                        </div>
-                                        <p class="ezy__epcheckout4-content mb-2">
-                                            <span class="me-3 edit"><b>Start Date</b>: {{ Package?.startDate | date: 'yyyy-MM-dd' }}</span>
-                                        </p>
-                                        <p class="ezy__epcheckout4-content mb-2">
-                                            <span class="me-3 edit"><b>Duration</b>: {{Package?.duration}}</span>
-                                        </p>
-                                        <p class="ezy__epcheckout4-content mb-2">
-                                            <span class="me-3 edit "><b>Price :</b>{{Package?.price}}$</span>
-                                        </p>       
-                                        <div class="mt-3 text-center">
-                                            <button class="btn btn-primary" id="back" (click)="Back()">
-                                                Back
-                                            </button>
-                                            <button
-                                                class="btn btn-info "  id="contine" (click)="continue()">
-                                                Continue
-                                            </button>   
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-                <div class="all">
-                    <div id="fill"></div>
-                    <div class="col-lg-4">
-                        <div class="card ezy__epcheckout4-card" id="bookingFormdiv">
-                            <div class="card-body p-md-4">
-                                <h5 class="fs-5 fw-bold mb-3">Communication Data</h5>
-                                <form [formGroup]="updateForm"  (ngSubmit)="booking()">
-                                                <div class="form-floating mb-3" id="bookingForm">
-                                                    <input type="text" class="form-control" id="floatingInput" formControlName="phoneNumber">
-                                                    <label for="floatingInput">Phone Number</label>
-                                                    <div
-                                                        *ngIf="updateForm.controls['phoneNumber'].invalid && (updateForm.controls['phoneNumber'].dirty || updateForm.controls['phoneNumber'].touched)">
-                                                        <div *ngIf="updateForm.controls['phoneNumber'].errors?.['required']">Phone number is required.
-                                                        </div>
-                                                        <div *ngIf="updateForm.controls['phoneNumber'].errors?.['pattern']">Invalid phone number format.
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" id="floatingPassport" formControlName="passportNumber">
-                                                    <label for="floatingPassport">Passport Number</label>
-                                                    <div
-                                                        *ngIf="updateForm.controls['passportNumber'].invalid && (updateForm.controls['passportNumber'].dirty || updateForm.controls['passportNumber'].touched)">
-                                                        <div *ngIf="updateForm.controls['passportNumber'].errors?.['required']">Passport number is
-                                                            required.</div>
-                                                    </div>
-                                                </div>
-                                
-                                                <div class="form-floating mt-3">
-                                                    <input type="text" class="form-control" id="floatingResidence" formControlName="residenceCountry">
-                                                    <label for="floatingResidence">Residence Country</label>
-                                                    <div
-                                                        *ngIf="updateForm.controls['residenceCountry'].invalid && (updateForm.controls['residenceCountry'].dirty || updateForm.controls['residenceCountry'].touched)">
-                                                        <div *ngIf="updateForm.controls['residenceCountry'].errors?.['required']">Residence country is
-                                                            required.</div>
-                                                    </div>
-                                                </div>
-                                
-                                                <button class="btn ezy__epcheckout4-btn w-100 mt-4 fs-6" type="submit"
-                                                    [disabled]="updateForm.invalid">Proceed to Pay</button>
-                                            </form>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </section>
-                                <!-- add-booking-package.component.html -->
-                <!--
-                                <form [formGroup]="updateForm" (ngSubmit)="booking()">
-                                    <label for="phoneNumber">Phone Number</label>
-                                    <input id="phoneNumber" formControlName="phoneNumber" type="text">
-                                    <div *ngIf="updateForm.get('phoneNumber')?.invalid && updateForm.get('phoneNumber')?.touched">
-                                        Please enter a valid phone number.
-                                    </div>
-                
-                                    <label for="passportNumber">Passport Number</label>
-                                    <input id="passportNumber" formControlName="passportNumber" type="text">
-                                    <div *ngIf="updateForm.get('passportNumber')?.invalid && updateForm.get('passportNumber')?.touched">
-                                        Passport number is required.
-                                    </div>
-                
-                                    <label for="residenceCountry">Residence Country</label>
-                                    <input id="residenceCountry" formControlName="residenceCountry" type="text">
-                                    <div
-                                        *ngIf="updateForm.get('residenceCountry')?.invalid && updateForm.get('residenceCountry')?.touched">
-                                        Residence country is required.
-                                    </div>
-                
-                                    <button type="submit" [disabled]="isSubmitting || !updateForm.valid">Submit</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            -->
+<div class="wrapper">
+<div class="card mb-3" style="max-width: 700px;">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+          <img [src]="'../../../assets/'+ Package?.image" alt="Dynamic Image" />
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{Package?.name}}</h5>
+                <p class="card-text"><b>Description : </b>{{Package?.description}}</p>
+                 <p class="card-text"><b>Duration : </b>{{Package?.duration}} Days</p>
+                   <p class="card-text p"><b>Price : </b> <span class="price">{{Package?.price}}$</span></p>
+                     <p class="btns"><button (click)="Back()" class="btn btn-primary">Back</button></p>
+                     <p class="btns"><button (click)="booking()" class="btn btn-info ">Confirm Booking</button></p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

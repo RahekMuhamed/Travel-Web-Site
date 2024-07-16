@@ -9,10 +9,10 @@ import { CommonModule } from '@angular/common';
 import { Services } from '../models/services';
 import { ServicesService } from '../services/services.service';
 import { HttpClientModule } from '@angular/common/http';
-import { TravelServiceComponent } from '../travel-service/travel-service.component';
 import { Package } from '../models/packages';
 import { PackagesService } from '../services/packages.service';
 import { AuthServiceService } from '../services/auth-service.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -24,7 +24,6 @@ import { AuthServiceService } from '../services/auth-service.service';
     CommonModule,
     RouterModule,
     HttpClientModule,
-    TravelServiceComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -108,19 +107,43 @@ export class HomeComponent {
         console.error('Client ID not found.');
       }
     } else {
-      this.router.navigate(['/login']);
+        Swal.fire({
+        title: 'Not Logged In',
+        text: 'You need to log in to book a Service. Do you want to log in now?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log in',
+        cancelButtonText: 'No, cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
     }
-  }
+     
+}
+  
   bookPackage(packageId: number): void {
     if (this.authService.isAuthenticated()) {
       const clientId = this.authService.getUserIdFromToken();
       if (clientId) {
-        this.router.navigate(['/AddBookingPackage'], { queryParams: { packageId: packageId, clientId: clientId } });
+        this.router.navigate(['/communicationData'], { queryParams: { packageId: packageId, clientId: clientId } });
       } else {
         console.error('Client ID not found.');
       }
     } else {
-      this.router.navigate(['/login']);
+      Swal.fire({
+      title: 'Not Logged In',
+      text: 'You need to log in to book a package. Do you want to log in now?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, log in',
+      cancelButtonText: 'No, cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/login']);
+      }
+    });
     }
      
   }

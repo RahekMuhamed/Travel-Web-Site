@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { BookingService } from '../../models/booking-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -79,27 +78,39 @@ export class AddBookingServiceComponent implements OnInit {
     this.calculateTotalServicePrice();
   }
 
- calculateNights(): number {
+  calculateNights(): number {
     if (this.startDate && this.endDate) {
-        const start = new Date(this.startDate).setHours(0, 0, 0, 0);
-        const end = new Date(this.endDate).setHours(0, 0, 0, 0);
-        const days = Math.ceil((end - start) / (1000 * 3600 * 24));
-        return Math.max(0, days); // For hotel bookings, number of nights equals days
+      const start = new Date(this.startDate).setHours(0, 0, 0, 0);
+      const end = new Date(this.endDate).setHours(0, 0, 0, 0);
+      const days = Math.ceil((end - start) / (1000 * 3600 * 24));
+      return Math.max(0, days); // For hotel bookings, number of nights equals days
     }
     return 0;
-}
+  }
+
   calculateTotalServicePrice() {
     const nights = this.calculateNights();
     if (nights > 0) {
-        let extraRooms = Math.max(0, Math.ceil((this.numberOFPersons - 2) / 2)); // Calculate extra rooms needed
-        this.totalServicePrice = (this.price * nights) + (extraRooms * this.price * nights); // Calculate total price for all rooms
+      let extraRooms = Math.max(0, Math.ceil((this.numberOFPersons - 2) / 2)); // Calculate extra rooms needed
+      this.totalServicePrice = (this.price * nights) + (extraRooms * this.price * nights); // Calculate total price for all rooms
     } else {
-        this.totalServicePrice = 0; // If no nights, the total price is 0
+      this.totalServicePrice = 0; // If no nights, the total price is 0
     }
-}
+  }
+
   continue() {
+    if (this.calculateNights() <= 0) {
+      Swal.fire({
+        title: 'Invalid End Date',
+        text: 'Please select a valid end date that increases the price.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
     // Use totalServicePrice instead of price for payment
-    this.bookingServiceService.AddBookingService(this.clientId,this.serviceId).subscribe(
+    this.bookingServiceService.AddBookingService(this.clientId, this.serviceId).subscribe(
       bookingserviceobj => {
         this.bookingService = bookingserviceobj;
         if (bookingserviceobj.id !== undefined) {
@@ -116,9 +127,9 @@ export class AddBookingServiceComponent implements OnInit {
           cancelButtonText: 'Back'
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['/ServicePayment'], { queryParams: {bookingServiceId: this.id, amount: this.totalServicePrice } });
+            this.router.navigate(['/ServicePayment'], { queryParams: { bookingServiceId: this.id, amount: this.totalServicePrice } });
           } else {
-            this.router.navigate(['/services']); // this will be aftrt adding before payment
+            this.router.navigate(['/services']); // this will be after adding before payment
           }
         });
       },
@@ -128,9 +139,8 @@ export class AddBookingServiceComponent implements OnInit {
       }
     );
   }
-  // this before add booking
+
   goBack() {
     this.router.navigateByUrl("/services");
   }
 }
-

@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class PackageDetailsComponent implements OnInit {
   packageId: number | undefined;
-  packageDetails: Package = new Package(0, '', false, '', '', 0, 0);
+  packageDetails: Package = new Package(0, '',0, false,);
 
   constructor(
     private route: ActivatedRoute,
@@ -43,10 +43,10 @@ export class PackageDetailsComponent implements OnInit {
   }
 
   redirectToPackageList(): void {
-    this.router.navigate(['/Admin/Packagelist']);
+    this.router.navigate(['/profile/Packagelist']);
   }
 
   redirectToEditPackage(packageId: number): void {
-    this.router.navigate(['/Admin/updatePackage', packageId]);
+    this.router.navigate(['/profile/updatePackage', packageId]);
   }
 }

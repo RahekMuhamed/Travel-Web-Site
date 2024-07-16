@@ -23,7 +23,7 @@ import { DividerModule } from 'primeng/divider';
 })
 export class ClientPackageDetailsComponent implements OnInit {
   packageId: number | undefined;
-  packageDetails: Package = new Package(0, '', false, '', '', 0, 0);
+  packageDetails: Package = new Package(0, '', 0, false, 0, 0, [],"","",1);
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +47,7 @@ export class ClientPackageDetailsComponent implements OnInit {
   fetchPackageDetails(): void {
     this.packagesService.getPackageById(this.packageId!).subscribe({
       next: (data: Package) => {
-        this.packageDetails = data;
+       // this.packageDetails = data;
       },
       error: (error) => console.error('Error fetching package details:', error),
     });

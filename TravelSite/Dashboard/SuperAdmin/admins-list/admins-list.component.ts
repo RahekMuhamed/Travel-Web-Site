@@ -1,25 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { UserServiceService } from '../../../src/app/services/user-service.service';
 import { User } from '../../../src/app/models/user';
 import { AuthServiceService } from '../../../src/app/services/auth-service.service';
+import { PaginationService } from '../../../src/app/services/pagination.service';
+import { SearchBarComponent } from '../../search-bar/search-bar.component';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admins-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SearchBarComponent, FormsModule],
   templateUrl: './admins-list.component.html',
   styleUrls: ['./admins-list.component.css'],
 })
 export class AdminsListComponent implements OnInit {
-  admins: User[] | null = null;
+  admins: User[] =[];
+  filteredAdmins: User[] = [];
+  paginatedAdmins: User[] = [];
+  rowsPerPage: number = 10;
+  currentPage: number = 1;
+  pageSizes: number[] = [5, 10, 20, 50];
 
   constructor(
     private userService: UserServiceService,
     private router: Router,
-    private authService: AuthServiceService
+    private authService: AuthServiceService,
+    private paginationService: PaginationService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +41,8 @@ export class AdminsListComponent implements OnInit {
           console.log('Fetched Admins:', admins);
           if (admins && admins.length > 0) {
             this.admins = admins;
+            this.filteredAdmins = admins.slice(); // Make a copy for filtering
+            this.updatePaginatedAdmins(); // Update paginated list initially
           } else {
             console.log('No admins found.');
           }
@@ -62,13 +73,16 @@ export class AdminsListComponent implements OnInit {
     }
   }
 
+
+
   viewDetails(adminId: string): void {
-    this.router.navigate(['/SuperAdmin/adminDetail', adminId]);
+    this.router.navigate(['/profile/adminDetail', adminId]);
   }
 
   updateAdmin(adminId: string): void {
-    this.router.navigate(['/SuperAdmin/updateAdmin', adminId]);
+    this.router.navigate(['/profile/updateAdmin', adminId]);
   }
+
   removeAdmin(adminId: string): void {
     Swal.fire({
       title: 'Are you sure?',
@@ -83,7 +97,9 @@ export class AdminsListComponent implements OnInit {
           () => {
             if (this.admins) {
               this.admins = this.admins.filter((admin) => admin.id !== adminId);
+              this.filteredAdmins = this.filteredAdmins.filter((admin) => admin.id !== adminId);
               localStorage.setItem('admins', JSON.stringify(this.admins));
+              this.updatePaginatedAdmins(); // Update paginated admins after deletion
               Swal.fire('Deleted!', 'Your admin has been deleted.', 'success');
             }
           },
@@ -107,6 +123,28 @@ export class AdminsListComponent implements OnInit {
   }
 
   addAdmin(): void {
-    this.router.navigate(['/Admin/AddAdmin']);
+    this.router.navigate(['/profile/AddAdmin']);
   }
+
+
+
+
+  onRowsPerPageChange(event: Event): void {
+    this.rowsPerPage = +(event.target as HTMLSelectElement).value;
+    this.updatePaginatedAdmins();
+  }
+
+  updatePaginatedAdmins(): void {
+    this.paginatedAdmins = this.paginationService.getPaginatedItems(this.filteredAdmins, this.currentPage, this.rowsPerPage);
+  }
+
+  onSearch(query: string): void {
+    console.log('Search query:', query);
+    this.filteredAdmins = this.admins.filter(admin =>
+      admin.fname && admin.fname.toLowerCase().includes(query.toLowerCase())
+    );
+    this.currentPage = 1;
+    this.updatePaginatedAdmins();
+  }
+  
 }

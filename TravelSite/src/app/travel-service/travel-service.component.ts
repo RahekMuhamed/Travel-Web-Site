@@ -5,27 +5,20 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
-import {
-  ActivatedRoute,
-  Router,
-  RouterLink,
-  RouterModule,
-} from '@angular/router';
-import { PaginationComponent } from '../pagination/pagination.component';
-import { SpinnerComponent } from '../spinner/spinner.component';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
+import { PaginationComponent } from "../pagination/pagination.component";
+import { AuthServiceService } from '../services/auth-service.service';
+import Swal from 'sweetalert2';
 import { CategoryService } from '../services/category.service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule,  } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
-import { Category } from '../models/category';
-import { Service } from '../models/bookingService.model';
-import { CategoryDropdownComponent } from '../category-dropdown/category-dropdown.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
-
+import { DropdownModule } from 'primeng/dropdown';
 import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
-
-
+import { CategoryDropdownComponent } from '../category-dropdown/category-dropdown.component';
 
 @Component({
   selector: 'app-travel-service',
@@ -48,41 +41,36 @@ import { TagModule } from 'primeng/tag';
     CommonModule,
     RouterModule,
     PaginationComponent,
-    SpinnerComponent,
+   SpinnerComponent,
     FormsModule,
     CategoryDropdownComponent,
 
   ],
 })
-export class TravelServiceComponent implements OnInit, OnChanges {
-[x: string]: any;
-  sortOptions!: SelectItem[];
-
-  sortOrder!: number;
-
-  sortField!: string;
-
-  services: any;
-  isLoading = false;
-  selectedCategoryId: string = '';
-  @Input() categoryId: string = '';
-
-  categories: Category[] = [];
-
+export class TravelServiceComponent implements OnInit {
+  services: any[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalItems: number = 100;
+  sortOrder: number | undefined;
+  sortField: any;
+  categoryId: any;
+  selectedCategoryId: string | undefined;
+  isLoading: any;
+  sortOptions: { label: string; value: string; }[] | undefined;
 
   constructor(
     private servicesService: ServicesService,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private authService: AuthServiceService
+
+  ) { }
 
   ngOnInit(): void {
     this.servicesService.loading$.subscribe(
-      (isLoading) => (this.isLoading = isLoading)
+      (isLoading: any) => (this.isLoading = isLoading)
     );
     this.loadData(this.currentPage, this.itemsPerPage);
 
@@ -96,7 +84,20 @@ export class TravelServiceComponent implements OnInit, OnChanges {
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
-    this.servicesService.getAll(page, pageSize).subscribe(
+    this.servicesService.getAllpag(page, pageSize).subscribe(
+      (response) => {
+        //
+        this.services = response.data.$values;
+        this.totalItems = response.totalCount;
+        this.currentPage = response.pageNumber;
+        this.itemsPerPage = response.pageSize; // Assuming the response contains the total number of pages
+      },
+      (error) => {
+        console.error('Error loading data:', error);
+      }
+    );
+ 
+    this.servicesService.getAllHotels(page, pageSize).subscribe(
       (response) => {
         //
         this.services = response.data.$values;
@@ -120,15 +121,16 @@ export class TravelServiceComponent implements OnInit, OnChanges {
       this.sortField = value;
     }
   }
-  ngOnChanges(): void {
+  /*
+ngOnChanges(): void {
     if (this.categoryId) {
       this.servicesService
         .getServicesByCategory(this.categoryId)
-        .subscribe((data) => {
+        .subscribe((data: any[]) => {
           this.services = data;
         });
     }
-  }
+  }*/
 
   onCategorySelected(categoryId: string): void {
     this.selectedCategoryId = categoryId;
@@ -140,6 +142,7 @@ export class TravelServiceComponent implements OnInit, OnChanges {
   //   });
   // }
   // }
+
 
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
@@ -185,6 +188,32 @@ export class TravelServiceComponent implements OnInit, OnChanges {
     return item.id; // Replace "id" with the unique identifier of your data item
   }
 
+  booking(serviceId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/AddBookingService'], { queryParams: { serviceId: serviceId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } 
+    else {
+      Swal.fire({
+      title: 'Not Logged In',
+      text: 'You need to log in to book a Service. Do you want to log in now?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, log in',
+      cancelButtonText: 'No, cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/login']);
+      }
+    });
+    }
+  }
+
+}
   // onPageSizeChange(event: Event): void {
   //   const target = event.target as HTMLSelectElement;
   //   const size = target.value;
@@ -235,4 +264,4 @@ export class TravelServiceComponent implements OnInit, OnChanges {
   // viewDetails(serviceId: number): void {
   //   this.router.navigate(['/serviceDetails', serviceId]);
   // }
-}
+

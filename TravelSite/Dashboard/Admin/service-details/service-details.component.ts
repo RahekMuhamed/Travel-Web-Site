@@ -43,10 +43,10 @@ export class ServiceDetailsComponent implements OnInit {
   }
 
   redirectToserviceList(): void {
-    this.router.navigate(['/Admin/servicelist']);
+    this.router.navigate(['/profile/servicelist']);
   }
 
   redirectToEditservice(serviceId: number): void {
-    this.router.navigate(['/Admin/updateservice', serviceId]);
+    this.router.navigate(['/profile/updateservice', serviceId]);
   }
 }

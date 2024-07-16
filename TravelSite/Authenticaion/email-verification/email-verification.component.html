@@ -1,0 +1,62 @@
+<section class="gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-7">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="card-body p-5" id="loginCard">
+
+            <div class="mb-md-6 mt-md-4 pb-5">
+
+              <h2 class="fw-bold mb-2 text-uppercase text-center">Verify your Email</h2>
+
+              <!-- Error and Success Messages -->
+              <div *ngIf="errorMessage" class="text-danger mb-3 text-center">
+                {{ errorMessage }}
+              </div>
+              <div *ngIf="successMessage" class="text-success mb-3 text-center">
+                {{ successMessage }}
+              </div>
+
+              <!-- Verification Code Form -->
+              <form [formGroup]="verificationForm" (ngSubmit)="onSubmit()" id="verification-form">
+
+                <!-- Error message for Verification Code -->
+                <div *ngIf="verificationForm.get('verificationCode')?.touched && verificationForm.get('verificationCode')?.errors?.['required']" class="text-danger mb-3 text-center">
+                  Verification Code is required.
+                </div>
+
+                <!-- Verification Code Input -->
+                <div class="form-outline form-white mb-4">
+                  <label class="form-label" for="verificationCode">Verification Code</label>
+                  <input type="text" id="verificationCode" formControlName="verificationCode" class="form-control form-control-lg" placeholder="Verification Code"/>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                  <button class="btn btn-outline-light btn-lg px-5" type="submit" [disabled]="submitting || verificationForm.invalid">
+                    <span *ngIf="submitting">Submitting...</span>
+                    <span *ngIf="!submitting && verificationForm.valid">Verify</span>
+                    <span *ngIf="!submitting && verificationForm.invalid">Please enter data correctly</span>
+                  </button>
+                </div>
+
+              </form>
+
+            </div>
+
+            <!-- Login and Register Links -->
+            <!-- <div class="d-flex justify-content-between mt-4">
+              <label for="loginLink">
+                <a id="loginLink" class="text-white-50" routerLink="/login">Login</a>
+              </label>
+              <label for="registerLink">
+                <a id="registerLink" class="text-white-50" routerLink="/signup">Register</a>
+              </label>
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

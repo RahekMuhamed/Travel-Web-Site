@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+<section class="ezy__epcheckout4 light" id="ezy__epcheckout4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Booking Date Selection Card -->
+                <div class="card ezy__epcheckout4-card mb-3">
+                    <div class="card-body px-md-4">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="calendar-start" class="form-label"><b>Start Date</b></label>
+                                <p-calendar inputId="calendar-start" [(ngModel)]="startDate" [showTime]="true"
+                                    [hourFormat]="'24'" (onSelect)="onStartDateChange()" dateFormat="yy-mm-dd"
+                                    placeholder="Select Start Date"></p-calendar>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <label for="calendar-end" class="form-label"><b>End Date</b></label>
+                                <p-calendar inputId="calendar-end" [(ngModel)]="endDate" [showTime]="true"
+                                    [hourFormat]="'24'" (onSelect)="onEndDateChange()" dateFormat="yy-mm-dd"
+                                    placeholder="Select End Date"></p-calendar>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <label class="form-label"><b>Number of Persons</b></label>
+                                <div class="input-group ezy__epcheckout4-qty align-items-center">
+                                    <button class="btn btn-secondary" type="button"
+                                        (click)="onPersonCountChange(-1)">-</button>
+                                    <input type="number" class="form-control text-center" [(ngModel)]="numberOFPersons"
+                                        [min]="1" aria-label="Number of persons">
+                                    <button class="btn btn-secondary" type="button"
+                                        (click)="onPersonCountChange(1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Information Card -->
+                <div class="card ezy__epcheckout4-card mb-3">
+                    <div class="card-body px-md-4">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <div class="ezy__epcheckout4-image">
+                                       <img [src]="'../../../assets/'+ service?.image"/>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="row">
+                                    <div class="col-12 col-xl-6 col-xxl-7">
+                                        <div class="ezy__epcheckout4-heading mb-1">
+                                            <p class="name">{{service?.name}}</p>
+                                        </div>
+                                        <p class="ezy__epcheckout4-content mb-2">
+                                            <span class="me-3"><b>Start Date</b>: {{startDate | date:'yyyy-MM-dd'
+                                               }}</span>
+                                            <span class="me-3"><b>End Date</b>: {{endDate | date:'yyyy-MM-dd
+                                               '}}</span>
+                                            <span class="me-3"><b>Duration</b>: {{calculateNights()}} Nights</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-xl-3 mt-3 mt-xl-0">
+                                        <div class="mb-3">
+                                          <!---<span class="ezy__epcheckout4-price me-2"><b>Price:</b>
+                                                ${{service?.price}}</span>
+                                            <br />-->
+                                            <span class="ezy__epcheckout4-price me-2"><b>Total Price:</b>
+                                                ${{totalServicePrice}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 text-center">
+                                        <button class="btn btn-info " id="baclbtn" (click)="goBack()">
+                                            Back
+                                        </button>
+                                        <button class="btn btn-primary"  id="Bookbtn" (click)="continue()">
+                                            Confirm Book
+                                        </button>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Additional content can go here -->
+            </div>
+        </div>
+    </div>
+</section>
+<app-footer></app-footer>

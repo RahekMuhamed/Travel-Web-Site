@@ -4,6 +4,7 @@ import { Payment } from '../models/payment';
 import { FormsModule } from '@angular/forms';
 import { PaymentService } from '../services/payment.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-payment',
@@ -12,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
+  // for package paymnet 
 export class PaymentComponent implements OnInit {
   payment: Payment = { amount: 0, currency: "USD", bookingPackageId: 0 };
   multipleBookingIds: number[] = [];
@@ -31,19 +33,8 @@ export class PaymentComponent implements OnInit {
       }
     });
   }
-  /*pay() {
-    if (this.multipleBookingIds.length > 0) {
-      if (this.multipleBookingIds.length === 1) {
-        this.processSingleBookingPayment();
-      }
-      else {
-        this.processMultipleBookingsPayment();
-      }
-    }
-    else {
-      alert("there is no objectsb")
-    }
-  }*/
+
+  // i add only with processSingleBookingPayment
   pay() {
     if (this.multipleBookingIds.length > 0) {
       this.processMultipleBookingsPayment();
@@ -57,14 +48,27 @@ export class PaymentComponent implements OnInit {
         if (response.success && response.approvalUrl) {
           // Redirect to PayPal approval URL
           window.location.href = response.approvalUrl;
+    Swal.fire({
+            title: 'Payment Successful!',
+            text: 'Redirecting to PayPal for approval...',
+            icon: 'success'
+          });
         } else {
           console.error("Payment failed", response);
-          alert("Payment failed. Please try again.");
+          Swal.fire({
+            title: 'Payment Failed',
+            text: 'Please try again later.',
+            icon: 'error'
+          });
         }
       },
       error => {
         console.log("Payment error", error);
-        alert("Payment error. Please try again.");
+        Swal.fire({
+          title: 'Payment Error',
+          text: 'Please try again later.',
+          icon: 'error'
+        });
       }
     );
   }

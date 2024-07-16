@@ -8,3 +8,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', "Helvetica Neue", sans-serif ;background-color: #f5f7fb; 
+box-sizing: border-box !important;
+}
+

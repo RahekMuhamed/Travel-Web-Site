@@ -12,21 +12,21 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { PackagesService } from '../services/packages.service';
 import { Package } from '../models/packages';
+import { AuthServiceService } from '../services/auth-service.service';
+import Swal from 'sweetalert2';
+import { SpinnerComponent } from '../spinner/spinner.component';
 import { ButtonModule } from 'primeng/button';
 import { SelectItem } from 'primeng/api';
-
+import { DropdownModule } from 'primeng/dropdown';
 import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
-import { SpinnerComponent } from '../spinner/spinner.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
 import { WishlistService } from '../services/wishlist.service';
 import { Category } from '../models/category';
 import { PickListModule } from 'primeng/picklist';
 import { OrderListModule } from 'primeng/orderlist';
 import { InputTextModule } from 'primeng/inputtext';
 import { RatingModule } from 'primeng/rating';
-import { AuthServiceService } from '../services/auth-service.service';
 import { DecodedToken } from '../models/decoded-token';
 import { jwtDecode } from 'jwt-decode';
 @Component({
@@ -77,21 +77,21 @@ export class PackagesComponent implements OnInit {
   itemsPerPage: number = 10;
   totalItems: number = 100;
 
-  @Input()
-  addedToWishlist: boolean = true;
-  @Input()
-  packageItem!: Package;
-
   wishlist: number[] = [];
+ 
+  packageId: number = 1;
   constructor(
     private packageService: PackagesService,
-    private wishlistService: WishlistService,
+    
+    private route: ActivatedRoute,
+    private router: Router,
+        private wishlistService: WishlistService,
     private authService: AuthServiceService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.packageService.loading$.subscribe(
-      (isLoading) => (this.isLoading = isLoading)
+    this.packageService['loading$'].subscribe(
+      (isLoading: boolean) => (this.isLoading = isLoading)
     );
     this.loadWishlist();
     // this.loadData();
@@ -139,7 +139,7 @@ export class PackagesComponent implements OnInit {
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
-    this.packageService.getAll(page, pageSize).subscribe(
+    this.packageService.getAllpag(page, pageSize).subscribe(
       (response) => {
         //
         this.packages = response.data.$values;
@@ -281,33 +281,34 @@ export class PackagesComponent implements OnInit {
     return item.id; // Replace "id" with the unique identifier of your data item
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('authToken');
-  }
-
-  getRole(): string | null {
-    return localStorage.getItem('userRole');
-  }
-
-  decodeToken(): DecodedToken | null {
-    const token = this.getToken();
-    if (token) {
-      try {
-        return jwtDecode<DecodedToken>(token);
-      } catch (error) {
-        console.error('Error decoding token:', error);
-        return null;
+  booking(packageId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/communicationData'], { queryParams: { packageId: packageId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
       }
+    } else {
+      Swal.fire({
+        title: 'Not Logged In',
+        text: 'You need to log in to book a package. Do you want to log in now?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log in',
+        cancelButtonText: 'No, cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
     }
-    return null;
-  }
-
-  getUserIdFromToken(): string | null {
-    const decodedToken = this.decodeToken();
-    return decodedToken
-      ? decodedToken[
-          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
-        ]
-      : null;
+     
   }
 }
+
+
+  // viewDetails(packageId: number): void {
+  //   this.router.navigate(['/packageDetails', packageId]);
+  // }
+

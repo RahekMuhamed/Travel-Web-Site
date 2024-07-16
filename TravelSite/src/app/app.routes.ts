@@ -1,3 +1,5 @@
+
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -16,23 +18,40 @@ import { SuperpackageDetailsComponent } from '../../Dashboard/SuperAdmin/superpa
 import { PackagesListComponent } from '../../Dashboard/SuperAdmin/SuperPackages-list/packages-list.component';
 import { SuperserviceDetailsComponent } from '../../Dashboard/SuperAdmin/superservice-details/superservice-details.component';
 import { AdminPackagesComponent } from '../../Dashboard/Admin/admin-packages/admin-packages.component';
-import { ServicesListComponent } from '../../Dashboard/SuperAdmin/SuperServices-list/services-list.component';
 import { AdminServicesComponent } from '../../Dashboard/Admin/admin-services/admin-services.component';
 import { EditUserInfoComponent } from '../../Dashboard/edit-user-info/edit-user-info.component';
 import { UserInfoComponent } from '../../Dashboard/user-info/user-info.component';
 import { AdminLayoutComponent } from '../../Dashboard/layout/admin-layout.component';
 import { SignUpComponent } from '../../Authenticaion/sign-up/sign-up.component';
 import { LoginComponent } from '../../Authenticaion/login/login.component';
-import { TravelServiceComponent } from './travel-service/travel-service.component';
-import { PaymentComponent } from './payment/payment.component';
-import { AddBookingPackageComponent } from './BookingPackage/add-booking-package/add-booking-package.component';
-import { GetAllBookingPackageComponent } from './BookingPackage/get-all-booking-package/get-all-booking-package.component';
+import { TravelServiceComponent } from '../app/travel-service/travel-service.component';
+import { ServicesListComponent } from '../../Dashboard/SuperAdmin/SuperServices-list/services-list.component';
 import { PackagesComponent } from './packages/packages.component';
-import { ClientServiceDetailsComponent } from './service-details/service-details.component';
-import { WishlistComponent } from './wishlist/wishlist.component';
-import { ClientPackageDetailsComponent } from './package-details/package-details.component';
-import { JoinGroupComponent } from './real-time-chat/join-group/join-group.component';
+import { AddServiceComponent } from '../../Dashboard/Admin/add-service/add-service.component';
+import { EditServiceComponent } from '../../Dashboard/Admin/edit-service/edit-service.component';
+import { EditPackageComponent } from '../../Dashboard/Admin/edit-package/edit-package.component';
+//import { AddPackageComponent } from '../../Dashboard/Admin/add-package/add-package.component';
+import { ForgetPasswordComponent } from '../../Authenticaion/forget-password/forget-password.component';
+import { ChangePasswordComponent } from '../../Dashboard/change-password/change-password.component';
+import { UnauthorizedComponent } from '../../Authenticaion/unauthorized/unauthorized.component';
+import { ServicePaymentComponent } from './service-payment/service-payment.component';
+import { PaymentComponent } from './payment/payment.component';
+
+import { AddBookingPackageComponent
+  
+} from './BookingPackage/add-booking-package/add-booking-package.component';
+import {
+  AddBookingServiceComponent
+   
+  } from './BookingService/add-booking-service/add-booking-service.component';
+import { PaymentSuccessComponent } from './PaymentStatusComponents/payment-success/payment-success.component';
+import { PaymnetFailureComponent } from './PaymentStatusComponents/paymnet-failure/paymnet-failure.component';
+import { PaymentCancellComponent } from './PaymentStatusComponents/payment-cancell/payment-cancell.component';
+import { CommonModule } from '@angular/common';
+import { CommunicationDataComponent } from './communication-data/communication-data.component';
+import { GetAllBookingPackageComponent } from './BookingPackage/get-all-booking-package/get-all-booking-package.component';
 import { ChatComponent } from './real-time-chat/chat/chat.component';
+
 
 
 export const routes: Routes = [
@@ -40,9 +59,10 @@ export const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     title: 'home',
-    data: { roles: ['client'] },
-  },
-  { path: 'join-group', component: JoinGroupComponent },
+    },
+     { path: '', redirectTo: '/login', pathMatch: 'full' },
+     { path: 'services', component: TravelServiceComponent },
+     { path: 'packages', component: PackagesComponent },
 
   // Route to the 'ChatComponent' when the path is 'chat'
    { path: 'chat', component: ChatComponent },
@@ -55,71 +75,54 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./chat/room/room.component').then((m) => m.RoomComponent),
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  {
-    path: 'services',
-    component: TravelServiceComponent,
-    data: { roles: ['client'] },
+  { path: 'serviceDetails/:id', component: ServiceDetailsComponent },
+  { path: 'serviceDetails/:id', component: PackageDetailsComponent },
+  /*{
+    path: 'SuperAdmin',
+    loadChildren: () =>
+      import('../../SuperAdmin/SuperAdmin.routes').then(
+        (m) => m.SuperAdminroutes
+      ),
+    },*/
+    {
+        path: "payment",
+        component: PaymentComponent,
+        title:"checkout"
   },
-  {
-    path: 'packages',
-    component: PackagesComponent,
-    data: { roles: ['client'] },
-  },
-  {
-    path: 'serviceDetails/:id',
-    component: ClientServiceDetailsComponent,
-    data: { roles: ['client'] },
-  },
-  {
-    path: 'clientPackageDetails/:id',
-    component: ClientPackageDetailsComponent,
-    data: { roles: ['client'] },
-  },
-  {
-    path: 'wishlist',
-    component: WishlistComponent,
-  },
-  // {
-  //   path: 'SuperAdmin',
-  //   loadChildren: () =>
-  //     import('../../SuperAdmin/SuperAdmin.routes').then(
-  //       (m) => m.SuperAdminroutes
-  //     ),
-  //   },
-  {
-    path: 'payment',
-    component: PaymentComponent,
-    title: 'checkout',
-  },
-  {
-    path: 'AddBookingPackage',
-    component: AddBookingPackageComponent,
-    title: 'Booking Package',
-  },
-  {
-    path: 'GetAllPackageBooking',
-    component: GetAllBookingPackageComponent,
-    title: 'All Booking',
-  },
-  { path: 'SignUp', component: SignUpComponent, title: 'Register' },
-  { path: 'login', component: LoginComponent, title: 'login' },
+  { path:"ServicePayment", component: ServicePaymentComponent, title: "Hotels Checkout" },
+  { path:"AddBookingPackage", component: AddBookingPackageComponent, title: "Booking Package" },
+  { path: "AddBookingService", component: AddBookingServiceComponent, title: "Booking Hotel" },
+   { path: 'payment-success', component: PaymentSuccessComponent },
+  { path: 'payment-failure', component: PaymnetFailureComponent },
+  { path: 'payment-cancel', component: PaymentCancellComponent },
+  { path: 'communicationData', component: CommunicationDataComponent, title: "communication Form" },
+  { path:"GetAllPackageBooking", component: GetAllBookingPackageComponent, title: "All Booking" },
+  //{path :"BookingDetails/:id",component:BookingDetailsComponent ,title:"Booking Package"},
+  { path:"SignUp", component: SignUpComponent, title: "Register" },
+  {path:"login" ,component:LoginComponent,title:"login"},
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
   },
-
   { path: 'SuperAdmin/Packagelist', component: PackagesListComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
+  { path: 'forgetpassword', component: ForgetPasswordComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent },
   {
-    path: 'Admin',
+    path: 'profile',
     component: AdminLayoutComponent,
     children: [
       {
         path: 'userinfo',
         component: UserInfoComponent,
+        canActivate: [AuthGuardService],
+        data: { roles: ['customerService', 'client', 'admin', 'superAdmin'] },
+      },
+      {
+        path: 'changePassword',
+        component: ChangePasswordComponent,
         canActivate: [AuthGuardService],
         data: { roles: ['customerService', 'client', 'admin', 'superAdmin'] },
       },
@@ -136,10 +139,29 @@ export const routes: Routes = [
         data: { roles: ['admin'] },
       },
       {
-        path: 'superservicelist',
-        component: ServicesListComponent,
+        path: 'serviceDetail/:id',
+        component: ServiceDetailsComponent,
         canActivate: [AuthGuardService],
-        data: { roles: ['superAdmin'] },
+        data: { roles: ['admin'] },
+      },
+      {
+        path: 'AddService',
+        component: AddServiceComponent,
+        canActivate: [AuthGuardService],
+        data: { roles: ['admin'] },
+      },
+      {
+        path: 'Packagelist',
+        component: AdminPackagesComponent,
+
+        canActivate: [AuthGuardService],
+        data: { roles: ['admin'] },
+      },
+      {
+        path: 'AddService',
+        component: AddServiceComponent,
+        canActivate: [AuthGuardService],
+        data: { roles: ['admin'] },
       },
       {
         path: 'Packagelist',
@@ -147,30 +169,37 @@ export const routes: Routes = [
         canActivate: [AuthGuardService],
         data: { roles: ['admin'] },
       },
-      {
-        path: 'serviceDetail/:id',
-        component: SuperserviceDetailsComponent,
+
+{
+        path: 'packageDetail/:id',
+        component: PackageDetailsComponent,
         canActivate: [AuthGuardService],
-        data: { roles: ['superAdmin'] },
+        data: { roles: ['admin'] },
       },
-      {
-        path: 'superPackagelist',
-        component: PackagesListComponent,
+     /* {
+        path: 'AddPackage',
+        component:AddPackageComponent,
         canActivate: [AuthGuardService],
-        data: { roles: ['superAdmin'] },
-      },
+        data: { roles: ['admin'] },
+      },*/
       {
         path: 'superpackageDetail/:id',
         component: SuperpackageDetailsComponent,
         canActivate: [AuthGuardService],
-        data: { roles: ['superAdmin'] },
+        data: { roles: ['admin'] },
       },
       {
-        path: 'serviceDetail/:id',
-        component: ServiceDetailsComponent,
+        path: 'updatePackage/:id',
+        component: EditPackageComponent,
         canActivate: [AuthGuardService],
         data: { roles: ['admin'] },
       },
+      /*{
+        path: 'AddPackage',
+        component: AddPackageComponent,
+        canActivate: [AuthGuardService],
+        data: { roles: ['admin'] },
+      },*/
       {
         path: 'adminslist',
         component: AdminsListComponent,
@@ -195,12 +224,7 @@ export const routes: Routes = [
         canActivate: [AuthGuardService],
         data: { roles: ['superAdmin'] },
       },
-      {
-        path: 'packageDetail/:id',
-        component: PackageDetailsComponent,
-        canActivate: [AuthGuardService],
-        data: { roles: ['admin'] },
-      },
+
       {
         path: 'ServiceProviderDetail/:id',
         component: ServiceProviderDetailComponent,
@@ -216,6 +240,30 @@ export const routes: Routes = [
       {
         path: 'AddServiceProvider',
         component: AddServiceProviderComponent,
+        canActivate: [AuthGuardService],
+        data: { roles: ['superAdmin'] },
+      },
+      {
+        path: 'superservicelist',
+        component: ServicesListComponent ,
+        canActivate: [AuthGuardService],
+        data: { roles: ['superAdmin'] },
+      },
+      {
+        path: 'serviceDetail/:id',
+        component: SuperserviceDetailsComponent,
+        canActivate: [AuthGuardService],
+        data: { roles: ['superAdmin'] },
+      },
+      {
+        path: 'superPackagelist',
+        component: PackagesListComponent,
+        canActivate: [AuthGuardService],
+        data: { roles: ['superAdmin'] },
+      },
+      {
+        path: 'superpackageDetail/:id',
+        component: SuperpackageDetailsComponent,
         canActivate: [AuthGuardService],
         data: { roles: ['superAdmin'] },
       },

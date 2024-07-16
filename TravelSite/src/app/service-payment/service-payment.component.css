@@ -1,0 +1,47 @@
+.imgdiv {
+    width: 40vw;
+    margin: auto;
+    height: 30vw;
+}
+
+.imgdiv img {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.paybtn {
+    width: 30vw;
+    margin: 15px auto;
+    text-align: center;
+}
+
+.paybtn button {
+    box-sizing: border-box;
+    padding: 8px 110px;
+    border-radius: 5px;
+    font-weight: 900px;
+    font-size: 40px;
+    font-family: 'Futura PT', 'Arial', sans-serif;
+    border: solid 1px #003087;
+    /* Use a web-safe font if the exact one isn't available */
+    transition: all 2s;
+
+}
+
+.paybtn button .fdd {
+    color: #003087;
+}
+
+.paybtn button .ldd {
+    color: #009cde;
+}
+
+.paybtn button:hover {
+    background-color: #1453ca;
+}
+
+.paybtn button:hover .fdd,
+.paybtn button:hover .ldd {
+    color: white;
+}

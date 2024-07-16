@@ -1,0 +1,53 @@
+.all
+{
+    margin-top: 40px;
+}
+h1 {
+    font-weight: bold;
+}
+:root {
+    --main-bg-color: #f8f9fa;
+    --light-color: #eee;
+}
+
+/* line 3, ../sass/signUp.scss */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* line 9, ../sass/signUp.scss */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--main-bg-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* line 25, ../sass/signUp.scss */
+.right-box {
+    background-image: linear-gradient(rgba(245, 242, 242, 0.5), rgba(218, 161, 245, 0.5)), url("../../assets/traveling-tools-with-copy-space_23-2148436336.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+/* line 33, ../sass/signUp.scss */
+.overlay-left h1 {
+    color: var(--light-color);
+}
+
+/* line 37, ../sass/signUp.scss */
+p {
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: .5px;
+    margin: 20px 0 30px;
+    font-family: 'Butterfly Kids', cursive;
+    text-shadow: 2px 2px 4px #2d2c2c;
+    color: var(--light-color);
+}

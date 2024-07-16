@@ -1,77 +1,148 @@
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/"  routerLinkActive="active-link">TRAVELLING</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/home" routerLinkActive="active-link">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/packages" routerLinkActive="active-link">Packages</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/services" routerLinkActive="active-link">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/contact" routerLinkActive="active-link">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/about" routerLinkActive="active-link">About</a>
-        </li>
-      </ul>
 
-      <div>
-        <button routerLink="/wishlist" class="btn cart-btn" type="submit"><i class="fa-solid fa-heart"></i></button>
-      </div>
-
-      <div class="dropdown-container">
-        <details class="dropdown right">
-          <summary class="avatar">
-            <img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp">
-          </summary>
-          <ul>
-            <li>
-              <p>
-                <span class="block bold">nada</span>
-                <span class="block italic">ali</span>
-              </p>
-            </li>
-            <li>
-              <a routerLink="/profile">
-                <span class="material-symbols-outlined">account</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span class="material-symbols-outlined">settings</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span class="material-symbols-outlined">help</span>
-              </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <a href="#">
-                <span class="material-symbols-outlined">logout</span>
-              </a>
-            </li>
-          </ul>
-        </details>
-      </div>
+<div class="container-fluid sticky-top header-container">
+  <!-- home section -->
+  <section class="homeSection_1">
+    <div class="logo">
+      <a routerLink="/home"
+        class="d-inline-flex flex-column align-items-center justify-content-center text-decoration-none">
+        <div id="floral">
+          Ri<img src="../../assets/circle-plane-flying-aviation-logo-vector-19287409.jpg" alt="">mas
+        </div>
+        <div id="boutique">Travelling</div>
+      </a>
     </div>
-  </div>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-light ">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/home" routerLinkActive="active-link">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link"routerLink="/packages" routerLinkActive="active-link"> Packages </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" routerLink="/services" routerLinkActive="active-link"> Services </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link"  routerLink="About" routerLinkActive="active-link">Contact Us </a>
+          </li>
+         <!-- <li class="nav-item " >
 
-<!-- Add this to your CSS -->
-<style>
-  .active-link {
-    color: rgb(152, 211, 243); /* Change this to whatever color you want */
-  }
-</style>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+              </a>
+                  <ul class="nav-icons">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                      </a>
+                      <div class="log_sign dropdown-menu border-0" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item bg-transparent" href="signup.html">Sign up</a>
+                        <a href="login.html" class="dropdown-item bg-transparent">Login</a>
+                      </div>
+                    </li>                    </ul>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+            </a>
+          <! amira update -->
+        <!--  <li>
+          <ul class="nav-icons">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user"></i>
+              </a>
+              <div class="log_sign dropdown-menu border-0" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item bg-transparent" href="signup.html">Sign up</a>
+                <a href="login.html" class="dropdown-item bg-transparent">Login</a>
+              </div>
+              </li>
+            <li class="nav-item ">
+              <a href="Addchart.html" class="shopping-cart">
+                <i class="fa fa-shopping-cart"></i>
+                <span visiblity="hidden" class="position-absolute translate-middle badge rounded-pill bg-danger"
+                  style=" display: none">
+                </span>
+              </a>
+            </li>
+          
+                                    </ul>
+
+          
+            <ul class="ifUserLogged">
+              <li class="nav-item ">
+                <a href="user.html" class="profile"><i class="fa-solid fa-house-chimney-user"></i></a>
+                    
+              </li>
+              <li class="nav-item ">
+                <a href="login.html" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                           
+              </li>
+
+                                        </ul>
+
+                   end li icons -->
+                         <!-- </ul>
+                          <!- end navar nav -->
+                          <!--  </div>
+                          <!- end collapse -->
+                          <!--  </nav>
+                          </section>
+                          </div>-->
+
+         <div class="dropdown-container">
+                <details class="dropdown right">
+                  <summary class="avatar">
+                    <img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp">
+                  </summary>
+                  <ul>
+                    <li>
+                      <div *ngIf="user">
+                        <p class="fs-5"><span>Hi:</span> {{ user.fname }}</p>
+                      </div>
+                    </li>
+                    <li>
+                      <a routerLink="/profile" *ngIf="isAuthenticated(); else loginLink">
+                        <span class="material-symbols-outlined">account</span>
+                      </a>
+                      <ng-template #loginLink>
+                        <a routerLink="/login">
+                          <span class="material-symbols-outlined">login</span>
+                        </a>
+                      </ng-template>
+                    </li>
+              
+                    <li class="divider" *ngIf="isAuthenticated()"></li>
+                    <li>
+                      <a (click)="onLogoutClick()" *ngIf="isAuthenticated()">
+                        <span class="material-symbols-outlined">logout</span>
+                      </a>
+                    </li>
+                  </ul>
+                </details>
+              </div>
+             
+
+           
+        <!-- <ul class="ifUserLogged">
+              <li class="nav-item ">
+                <a href="user.html" class="profile"><i class="fa-solid fa-house-chimney-user"></i></a>
+                    
+              </li>
+              <li class="nav-item ">
+                <a href="login.html" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                           
+              </li>
+            </ul>
+          </ul>-->
 

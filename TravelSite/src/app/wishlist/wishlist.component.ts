@@ -4,46 +4,32 @@ import { WishlistService } from '../services/wishlist.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Package } from '../models/packages';
-import { SpinnerService } from '../services/spinner.service';
-import { RouterLink } from '@angular/router';
+import { PackagesService } from '../services/packages.service';
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './wishlist.component.html',
   styleUrl: './wishlist.component.css',
 })
 export class WishlistComponent implements OnInit {
- // wishlist: Package[] = [];
+  lovedPackages: Package[] = [];
 
-   wishlistPackages: any[] = [];
-  loading: boolean = true;
-
-  constructor(private wishlistService: WishlistService) {}
+  constructor(
+    private packagesService: PackagesService,
+    private wishlistService: WishlistService
+  ) {}
 
   ngOnInit(): void {
-    this.wishlistService.getWishlistPackages().subscribe(
-      (data) => {
-        this.wishlistPackages = data;
-        this.loading = false;
-      },
-      (error) => {
-        console.error('Error fetching wishlist packages', error);
-        this.loading = false;
-      }
-    );
+    // this.wishlistService.getLovedPackages().subscribe(
+    //   (packages) => {
+    //     this.lovedPackages = packages;
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching loved packages:', error);
+    //   }
+    // );
   }
-  // loadWishlist(): void {
-  //   this.wishlistService.fetchLikedPackages().subscribe((packages) => {
-  //     this.wishlist = packages;
-  //   });
-  // }
 
-//   removeFromWishlist(pack: Package): void {
-//     this.wishlistService.removeFromWishlist(pack).subscribe(() => {
-//       this.loadWishlist();
-//     });
-//   }
-// }
-
+  
 }

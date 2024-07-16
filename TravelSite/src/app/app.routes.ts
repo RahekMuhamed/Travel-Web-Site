@@ -45,7 +45,7 @@ export const routes: Routes = [
   { path: 'join-group', component: JoinGroupComponent },
 
   // Route to the 'ChatComponent' when the path is 'chat'
-  // { path: 'chat', component: ChatComponent },
+   { path: 'chat', component: ChatComponent },
   //############################
 
 

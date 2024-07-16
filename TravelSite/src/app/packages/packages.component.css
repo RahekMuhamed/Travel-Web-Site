@@ -12,11 +12,11 @@
 #pageSize {
   margin-bottom: 20px;
 }
-.container {
+/* .container {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 
 .cards-container {
@@ -25,38 +25,84 @@
     justify-content: center; /* Center the cards horizontally */
 }
 
-.cardcontainer {
+/* .cardcontainer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center; 
-    width: 300px; /* Set a fixed width for the cards */
-    margin: 10px; /* Add some space between cards */
+    align-items: center;
+    width: 300px;
+    margin: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     overflow: hidden;
+} */
+.card {
+  padding: 20px;
+  width: 330px;
+  min-height: 370px;
+  border-radius: 20px;
+  background: #e8e8e8;
+  box-shadow: 5px 5px 6px #dadada,
+               -5px -5px 6px #f6f6f6;
+  transition: 0.4s;
 }
 
+.card:hover {
+  translate: 0 -10px;
+}
 
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2e54a7;
+  margin: 15px 0 0 10px;
+}
 
-.content {
-    
-    text-align: center; 
+.card-image {
+  min-height: 170px;
+  background-color: #c9c9c9;
+  border-radius: 15px;
+  box-shadow: inset 8px 8px 10px #c3c3c3,
+            inset -8px -8px 10px #cfcfcf;
+}
+
+.card-body {
+  margin: 13px 0 0 10px;
+  color: rgb(31, 31, 31);
+  font-size: 15px;
 }
 
 .footer {
-  
-    text-align: center;
-    
-}
-.like {
-  color: grey;
+  float: right;
+  margin: 28px 0 0 18px;
+  font-size: 13px;
+  color: #636363;
 }
 
-.like.liked {
-  color: red;
+.by-name {
+  font-weight: 700;
 }
+.box
+{
+
+    display: inline-block;
+    position: relative;
+    width: 185px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #ecedee;
+    font-family: 'Poppins',sans-serif;
+    font-size: 14px;
+    color: #000000;
+    background-color: #ffffff;
+    padding-left: 20px;
+    padding-right: 7px;
+    margin-right: 16px;
+}
+
+
+
 
 
 

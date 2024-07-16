@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ServicesService } from '../services/services.service';
@@ -21,12 +21,19 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { WishlistService } from '../services/wishlist.service';
-
+import { Category } from '../models/category';
+import { PickListModule } from 'primeng/picklist';
+import { OrderListModule } from 'primeng/orderlist';
+import { InputTextModule } from 'primeng/inputtext';
+import { RatingModule } from 'primeng/rating';
+import { AuthServiceService } from '../services/auth-service.service';
+import { DecodedToken } from '../models/decoded-token';
+import { jwtDecode } from 'jwt-decode';
 @Component({
   selector: 'app-packages',
   standalone: true,
   templateUrl: './packages.component.html',
-  styleUrls: ['./packages.component.css', '../home/home.component.css'],
+  styleUrls: ['./packages.component.css'],
   providers: [PackagesService, HttpClientModule],
   imports: [
     HttpClientModule,
@@ -40,17 +47,24 @@ import { WishlistService } from '../services/wishlist.service';
     DataViewModule,
     ButtonModule,
     TagModule,
-
     DropdownModule,
     ReactiveFormsModule,
+    PickListModule,
+    OrderListModule,
+    InputTextModule,
+    RatingModule,
   ],
 })
 export class PackagesComponent implements OnInit {
+  dv: DataView | undefined;
+  sourceCities: any[] = [];
+
+  targetCities: any[] = [];
+
+  orderCities: any[] = [];
   packages: Package[] = [];
-
-  wishlist: Package[] = [];
-  clientId: string = '882b687b-d254-4b1f-b168-17d9233605a9'; // Replace with actual client ID
-
+  likedPackages: Set<number> = new Set();
+  wishlistPackageIds: number[] = [];
   sortOptions!: SelectItem[];
 
   sortOrder!: number;
@@ -62,29 +76,66 @@ export class PackagesComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 100;
+
+  @Input()
+  addedToWishlist: boolean = true;
+  @Input()
+  packageItem!: Package;
+
+  wishlist: number[] = [];
   constructor(
     private packageService: PackagesService,
     private wishlistService: WishlistService,
-    private route: ActivatedRoute,
-    private router: Router
+    private authService: AuthServiceService
   ) {}
 
   ngOnInit(): void {
-     this.packageService.fetchWishlist().subscribe();
     this.packageService.loading$.subscribe(
       (isLoading) => (this.isLoading = isLoading)
     );
+    this.loadWishlist();
+    // this.loadData();
     this.loadData(this.currentPage, this.itemsPerPage);
+
     this.sortOptions = [
       { label: 'Price High to Low', value: '!price' },
       { label: 'Price Low to High', value: 'price' },
     ];
 
-    this.wishlistService.wishlist$.subscribe(
-      (wishlist) => (this.wishlist = wishlist)
+    this.sourceCities = [
+      { name: 'San Francisco', code: 'SF' },
+      { name: 'London', code: 'LDN' },
+      { name: 'Paris', code: 'PRS' },
+      { name: 'Istanbul', code: 'IST' },
+      { name: 'Berlin', code: 'BRL' },
+      { name: 'Barcelona', code: 'BRC' },
+      { name: 'Rome', code: 'RM' },
+    ];
+
+    this.targetCities = [];
+
+    this.orderCities = [
+      { name: 'San Francisco', code: 'SF' },
+      { name: 'London', code: 'LDN' },
+      { name: 'Paris', code: 'PRS' },
+      { name: 'Istanbul', code: 'IST' },
+      { name: 'Berlin', code: 'BRL' },
+      { name: 'Barcelona', code: 'BRC' },
+      { name: 'Rome', code: 'RM' },
+    ];
+  }
+  loadWishlist(): void {
+    this.wishlistService.getWishlist().subscribe(
+      (wishlist) => {
+        this.wishlistPackageIds = wishlist.map((pkg) => pkg.id);
+        this.updatePackagesWishlistStatus();
+      },
+      (error) => {
+        console.error('Error loading wishlist:', error);
+      }
     );
   }
-  loadData(
+   loadData(
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
@@ -94,26 +145,83 @@ export class PackagesComponent implements OnInit {
         this.packages = response.data.$values;
         this.totalItems = response.totalCount;
         this.currentPage = response.pageNumber;
-        this.itemsPerPage = response.pageSize; // Assuming the response contains the total number of pages
+        this.itemsPerPage = response.pageSize;
+        this.updatePackagesWishlistStatus();
       },
       (error) => {
         console.error('Error loading data:', error);
       }
     );
   }
+  updatePackagesWishlistStatus(): void {
+    this.packages.forEach((pkg) => {
+      pkg.isInWishlist = this.wishlistPackageIds.includes(pkg.id);
+    });
+  }
 
-  toggleWishlist(pack: Package): void {
-    if (this.wishlistService.isInWishlist(pack)) {
-      this.wishlistService.removeFromWishlist(pack).subscribe();
+ 
+
+  addToWishlist(pkg: Package): void {
+    this.wishlistService.likePackage(pkg).subscribe(
+      (response) => {
+        console.log('Package added to wishlist', response);
+        pkg.isInWishlist = true;
+        this.wishlistPackageIds.push(pkg.id);
+      },
+      (error) => {
+        console.error('Error adding package to wishlist', error);
+      }
+    );
+  }
+
+  removeFromWishlist(pkgId: number): void {
+    this.wishlistService.unlikePackage(pkgId).subscribe(
+      () => {
+        console.log('Package removed from wishlist');
+        const pkg = this.packages.find((p) => p.id === pkgId);
+        if (pkg) {
+          pkg.isInWishlist = false;
+        }
+        this.wishlistPackageIds = this.wishlistPackageIds.filter(
+          (id) => id !== pkgId
+        );
+      },
+      (error) => {
+        console.error('Error removing package from wishlist', error);
+      }
+    );
+  }
+
+  // Example function to toggle wishlist status
+  toggleWishlist(pkg: Package): void {
+    if (pkg.isInWishlist) {
+      this.removeFromWishlist(pkg.id);
     } else {
-      this.wishlistService.addToWishlist(pack, this.clientId).subscribe();
+      this.addToWishlist(pkg);
     }
   }
 
-  isInWishlist(pack: Package): boolean {
-    return this.wishlistService.isInWishlist(pack);
-  }
-
+  // toggleLove(pkg: Package): void {
+  //   if (pkg.liked) {
+  //     this.wishlistService.unlikePackage(pkg.id).subscribe(
+  //       () => {
+  //         pkg.liked = false;
+  //       },
+  //       (error) => {
+  //         console.error('Error unliking package:', error);
+  //       }
+  //     );
+  //   } else {
+  //     this.wishlistService.likePackage(pkg).subscribe(
+  //       () => {
+  //         pkg.liked = true;
+  //       },
+  //       (error) => {
+  //         console.error('Error liking package:', error);
+  //       }
+  //     );
+  //   }
+  // }
   onSortChange(event: any) {
     let value = event.value;
 
@@ -125,6 +233,9 @@ export class PackagesComponent implements OnInit {
       this.sortField = value;
     }
   }
+  // onFilter(dv: DataView, event: Event) {
+  //    dv.filter((event.target as HTMLInputElement).value);
+  // }
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
@@ -170,7 +281,33 @@ export class PackagesComponent implements OnInit {
     return item.id; // Replace "id" with the unique identifier of your data item
   }
 
-  // viewDetails(packageId: number): void {
-  //   this.router.navigate(['/packageDetails', packageId]);
-  // }
+  getToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
+  getRole(): string | null {
+    return localStorage.getItem('userRole');
+  }
+
+  decodeToken(): DecodedToken | null {
+    const token = this.getToken();
+    if (token) {
+      try {
+        return jwtDecode<DecodedToken>(token);
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+      }
+    }
+    return null;
+  }
+
+  getUserIdFromToken(): string | null {
+    const decodedToken = this.decodeToken();
+    return decodedToken
+      ? decodedToken[
+          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+        ]
+      : null;
+  }
 }

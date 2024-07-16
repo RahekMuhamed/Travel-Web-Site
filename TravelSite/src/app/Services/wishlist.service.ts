@@ -1,88 +1,143 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  tap,
+  throwError,
+} from 'rxjs';
 import { Wishlist } from '../models/wishlist';
 import { Package } from '../models/packages';
+import { AuthServiceService } from './auth-service.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WishlistService {
+  //private baseUrl: string = 'https://localhost:7062/api/LovePackage/';
   private baseUrl: string = 'https://localhost:7062/api/LovePackage/';
+  private userWishlistUrl: string =
+    'https://localhost:7062/api/LovePackage/user-packages';
+
   private wishlist: Package[] = [];
   private wishlistSubject = new BehaviorSubject<Package[]>(this.wishlist);
+  productIds: any[] = [];
+  constructor(
+    private http: HttpClient,
+    private authService: AuthServiceService
+  ) {}
 
-  constructor(private http: HttpClient) {}
-
-  get wishlist$(): Observable<Package[]> {
-    return this.wishlistSubject.asObservable();
-  }
-  getWishlistPackages(): Observable<any> {
-    const token = localStorage.getItem('authToken'); // Get the auth token from localStorage
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
-    return this.http.get<any>(this.baseUrl, { headers });
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('authToken');
-  }
-
-  fetchLikedPackages(): Observable<Package[]> {
-    const token = this.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
+  getWishlist(): Observable<Package[]> {
+    const headers = this.getAuthHeaders();
     return this.http
       .get<Package[]>(`${this.baseUrl}user-packages`, { headers })
-      .pipe(
-        tap((packages) => {
-          this.wishlist = packages;
-          this.wishlistSubject.next(this.wishlist);
-        })
-      );
+      .pipe(catchError(this.handleError));
   }
 
-  addToWishlist(pack: Package, clientId: string): Observable<any> {
-    const body = {
+  likePackage(pkg: Package): Observable<any> {
+    const headers = this.getAuthHeaders();
+    const data = {
       id: 0,
       date: new Date().toISOString(),
       isDeleted: false,
-      clientId: clientId,
-      packageId: pack.id,
+      clientId: this.authService.getUserIdFromToken(),
+      packageId: pkg.id,
+      packageName: pkg.name,
+      packageDescription: pkg.description,
+      packagePrice: pkg.price,
     };
-    const token = this.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    return this.http.post<any>(this.baseUrl, body, { headers }).pipe(
-      tap(() => {
-        this.wishlist.push(pack);
-        this.wishlistSubject.next(this.wishlist);
-      })
-    );
+    return this.http
+      .post<any>(this.baseUrl, data, { headers })
+      .pipe(catchError(this.handleError));
+  }
+  unlikePackage(pkgId: number): Observable<void> {
+    const headers = this.getAuthHeaders();
+    return this.http
+      .delete<void>(`${this.baseUrl}${pkgId}`, { headers })
+      .pipe(catchError(this.handleError));
   }
 
-  removeFromWishlist(pack: Package): Observable<any> {
-    const lovePackageId = this.getLovePackageId(pack); // Implement this method
-    const url = `${this.baseUrl}${lovePackageId}`;
-    const token = this.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    return this.http.delete<any>(url, { headers }).pipe(
-      tap(() => {
-        this.wishlist = this.wishlist.filter((p) => p.id !== pack.id);
-        this.wishlistSubject.next(this.wishlist);
-      })
-    );
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
   }
 
-  isInWishlist(pack: Package): boolean {
-    return this.wishlist.some((p) => p.id === pack.id);
+  // getLovedPackages(): Observable<Package[]> {
+  //   const headers = this.getAuthHeaders();
+  //   return this.http
+  //     .get<Package[]>(this.baseUrl, { headers })
+  //     .pipe(catchError(this.handleError));
+  // }
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side errors
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side errors
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 
-  private getLovePackageId(pack: Package): number {
-    // Implement logic to get the lovePackageId for the given package
-    return 0; // Placeholder, replace with actual logic
-  }
+  // fetchLikedPackages(): Observable<Package[]> {
+  //   const token = this.authService.getToken();
+  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  //   return this.http
+  //     .get<Package[]>(`${this.baseUrl}user-packages`, { headers })
+  //     .pipe(
+  //       tap((packages) => {
+  //         this.wishlist = packages;
+  //         this.wishlistSubject.next(this.wishlist);
+  //       })
+  //     );
+  // }
+
+  // addToWishlist(pack: Package): Observable<any> {
+  //   const body = {
+  //     id: 0,
+  //     date: new Date().toISOString(),
+  //     isDeleted: false,
+
+  //     packageId: pack.id,
+  //   };
+  //   const token = this.authService.getToken();
+  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  //   return this.http.post<any>(this.baseUrl, body, { headers }).pipe(
+  //     tap(() => {
+  //       this.wishlist.push(pack);
+  //       this.wishlistSubject.next(this.wishlist);
+  //     })
+  //   );
+  // }
+
+  // removeFromWishlist(pack: Package): Observable<any> {
+  //   const lovePackageId = this.getLovePackageId(pack); // Implement this method
+  //   const url = `${this.baseUrl}${lovePackageId}`;
+  //   const token = this.authService.getToken();
+  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  //   return this.http.delete<any>(url, { headers }).pipe(
+  //     tap(() => {
+  //       this.wishlist = this.wishlist.filter((p) => p.id !== pack.id);
+  //       this.wishlistSubject.next(this.wishlist);
+  //     })
+  //   );
+  // }
+
+  // isInWishlist(pack: Package): boolean {
+  //   return this.wishlist.some((p) => p.id === pack.id);
+  // }
 }

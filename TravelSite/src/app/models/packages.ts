@@ -16,6 +16,7 @@ export class Package {
     public duration?: number,
 public liked: boolean = false  ,
 public isInWishlist?: boolean,
+public wishlistItemId?: number | null,
    // public bookingPackages: BookingPackage[],
    //public lovePackages: LovePackage[],
   // public adminId: string | undefined,

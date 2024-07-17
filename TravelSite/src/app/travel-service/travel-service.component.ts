@@ -41,14 +41,13 @@ import { CategoryDropdownComponent } from '../category-dropdown/category-dropdow
     CommonModule,
     RouterModule,
     PaginationComponent,
-   SpinnerComponent,
+    SpinnerComponent,
     FormsModule,
     CategoryDropdownComponent,
-
   ],
 })
 export class TravelServiceComponent implements OnInit {
-  services: any[] = [];
+  services: Services[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalItems: number = 100;
@@ -57,7 +56,7 @@ export class TravelServiceComponent implements OnInit {
   categoryId: any;
   selectedCategoryId: string | undefined;
   isLoading: any;
-  sortOptions: { label: string; value: string; }[] | undefined;
+  sortOptions: { label: string; value: string }[] | undefined;
 
   constructor(
     private servicesService: ServicesService,
@@ -65,8 +64,7 @@ export class TravelServiceComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthServiceService
-
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.servicesService.loading$.subscribe(
@@ -96,7 +94,7 @@ export class TravelServiceComponent implements OnInit {
         console.error('Error loading data:', error);
       }
     );
- 
+
     this.servicesService.getAllHotels(page, pageSize).subscribe(
       (response) => {
         //
@@ -142,7 +140,6 @@ ngOnChanges(): void {
   //   });
   // }
   // }
-
 
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
@@ -192,27 +189,53 @@ ngOnChanges(): void {
     if (this.authService.isAuthenticated()) {
       const clientId = this.authService.getUserIdFromToken();
       if (clientId) {
-        this.router.navigate(['/AddBookingService'], { queryParams: { serviceId: serviceId, clientId: clientId } });
+        this.router.navigate(['/AddBookingService'], {
+          queryParams: { serviceId: serviceId, clientId: clientId },
+        });
       } else {
         console.error('Client ID not found.');
       }
-    } 
-    else {
+    } else {
       Swal.fire({
-      title: 'Not Logged In',
-      text: 'You need to log in to book a Service. Do you want to log in now?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, log in',
-      cancelButtonText: 'No, cancel'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.router.navigate(['/login']);
-      }
-    });
+        title: 'Not Logged In',
+        text: 'You need to log in to book a Service. Do you want to log in now?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log in',
+        cancelButtonText: 'No, cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
     }
   }
 
+  bookPackage(packageId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/communicationData'], {
+          queryParams: { packageId: packageId, clientId: clientId },
+        });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+      Swal.fire({
+        title: 'Not Logged In',
+        text: 'You need to log in to book a package. Do you want to log in now?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log in',
+        cancelButtonText: 'No, cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
+    }
+  }
 }
   // onPageSizeChange(event: Event): void {
   //   const target = event.target as HTMLSelectElement;

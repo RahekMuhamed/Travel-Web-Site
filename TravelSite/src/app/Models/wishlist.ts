@@ -6,5 +6,9 @@ export class Wishlist {
  public isDeleted: boolean,
  public clientId: string,
  public packageId: number,
+public packageName:string,
+public packageDescription:string,
+public packagePrice: number
+ 
   ) {}
 }

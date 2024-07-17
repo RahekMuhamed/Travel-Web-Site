@@ -2,21 +2,25 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable ,throwError} from 'rxjs';
 import { Services } from '../models/services';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, finalize, map } from 'rxjs/operators';
 import { AuthServiceService } from './auth-service.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ServicesService {
   //loading$: any;
-    loading$ = new BehaviorSubject<boolean>(false); // Initialized as a BehaviorSubject
 
-  getServicesByCategory(categoryId: any) {
-    throw new Error('Method not implemented.');
+  private baseUrl: string = 'http://localhost:7062/api/Service/';
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+
+  constructor(
+    private http: HttpClient,
+    private authService: AuthServiceService
+  ) {}
+
+  get loading$() {
+    return this.loadingSubject.asObservable();
   }
-  private baseUrl: string = 'http://localhost:5141/api/Service/';
-
-  constructor(private http: HttpClient,private authService:AuthServiceService) {}
   private getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
     return new HttpHeaders({
@@ -25,33 +29,44 @@ export class ServicesService {
     });
   }
 
+  // getAllpag(page?: number, pageSize?: number): Observable<any> {
+  //   const headers = this.getHeaders();
+  //   return this.http.get<any>(
+  //     `${this.baseUrl}?pageNumber=${page}&pageSize=${pageSize}`, { headers }
+  //   ).pipe(
+  //     map((response) => response),
+  //     catchError(this.handleError)
+  //   );
+  // }
   getAllpag(page?: number, pageSize?: number): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.get<any>(
-      `${this.baseUrl}?pageNumber=${page}&pageSize=${pageSize}`, { headers }
-    ).pipe(
+    this.loadingSubject.next(true);
+    return this.http
+      .get<any>(`${this.baseUrl}?pageNumber=${page}&pageSize=${pageSize}`)
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError),
+        finalize(() => this.loadingSubject.next(false))
+      );
+  }
+  // New method to fetch all hotel services
+  getAllHotels(page?: number, pageSize?: number): Observable<any> {
+    let url = `${this.baseUrl}HotelServices`;
+    if (page !== undefined && pageSize !== undefined) {
+      url += `?pageNumber=${page}&pageSize=${pageSize}`;
+    }
+    return this.http.get<any>(url).pipe(
       map((response) => response),
       catchError(this.handleError)
     );
   }
-    // New method to fetch all hotel services
- getAllHotels(page?: number, pageSize?: number): Observable<any> {
-  let url = `${this.baseUrl}HotelServices`;
-  if (page !== undefined && pageSize !== undefined) {
-    url += `?pageNumber=${page}&pageSize=${pageSize}`;
+  getServicesByCategory(categoryId: any) {
+    throw new Error('Method not implemented.');
   }
-  return this.http.get<any>(url).pipe(
-    map((response) => response),
-    catchError(this.handleError)
-  );
-}
-
-
   getAll(): Observable<Services[]> {
     const headers = this.getHeaders();
-    return this.http.get<any>(this.baseUrl, { headers }).pipe(
-      map(response => response.data)
-    );
+    return this.http
+      .get<any>(this.baseUrl, { headers })
+      .pipe(map((response) => response.data));
   }
 
   getserviceById(id: number): Observable<Services> {
@@ -75,7 +90,9 @@ export class ServicesService {
 
   update(serv: Services): Observable<Services> {
     const headers = this.getHeaders();
-    return this.http.put<Services>(`${this.baseUrl}${serv.id}`, serv, { headers });
+    return this.http.put<Services>(`${this.baseUrl}${serv.id}`, serv, {
+      headers,
+    });
   }
 
   deleteService(serviceId: number): Observable<void> {

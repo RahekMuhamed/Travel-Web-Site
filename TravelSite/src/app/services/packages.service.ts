@@ -10,9 +10,7 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root',
 })
 export class PackagesService {
-  private wishlistUrl: string = 'https://localhost:7062/api/LovePackage/';
-  private lovedPackagesUrl: string =
-    'https://localhost:7062/api/LovePackage/user-packages';
+ 
   private baseUrl: string = 'https://localhost:7062/api/Packages/';
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
@@ -31,8 +29,8 @@ export class PackagesService {
       .get<any>(`${this.baseUrl}?pageNumber=${page}&pageSize=${pageSize}`)
       .pipe(
         map((response) => response),
-        catchError(this.handleError)
-        // finalize(() => this.loadingSubject.next(false))
+        catchError(this.handleError),
+         finalize(() => this.loadingSubject.next(false))
       );
   }
 
@@ -49,41 +47,6 @@ export class PackagesService {
     );
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('authToken');
-  }
-
-  getUserIdFromToken(): string | null {
-    const token = this.getToken();
-    if (token) {
-      const decodedToken = this.decodeToken(token);
-      return decodedToken
-        ? decodedToken[
-            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
-          ]
-        : null;
-    }
-    return null;
-  }
-
-  private decodeToken(token: string): any {
-    try {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split('')
-          .map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-          })
-          .join('')
-      );
-      return JSON.parse(jsonPayload);
-    } catch (error) {
-      console.error('Failed to decode token', error);
-      return null;
-    }
-  }
 
   add(packageData: Package): Observable<any> {
     const token = this.authService.getToken();

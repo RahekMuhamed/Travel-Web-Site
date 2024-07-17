@@ -20,24 +20,24 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root',
 })
 export class WishlistService {
-  //private baseUrl: string = 'https://localhost:7062/api/LovePackage/';
   private baseUrl: string = 'https://localhost:7062/api/LovePackage/';
   private userWishlistUrl: string =
     'https://localhost:7062/api/LovePackage/user-packages';
 
-  private wishlist: Package[] = [];
-  private wishlistSubject = new BehaviorSubject<Package[]>(this.wishlist);
+  private wishlist: Wishlist[] = [];
+  private wishlistSubject = new BehaviorSubject<Wishlist[]>(this.wishlist);
   productIds: any[] = [];
   constructor(
     private http: HttpClient,
     private authService: AuthServiceService
   ) {}
 
-  getWishlist(): Observable<Package[]> {
+  getWishlist(): Observable<Wishlist[]> {
     const headers = this.getAuthHeaders();
-    return this.http
-      .get<Package[]>(`${this.baseUrl}user-packages`, { headers })
-      .pipe(catchError(this.handleError));
+    return this.http.get<any>(this.userWishlistUrl, { headers }).pipe(
+      map((response) => response.$values || []), // Extract the $values array
+      catchError(this.handleError)
+    );
   }
 
   likePackage(pkg: Package): Observable<any> {
@@ -57,18 +57,22 @@ export class WishlistService {
       .pipe(catchError(this.handleError));
   }
   unlikePackage(pkgId: number): Observable<void> {
-    const headers = this.getAuthHeaders();
+    const headers = this.getAuthHeaders(pkgId);
     return this.http
-      .delete<void>(`${this.baseUrl}${pkgId}`, { headers })
+      .delete<void>(this.baseUrl, { headers })
       .pipe(catchError(this.handleError));
   }
 
-  private getAuthHeaders(): HttpHeaders {
+  private getAuthHeaders(pkgId?: number): HttpHeaders {
     const token = this.authService.getToken();
-    return new HttpHeaders({
+    let headersConfig: { [key: string]: string } = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-    });
+    };
+    if (pkgId) {
+      headersConfig['Package-ID'] = pkgId.toString();
+    }
+    return new HttpHeaders(headersConfig);
   }
 
   // getLovedPackages(): Observable<Package[]> {
@@ -78,16 +82,16 @@ export class WishlistService {
   //     .pipe(catchError(this.handleError));
   // }
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {
-      // Client-side errors
-      errorMessage = `Error: ${error.error.message}`;
+      // Client-side or network error
+      console.error('An error occurred:', error.error.message);
     } else {
-      // Server-side errors
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      // Backend returned an unsuccessful response code
+      console.error(
+        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
+      );
     }
-    console.error(errorMessage);
-    return throwError(errorMessage);
+    return throwError('Something bad happened; please try again later.');
   }
 
   // fetchLikedPackages(): Observable<Package[]> {

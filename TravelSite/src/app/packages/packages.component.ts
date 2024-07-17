@@ -29,11 +29,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RatingModule } from 'primeng/rating';
 import { DecodedToken } from '../models/decoded-token';
 import { jwtDecode } from 'jwt-decode';
+import { HomeComponent } from '../home/home.component';
 @Component({
   selector: 'app-packages',
   standalone: true,
   templateUrl: './packages.component.html',
-  styleUrls: ['./packages.component.css'],
+  styleUrls: ['./packages.component.css', '../home/home.component.css'],
   providers: [PackagesService, HttpClientModule],
   imports: [
     HttpClientModule,
@@ -56,14 +57,8 @@ import { jwtDecode } from 'jwt-decode';
   ],
 })
 export class PackagesComponent implements OnInit {
-  dv: DataView | undefined;
-  sourceCities: any[] = [];
-
-  targetCities: any[] = [];
-
-  orderCities: any[] = [];
   packages: Package[] = [];
-  likedPackages: Set<number> = new Set();
+
   wishlistPackageIds: number[] = [];
   sortOptions!: SelectItem[];
 
@@ -74,68 +69,59 @@ export class PackagesComponent implements OnInit {
   isLoading = false;
 
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 3;
   totalItems: number = 100;
 
   wishlist: number[] = [];
- 
+  isInWishlist: boolean = false;
   packageId: number = 1;
   constructor(
     private packageService: PackagesService,
-    
+
     private route: ActivatedRoute,
     private router: Router,
-        private wishlistService: WishlistService,
+    private wishlistService: WishlistService,
     private authService: AuthServiceService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.packageService['loading$'].subscribe(
-      (isLoading: boolean) => (this.isLoading = isLoading)
+    this.packageService.loading$.subscribe(
+      (isLoading) => (this.isLoading = isLoading)
     );
-    this.loadWishlist();
-    // this.loadData();
+
+   
+     this.loadWishlist();
     this.loadData(this.currentPage, this.itemsPerPage);
+   
 
     this.sortOptions = [
       { label: 'Price High to Low', value: '!price' },
       { label: 'Price Low to High', value: 'price' },
     ];
-
-    this.sourceCities = [
-      { name: 'San Francisco', code: 'SF' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Paris', code: 'PRS' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Berlin', code: 'BRL' },
-      { name: 'Barcelona', code: 'BRC' },
-      { name: 'Rome', code: 'RM' },
-    ];
-
-    this.targetCities = [];
-
-    this.orderCities = [
-      { name: 'San Francisco', code: 'SF' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Paris', code: 'PRS' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Berlin', code: 'BRL' },
-      { name: 'Barcelona', code: 'BRC' },
-      { name: 'Rome', code: 'RM' },
-    ];
   }
+
   loadWishlist(): void {
     this.wishlistService.getWishlist().subscribe(
       (wishlist) => {
-        this.wishlistPackageIds = wishlist.map((pkg) => pkg.id);
-        this.updatePackagesWishlistStatus();
+        this.packages.forEach((pkg) => {
+          const wishlistItem = wishlist.find(
+            (item) => item.packageId === pkg.id
+          );
+          if (wishlistItem) {
+            pkg.isInWishlist = true;
+            pkg.wishlistItemId = wishlistItem.id;
+          } else {
+            pkg.isInWishlist = false;
+            pkg.wishlistItemId = null;
+          }
+        });
       },
       (error) => {
         console.error('Error loading wishlist:', error);
       }
     );
   }
-   loadData(
+  loadData(
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
@@ -159,69 +145,48 @@ export class PackagesComponent implements OnInit {
     });
   }
 
- 
-
-  addToWishlist(pkg: Package): void {
-    this.wishlistService.likePackage(pkg).subscribe(
-      (response) => {
-        console.log('Package added to wishlist', response);
-        pkg.isInWishlist = true;
-        this.wishlistPackageIds.push(pkg.id);
-      },
-      (error) => {
-        console.error('Error adding package to wishlist', error);
-      }
-    );
+  private addToWishlist(packageId: number): void {
+    this.wishlistPackageIds.push(packageId);
+    this.updatePackagesWishlistStatus();
   }
 
-  removeFromWishlist(pkgId: number): void {
-    this.wishlistService.unlikePackage(pkgId).subscribe(
-      () => {
-        console.log('Package removed from wishlist');
-        const pkg = this.packages.find((p) => p.id === pkgId);
-        if (pkg) {
-          pkg.isInWishlist = false;
-        }
-        this.wishlistPackageIds = this.wishlistPackageIds.filter(
-          (id) => id !== pkgId
-        );
-      },
-      (error) => {
-        console.error('Error removing package from wishlist', error);
-      }
-    );
-  }
-
-  // Example function to toggle wishlist status
-  toggleWishlist(pkg: Package): void {
-    if (pkg.isInWishlist) {
-      this.removeFromWishlist(pkg.id);
-    } else {
-      this.addToWishlist(pkg);
+  private removeFromWishlist(packageId: number): void {
+    const index = this.wishlistPackageIds.indexOf(packageId);
+    if (index !== -1) {
+      this.wishlistPackageIds.splice(index, 1);
+      this.updatePackagesWishlistStatus();
     }
   }
 
-  // toggleLove(pkg: Package): void {
-  //   if (pkg.liked) {
-  //     this.wishlistService.unlikePackage(pkg.id).subscribe(
-  //       () => {
-  //         pkg.liked = false;
-  //       },
-  //       (error) => {
-  //         console.error('Error unliking package:', error);
-  //       }
-  //     );
-  //   } else {
-  //     this.wishlistService.likePackage(pkg).subscribe(
-  //       () => {
-  //         pkg.liked = true;
-  //       },
-  //       (error) => {
-  //         console.error('Error liking package:', error);
-  //       }
-  //     );
-  //   }
-  // }
+  toggleWishlist(pkg: Package): void {
+    if (pkg.isInWishlist) {
+      // Remove from wishlist
+      this.wishlistService.unlikePackage(pkg.wishlistItemId!).subscribe(
+        () => {
+          pkg.isInWishlist = false;
+          pkg.wishlistItemId = null;
+          console.log('Package removed from wishlist:', pkg);
+        },
+        (error) => {
+          console.error('Error removing package from wishlist:', error);
+        }
+      );
+    } else {
+      // Add to wishlist
+      this.wishlistService.likePackage(pkg).subscribe(
+        (response) => {
+          pkg.isInWishlist = true;
+          pkg.wishlistItemId = response.id; // Assuming response contains the new wishlist item ID
+          console.log('Package added to wishlist:', pkg);
+        },
+        (error) => {
+          console.error('Error adding package to wishlist:', error);
+        }
+      );
+    } 
+  }
+ 
+ 
   onSortChange(event: any) {
     let value = event.value;
 
@@ -285,7 +250,9 @@ export class PackagesComponent implements OnInit {
     if (this.authService.isAuthenticated()) {
       const clientId = this.authService.getUserIdFromToken();
       if (clientId) {
-        this.router.navigate(['/communicationData'], { queryParams: { packageId: packageId, clientId: clientId } });
+        this.router.navigate(['/communicationData'], {
+          queryParams: { packageId: packageId, clientId: clientId },
+        });
       } else {
         console.error('Client ID not found.');
       }
@@ -296,14 +263,38 @@ export class PackagesComponent implements OnInit {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, log in',
-        cancelButtonText: 'No, cancel'
+        cancelButtonText: 'No, cancel',
       }).then((result) => {
         if (result.isConfirmed) {
           this.router.navigate(['/login']);
         }
       });
     }
-     
+  }
+  bookPackage(packageId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/communicationData'], {
+          queryParams: { packageId: packageId, clientId: clientId },
+        });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+      Swal.fire({
+        title: 'Not Logged In',
+        text: 'You need to log in to book a package. Do you want to log in now?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log in',
+        cancelButtonText: 'No, cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
+    }
   }
 }
 

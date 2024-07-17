@@ -51,6 +51,9 @@ import { CommonModule } from '@angular/common';
 import { CommunicationDataComponent } from './communication-data/communication-data.component';
 import { GetAllBookingPackageComponent } from './BookingPackage/get-all-booking-package/get-all-booking-package.component';
 import { ChatComponent } from './real-time-chat/chat/chat.component';
+import { ClientServiceDetailsComponent } from './service-details/service-details.component';
+import { ClientPackageDetailsComponent } from './package-details/package-details.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 
 
@@ -59,15 +62,14 @@ export const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     title: 'home',
-    },
-     { path: '', redirectTo: '/login', pathMatch: 'full' },
-     { path: 'services', component: TravelServiceComponent },
-     { path: 'packages', component: PackagesComponent },
+  },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'services', component: TravelServiceComponent },
+  { path: 'packages', component: PackagesComponent },
 
   // Route to the 'ChatComponent' when the path is 'chat'
-   { path: 'chat', component: ChatComponent },
+  { path: 'chat', component: ChatComponent },
   //############################
-
 
   //chat with css tailwind
   {
@@ -75,8 +77,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./chat/room/room.component').then((m) => m.RoomComponent),
   },
-  { path: 'serviceDetails/:id', component: ServiceDetailsComponent },
-  { path: 'serviceDetails/:id', component: PackageDetailsComponent },
+  { path: 'serviceDetails/:id', component: ClientServiceDetailsComponent },
+  { path: 'packageDetails/:id', component: ClientPackageDetailsComponent },
+  {path: 'wishlist',component: WishlistComponent},
   /*{
     path: 'SuperAdmin',
     loadChildren: () =>
@@ -84,22 +87,42 @@ export const routes: Routes = [
         (m) => m.SuperAdminroutes
       ),
     },*/
-    {
-        path: "payment",
-        component: PaymentComponent,
-        title:"checkout"
+  {
+    path: 'payment',
+    component: PaymentComponent,
+    title: 'checkout',
   },
-  { path:"ServicePayment", component: ServicePaymentComponent, title: "Hotels Checkout" },
-  { path:"AddBookingPackage", component: AddBookingPackageComponent, title: "Booking Package" },
-  { path: "AddBookingService", component: AddBookingServiceComponent, title: "Booking Hotel" },
-   { path: 'payment-success', component: PaymentSuccessComponent },
+  {
+    path: 'ServicePayment',
+    component: ServicePaymentComponent,
+    title: 'Hotels Checkout',
+  },
+  {
+    path: 'AddBookingPackage',
+    component: AddBookingPackageComponent,
+    title: 'Booking Package',
+  },
+  {
+    path: 'AddBookingService',
+    component: AddBookingServiceComponent,
+    title: 'Booking Hotel',
+  },
+  { path: 'payment-success', component: PaymentSuccessComponent },
   { path: 'payment-failure', component: PaymnetFailureComponent },
   { path: 'payment-cancel', component: PaymentCancellComponent },
-  { path: 'communicationData', component: CommunicationDataComponent, title: "communication Form" },
-  { path:"GetAllPackageBooking", component: GetAllBookingPackageComponent, title: "All Booking" },
+  {
+    path: 'communicationData',
+    component: CommunicationDataComponent,
+    title: 'communication Form',
+  },
+  {
+    path: 'GetAllPackageBooking',
+    component: GetAllBookingPackageComponent,
+    title: 'All Booking',
+  },
   //{path :"BookingDetails/:id",component:BookingDetailsComponent ,title:"Booking Package"},
-  { path:"SignUp", component: SignUpComponent, title: "Register" },
-  {path:"login" ,component:LoginComponent,title:"login"},
+  { path: 'SignUp', component: SignUpComponent, title: 'Register' },
+  { path: 'login', component: LoginComponent, title: 'login' },
   {
     path: '',
     redirectTo: 'home',
@@ -170,13 +193,13 @@ export const routes: Routes = [
         data: { roles: ['admin'] },
       },
 
-{
+      {
         path: 'packageDetail/:id',
         component: PackageDetailsComponent,
         canActivate: [AuthGuardService],
         data: { roles: ['admin'] },
       },
-     /* {
+      /* {
         path: 'AddPackage',
         component:AddPackageComponent,
         canActivate: [AuthGuardService],
@@ -245,7 +268,7 @@ export const routes: Routes = [
       },
       {
         path: 'superservicelist',
-        component: ServicesListComponent ,
+        component: ServicesListComponent,
         canActivate: [AuthGuardService],
         data: { roles: ['superAdmin'] },
       },

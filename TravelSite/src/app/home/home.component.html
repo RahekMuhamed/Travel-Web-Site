@@ -87,7 +87,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> 
 <div class="container SERVICE">
   <h1 class="headline">SERVICES</h1>
         <div class="row">
@@ -109,102 +109,21 @@
         </div>
   </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+  <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
   <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
-  </button>
-</div> -->
+  </button> -->
+</div> 
 <!-- end of slider -->
 
-<!-- service cards -->
 
-<div class="container">
-  <h1 class="headline">Services</h1>
-  <!-- <div class="row"> -->
-  <div
-    class="cardcontainer m-2"
-    *ngFor="let item of services | slice : -3; let i = index"
-  >
-    <!-- @for (item of services; track $index) { -->
-
-    <div class="photo">
-      <img src="{{ item.image }}" />
-      <!-- <img src="{{ item.image}}"> -->
-    </div>
-
-    <div class="content">
-      <p class="txt4">{{ item.name }}</p>
-      <!-- <p class="date">{{ item.startDate}}</p> -->
-
-      <p class="txt5">{{ item.price }}$</p>
-      <p class="txt2">{{ item.description }}</p>
-    </div>
-
-    <div class="footer">
-      <p>
-        <!-- <a class="waves-effect waves-light btn" href="/srviceDetails">Read More</a> -->
-        <a
-          class="waves-effect waves-light btn"
-          [routerLink]="['/serviceDetails', item.id]"
-          >Read More</a
-        >
-        <a id="heart"
-          ><span class="like"><i class="fab fa-gratipay"></i>Like</span></a
-        >
-      </p>
-      <button class="book-btn">book now</button>
-      <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
-    </div>
-
-    <!-- }  -->
-  </div>
-</div>
-
-<!-- end of service cards -->
-
-<!-- </div> -->
 
 <!-- hhhhhhhhhhh -->
 
-<div class="container">
-  <h1 class="headline">Packages</h1>
-  <!-- <div class="row"> -->
-
-  <div
-    class="cardcontainer m-2"
-    *ngFor="let item of packages | slice : -3; let i = index"
-  >
-    <div class="photo">
-      <img src="{{ item.image }}" />
-    </div>
-
-    <div class="content">
-      <p class="txt4">{{ item.name }}</p>
-      <!-- <p class="date">{{ item.startDate}}</p> -->
-
-      <p class="txt5">{{ item.price }}$</p>
-      <p class="txt2">{{ item.description }}</p>
-    </div>
-
-    <div class="footer">
-      <p>
-        <a
-          class="waves-effect waves-light btn"
-          [routerLink]="['/packageDetails', item.id]"
-          >Read More</a
-        >
-        <a id="heart"
-          ><span class="like"><i class="fab fa-gratipay"></i>Like</span></a
-        >
-      </p>
-      <button class="book-btn">book now</button>
-      <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
-    </div>
-  </div>
 
 <!--        pACKAGES -->
         <div class="container packages">
@@ -219,7 +138,7 @@
                   <p class="card-text">{{item.price}}$</p>
                   <div class="footer">
                     <p>
-                      <a class="waves-effect waves-light btn" [routerLink]="['/packageDetails', item.id]">Read More</a>
+                      <a class="waves-effect waves-light btn"  [routerLink]="['/packageDetails', item.id]">Read More</a>
                       <a id="heart"><span class="like"><i class="fab fa-gratipay"></i></span></a>
                     </p>
                     <button class="book-btn" (click)="bookPackage(item.id)">Book now</button>
@@ -229,7 +148,7 @@
             </div>
           </div>
         </div>
-<div>
+
 
   <section class="ezy__service2">
     <div class="container">
@@ -290,55 +209,8 @@
       </div>
     </div>
   </section>
-</div>
+
   <app-footer></app-footer>
 
-<!-- <p-card header="Advanced Card" subheader="Card Subheader" [style]="{ width: '360px' }">
-    <ng-template pTemplate="header">
-        <img alt="Card" src="../../assets/umrah3.jpeg" />
-    </ng-template>
-    <p>
-        Lorem ipsum dolor sit amet...
-    </p>
-    <ng-template pTemplate="footer">
-        <div class="flex gap-3 mt-1">
-            <p-button label="Cancel" severity="secondary" class="w-full" styleClass="w-full" />
-            <p-button label="Save" class="w-full" styleClass="w-full" />
-        </div>
-    </ng-template>
-</p-card> -->
-<!-- @for (item of services; track $index) {
-      <tr >
-        <td>{{item.id}}</td>
-        <td>{{ item.name}}</td>
-        <td>{{ item.quantityAvailable}}</td>
-        <td>
-          <button class="btn btn-info">Details</button>
-        </td>
-        <td>
-          <button class="btn btn-warning">Update</button>
-        </td>
-        <td>
-          <button class="btn btn-danger">Remove</button>
-        </td>
-      </tr>
-    }
 
 
-<div *ngFor="let service of services" class="service">
-  <h1>hiiiiii</h1>
-  <h3>{{ service.name }} hell</h3>
-  <p>{{ service.description }}</p>
-  <p>Price: {{ service.price }}</p>
-  <a [routerLink]="['/booking', service.id]">Book Now</a>
-</div> -->
-
-<!-- <div *ngFor="let service of services" class="service">
-  <h1>{{ service.name }}</h1>
-  <h3>{{ service.description }}</h3>
-  <p>Price: {{ service.price }}</p>
-  <a [routerLink]="['/booking', service.id]" class="btn btn-primary">Book Now</a>
-  <a [routerLink]="['/service-details', service.id]" class="btn btn-info">Details</a>
-  <a [routerLink]="['/update-service', service.id]" class="btn btn-warning">Update</a>
-
-</div> -->

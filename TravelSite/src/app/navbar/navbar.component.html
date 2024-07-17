@@ -1,9 +1,7 @@
-
-
 <div class="container-fluid sticky-top header-container">
   <!-- home section -->
   <section class="homeSection_1">
-    <div class="logo">
+    <!-- <div class="logo">
       <a routerLink="/home"
         class="d-inline-flex flex-column align-items-center justify-content-center text-decoration-none">
         <div id="floral">
@@ -11,27 +9,56 @@
         </div>
         <div id="boutique">Travelling</div>
       </a>
-    </div>
-    <nav class="navbar navbar-expand-lg navbar-light ">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    </div> -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" routerLink="/home" routerLinkActive="active-link">Home <span class="sr-only">(current)</span></a>
+            <a
+              class="nav-link"
+              routerLink="/home"
+              routerLinkActive="active-link"
+              >Home <span class="sr-only">(current)</span></a
+            >
           </li>
-          <li class="nav-item ">
-            <a class="nav-link"routerLink="/packages" routerLinkActive="active-link"> Packages </a>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/packages"
+              routerLinkActive="active-link"
+            >
+              Packages
+            </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" routerLink="/services" routerLinkActive="active-link"> Services </a>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/services"
+              routerLinkActive="active-link"
+            >
+              Services
+            </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link"  routerLink="About" routerLinkActive="active-link">Contact Us </a>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="About"
+              routerLinkActive="active-link"
+              >Contact Us
+            </a>
           </li>
-         <!-- <li class="nav-item " >
+          <!-- <li class="nav-item " >
 
           </li>
           <li class="nav-item dropdown">
@@ -55,7 +82,7 @@
               aria-haspopup="true" aria-expanded="false">
             </a>
           <! amira update -->
-        <!--  <li>
+          <!--  <li>
           <ul class="nav-icons">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
@@ -92,49 +119,56 @@
                                         </ul>
 
                    end li icons -->
-                         <!-- </ul>
+          <!-- </ul>
                           <!- end navar nav -->
-                          <!--  </div>
+          <!--  </div>
                           <!- end collapse -->
-                          <!--  </nav>
+          <!--  </nav>
                           </section>
                           </div>-->
+          <div>
+            <button routerLink="/wishlist" class="btn cart-btn" type="submit">
+              <i class="fa-solid fa-heart"></i>
+            </button>
+          </div>
+          <div class="dropdown-container">
+            <details class="dropdown right">
+              <summary class="avatar">
+                <img
+                  src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
+              </summary>
+              <ul>
+                <li>
+                  <div *ngIf="user">
+                    <p class="fs-5"><span>Hi:</span> {{ user.fname }}</p>
+                  </div>
+                </li>
+                <li>
+                  <a
+                    routerLink="/profile"
+                    *ngIf="isAuthenticated(); else loginLink"
+                  >
+                    <span class="material-symbols-outlined">account</span>
+                  </a>
+                  <ng-template #loginLink>
+                    <a routerLink="/login">
+                      <span class="material-symbols-outlined">login</span>
+                    </a>
+                  </ng-template>
+                </li>
 
-         <div class="dropdown-container">
-                <details class="dropdown right">
-                  <summary class="avatar">
-                    <img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp">
-                  </summary>
-                  <ul>
-                    <li>
-                      <div *ngIf="user">
-                        <p class="fs-5"><span>Hi:</span> {{ user.fname }}</p>
-                      </div>
-                    </li>
-                    <li>
-                      <a routerLink="/profile" *ngIf="isAuthenticated(); else loginLink">
-                        <span class="material-symbols-outlined">account</span>
-                      </a>
-                      <ng-template #loginLink>
-                        <a routerLink="/login">
-                          <span class="material-symbols-outlined">login</span>
-                        </a>
-                      </ng-template>
-                    </li>
-              
-                    <li class="divider" *ngIf="isAuthenticated()"></li>
-                    <li>
-                      <a (click)="onLogoutClick()" *ngIf="isAuthenticated()">
-                        <span class="material-symbols-outlined">logout</span>
-                      </a>
-                    </li>
-                  </ul>
-                </details>
-              </div>
-             
+                <li class="divider" *ngIf="isAuthenticated()"></li>
+                <li>
+                  <a (click)="onLogoutClick()" *ngIf="isAuthenticated()">
+                    <span class="material-symbols-outlined">logout</span>
+                  </a>
+                </li>
+              </ul>
+            </details>
+          </div>
 
-           
-        <!-- <ul class="ifUserLogged">
+          <!-- <ul class="ifUserLogged">
               <li class="nav-item ">
                 <a href="user.html" class="profile"><i class="fa-solid fa-house-chimney-user"></i></a>
                     
@@ -145,4 +179,8 @@
               </li>
             </ul>
           </ul>-->
-
+        </ul>
+      </div>
+    </nav>
+  </section>
+</div>

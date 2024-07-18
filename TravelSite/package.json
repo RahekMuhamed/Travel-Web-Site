@@ -26,6 +26,7 @@
     "daisyui": "^4.12.10",
     "jwt-decode": "^4.0.0",
     "ng-multiselect-dropdown": "^1.0.0",
+    "ng2-search-filter": "^0.5.1",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.1",
     "rxjs": "~7.8.0",

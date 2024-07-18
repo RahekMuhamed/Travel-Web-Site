@@ -85,33 +85,7 @@ export class WishlistComponent implements OnInit {
       pkg.isInWishlist = this.wishlistPackageIds.includes(pkg.id);
     });
   }
-  toggleWishlist(pkg: Package): void {
-    if (pkg.isInWishlist) {
-      // Remove from wishlist
-      this.wishlistService.unlikePackage(pkg.wishlistItemId!).subscribe(
-        () => {
-          pkg.isInWishlist = false;
-          pkg.wishlistItemId = null;
-          console.log('Package removed from wishlist:', pkg);
-        },
-        (error) => {
-          console.error('Error removing package from wishlist:', error);
-        }
-      );
-    } else {
-      // Add to wishlist
-      this.wishlistService.likePackage(pkg).subscribe(
-        (response) => {
-          pkg.isInWishlist = true;
-          pkg.wishlistItemId = response.id; // Assuming response contains the new wishlist item ID
-          console.log('Package added to wishlist:', pkg);
-        },
-        (error) => {
-          console.error('Error adding package to wishlist:', error);
-        }
-      );
-    }
-  }
+ 
   bookPackage(packageId: number): void {
     if (this.authService.isAuthenticated()) {
       const clientId = this.authService.getUserIdFromToken();

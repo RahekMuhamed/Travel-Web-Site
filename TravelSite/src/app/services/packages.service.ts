@@ -10,7 +10,6 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root',
 })
 export class PackagesService {
- 
   private baseUrl: string = 'https://localhost:7062/api/Packages/';
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
@@ -30,7 +29,7 @@ export class PackagesService {
       .pipe(
         map((response) => response),
         catchError(this.handleError),
-         finalize(() => this.loadingSubject.next(false))
+        finalize(() => this.loadingSubject.next(false))
       );
   }
 
@@ -46,7 +45,7 @@ export class PackagesService {
       catchError(this.handleError)
     );
   }
-
+  
 
   add(packageData: Package): Observable<any> {
     const token = this.authService.getToken();

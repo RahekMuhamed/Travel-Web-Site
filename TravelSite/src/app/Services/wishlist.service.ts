@@ -35,15 +35,13 @@ export class WishlistService {
   getWishlist(): Observable<Wishlist[]> {
     const headers = this.getAuthHeaders();
     return this.http.get<any>(this.userWishlistUrl, { headers }).pipe(
-      map((response) => response.$values || []), // Extract the $values array
+      map((response) => response.$values || []),
       catchError(this.handleError)
     );
   }
-
   likePackage(pkg: Package): Observable<any> {
     const headers = this.getAuthHeaders();
     const data = {
-      id: 0,
       date: new Date().toISOString(),
       isDeleted: false,
       clientId: this.authService.getUserIdFromToken(),
@@ -56,24 +54,35 @@ export class WishlistService {
       .post<any>(this.baseUrl, data, { headers })
       .pipe(catchError(this.handleError));
   }
-  unlikePackage(pkgId: number): Observable<void> {
-    const headers = this.getAuthHeaders(pkgId);
+  unlikePackage(wishlistItemId: number, packageId: number): Observable<any> {
+    const headers = this.getAuthHeaders(packageId);
     return this.http
-      .delete<void>(this.baseUrl, { headers })
+      .delete<any>(`${this.baseUrl}/${wishlistItemId}`, { headers })
       .pipe(catchError(this.handleError));
   }
 
-  private getAuthHeaders(pkgId?: number): HttpHeaders {
+  private getAuthHeaders(packageId?: number): HttpHeaders {
     const token = this.authService.getToken();
     let headersConfig: { [key: string]: string } = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
-    if (pkgId) {
-      headersConfig['Package-ID'] = pkgId.toString();
+    if (packageId) {
+      headersConfig['Package-ID'] = packageId.toString();
     }
     return new HttpHeaders(headersConfig);
   }
+  // private getAuthHeaders(pkgId?: number): HttpHeaders {
+  //   const token = this.authService.getToken();
+  //   let headersConfig: { [key: string]: string } = {
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${token}`,
+  //   };
+  //   if (pkgId) {
+  //     headersConfig['Package-ID'] = pkgId.toString();
+  //   }
+  //   return new HttpHeaders(headersConfig);
+  // }
 
   // getLovedPackages(): Observable<Package[]> {
   //   const headers = this.getAuthHeaders();

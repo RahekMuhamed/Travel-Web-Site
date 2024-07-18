@@ -17,10 +17,7 @@ export class Package {
 public liked: boolean = false  ,
 public isInWishlist?: boolean,
 public wishlistItemId?: number | null,
-   // public bookingPackages: BookingPackage[],
-   //public lovePackages: LovePackage[],
-  // public adminId: string | undefined,
-  // public admin: admin,
+
    public serviceNames: {}={}
   ,
     public firstLocationDuration?: number,

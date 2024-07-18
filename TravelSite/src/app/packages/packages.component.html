@@ -7,7 +7,7 @@
 
   <div *ngIf="!isLoading">
 
-    
+
     <div class="container">
       <p-dataView
         #dv
@@ -25,11 +25,15 @@
               styleClass="mb-2 md:mb-0"
             ></p-dropdown>
           </div>
+
+
         </ng-template>
+
         <ng-template pTemplate="list" let-packages>
-         
+
 <!--        pACKAGES -->
         <div class="container packages">
+
           <!-- <h1 class="headline">PACKAGES</h1> -->
           <div class="row">
             <div *ngFor="let item of packages ; let i = index" class="col-12 col-md-4 col-lg-3 mb-4">
@@ -42,8 +46,14 @@
                   <div class="footer">
                     <p>
                       <a class="waves-effect waves-light btn"  [routerLink]="['/packageDetails', item.id]">Read More</a>
-                    
-              <a id="heart" (click)="toggleWishlist(item)">
+
+                       <a id="heart" (click)="toggleWishlist(item)">
+    <span class="like" [ngClass]="{ liked: item.isInWishlist }">
+      <i class="fab fa-gratipay" [style.color]="item.isInWishlist ? 'red' : 'black'"></i>
+      {{ item.isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist' }}
+    </span>
+  </a>
+              <!-- <a id="heart" (click)="toggleWishlist(item)">
              <span class="like" [ngClass]="{ liked: item.isInWishlist }">
           <i
             class="fab fa-gratipay"
@@ -52,7 +62,7 @@
         </i>
           Like
         </span>
-      </a> 
+      </a>  -->
                     </p>
 
                     <button class="book-btn" (click)="bookPackage(item.id)">Book now</button>
@@ -62,14 +72,14 @@
             </div>
           </div>
         </div>
-          
-          
+
+
 
         </ng-template>
       </p-dataView>
     </div>
 
-   
+
   </div>
 
 
@@ -81,4 +91,4 @@
   <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
 </div>
 <app-footer></app-footer>
- 
+

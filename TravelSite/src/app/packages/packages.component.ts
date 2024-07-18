@@ -30,6 +30,7 @@ import { RatingModule } from 'primeng/rating';
 import { DecodedToken } from '../models/decoded-token';
 import { jwtDecode } from 'jwt-decode';
 import { HomeComponent } from '../home/home.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 @Component({
   selector: 'app-packages',
   standalone: true,
@@ -54,10 +55,12 @@ import { HomeComponent } from '../home/home.component';
     OrderListModule,
     InputTextModule,
     RatingModule,
+    OrderListModule
   ],
 })
 export class PackagesComponent implements OnInit {
   packages: Package[] = [];
+  searchText!: string;
 
   wishlistPackageIds: number[] = [];
   sortOptions!: SelectItem[];
@@ -75,6 +78,7 @@ export class PackagesComponent implements OnInit {
   wishlist: number[] = [];
   isInWishlist: boolean = false;
   packageId: number = 1;
+  searchTerm: string = '';
   constructor(
     private packageService: PackagesService,
 
@@ -89,38 +93,26 @@ export class PackagesComponent implements OnInit {
       (isLoading) => (this.isLoading = isLoading)
     );
 
-   
-     this.loadWishlist();
     this.loadData(this.currentPage, this.itemsPerPage);
-   
+    this.loadWishlist();
 
     this.sortOptions = [
       { label: 'Price High to Low', value: '!price' },
       { label: 'Price Low to High', value: 'price' },
     ];
   }
-
   loadWishlist(): void {
     this.wishlistService.getWishlist().subscribe(
       (wishlist) => {
-        this.packages.forEach((pkg) => {
-          const wishlistItem = wishlist.find(
-            (item) => item.packageId === pkg.id
-          );
-          if (wishlistItem) {
-            pkg.isInWishlist = true;
-            pkg.wishlistItemId = wishlistItem.id;
-          } else {
-            pkg.isInWishlist = false;
-            pkg.wishlistItemId = null;
-          }
-        });
+        this.wishlistPackageIds = wishlist.map((item) => item.packageId);
+        this.updatePackagesWishlistStatus();
       },
       (error) => {
         console.error('Error loading wishlist:', error);
       }
     );
   }
+
   loadData(
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
@@ -145,48 +137,53 @@ export class PackagesComponent implements OnInit {
     });
   }
 
+  toggleWishlist(item: Package): void {
+    if (item.isInWishlist) {
+      // Remove from wishlist
+      if (item.wishlistItemId) {
+        this.wishlistService
+          .unlikePackage(item.wishlistItemId, item.id)
+          .subscribe(
+            () => {
+              item.isInWishlist = false;
+              item.wishlistItemId = null;
+              this.removeFromWishlist(item.id); // Update local wishlist tracking
+              console.log('Package removed from wishlist:', item);
+            },
+            (error) => {
+              console.error('Error removing package from wishlist:', error);
+            }
+          );
+      }
+    } else {
+      // Add to wishlist
+      this.wishlistService.likePackage(item).subscribe(
+        (response) => {
+          item.isInWishlist = true;
+          item.wishlistItemId = response.id; // Assuming response contains the new wishlist item ID
+          this.addToWishlist(item.id); // Update local wishlist tracking
+          console.log('Package added to wishlist:', item);
+        },
+        (error) => {
+          console.error('Error adding package to wishlist:', error);
+        }
+      );
+    }
+  }
+
   private addToWishlist(packageId: number): void {
     this.wishlistPackageIds.push(packageId);
-    this.updatePackagesWishlistStatus();
+    // this.updatePackagesWishlistStatus();
   }
 
   private removeFromWishlist(packageId: number): void {
     const index = this.wishlistPackageIds.indexOf(packageId);
     if (index !== -1) {
       this.wishlistPackageIds.splice(index, 1);
-      this.updatePackagesWishlistStatus();
+      // this.updatePackagesWishlistStatus();
     }
   }
 
-  toggleWishlist(pkg: Package): void {
-    if (pkg.isInWishlist) {
-      // Remove from wishlist
-      this.wishlistService.unlikePackage(pkg.wishlistItemId!).subscribe(
-        () => {
-          pkg.isInWishlist = false;
-          pkg.wishlistItemId = null;
-          console.log('Package removed from wishlist:', pkg);
-        },
-        (error) => {
-          console.error('Error removing package from wishlist:', error);
-        }
-      );
-    } else {
-      // Add to wishlist
-      this.wishlistService.likePackage(pkg).subscribe(
-        (response) => {
-          pkg.isInWishlist = true;
-          pkg.wishlistItemId = response.id; // Assuming response contains the new wishlist item ID
-          console.log('Package added to wishlist:', pkg);
-        },
-        (error) => {
-          console.error('Error adding package to wishlist:', error);
-        }
-      );
-    } 
-  }
- 
- 
   onSortChange(event: any) {
     let value = event.value;
 

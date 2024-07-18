@@ -1,0 +1,78 @@
+<app-navbar></app-navbar>
+<div class="container packages">
+  <!-- <h1 class="headline">PACKAGES</h1> -->
+  <div class="row">
+    <div *ngFor="let item of packages ; let i = index" class="col-12 col-md-4 col-lg-3 mb-4">
+      <div class="card">
+        <img [src]="'../../../assets/'+ item?.image" alt="Dynamic Image" />
+        <div class="card-body">
+          <h5 class="card-title">{{item.name}}</h5>
+          <p class="card-text">{{item.description}}</p>
+          <p class="card-text">{{item.price}}$</p>
+          <div class="footer">
+            <p>
+              <a class="waves-effect waves-light btn" [routerLink]="['/packageDetails', item.id]">Read More</a>
+
+              <a id="heart" (click)="toggleWishlist(item)">
+                <span class="like" [ngClass]="{ liked: item.isInWishlist }">
+                  <i class="fab fa-gratipay" [style.color]="item.isInWishlist ? 'red' : 'black'">
+                  </i>
+                  Like
+                </span>
+              </a>
+            </p>
+
+            <button class="book-btn" (click)="bookPackage(item.id)">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="wishlist$ | async as wishlist; else loading">
+  <div *ngIf="wishlist.length > 0; else noPackages">
+    <div class="container packages">
+      <!-- <h1 class="headline">PACKAGES</h1> -->
+      <div class="row">
+        <div *ngFor="let pkg of wishlist; let i = index" class="col-12 col-md-4 col-lg-3 mb-4">
+          <div class="card">
+            <!-- <img [src]="'../../../assets/'+ pkg?.image" alt="Dynamic Image" /> -->
+            <div class="card-body">
+              <h5 class="card-title">{{pkg.packageName }}</h5>
+              <p class="card-text">{{pkg.packageDescription}}</p>
+              <p class="card-text">{{pkg.packagePrice}}$</p>
+              <div class="footer">
+                <p>
+                  <a class="waves-effect waves-light btn" [routerLink]="['/packageDetails', pkg.packageId]">Read
+                    More</a>
+
+                  <!-- <a id="heart" (click)="toggleWishlist(pkg)">
+             <span class="like" [ngClass]="{ liked: pkg.isInWishlist }">
+          <i
+            class="fab fa-gratipay"
+            [style.color]="pkg.isInWishlist ? 'red' : 'black'"
+          >
+        </i>
+          Like
+        </span>
+      </a>  -->
+                </p>
+
+                <button class="book-btn" (click)="bookPackage(pkg.packageId)">Book now</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>
+<ng-template #noPackages>
+  <p>No packages in wishlist.</p>
+</ng-template>
+
+<app-footer></app-footer>

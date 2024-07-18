@@ -9,9 +9,10 @@ import { CommonModule } from '@angular/common';
 import { Services } from '../models/services';
 import { ServicesService } from '../services/services.service';
 import { HttpClientModule } from '@angular/common/http';
-import { TravelServiceComponent } from '../travel-service/travel-service.component';
 import { Package } from '../models/packages';
 import { PackagesService } from '../services/packages.service';
+import { AuthServiceService } from '../services/auth-service.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -23,7 +24,6 @@ import { PackagesService } from '../services/packages.service';
     CommonModule,
     RouterModule,
     HttpClientModule,
-    TravelServiceComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -37,35 +37,22 @@ export class HomeComponent {
   totalItems: number = 100;
   constructor(
     private serviceservice: ServicesService,
-    private packageService: PackagesService
-  ) {}
+    private packageService: PackagesService,
+    public router: Router,
+    public authService: AuthServiceService
+  ) { }
   ngOnInit(): void {
 
 
-     this.loadServiceData(this.currentPage, this.itemsPerPage);
-      this.loadPackageData(this.currentPage, this.itemsPerPage);
-    // this.serviceservice.getAll().subscribe({
-    //   next: (response: Services[]) => {
-    //     this.services = response;
-    //   },
-    //   error: (err) => {
-    //     console.error('Error fetching services', err);
-    //   },
-    // });
-    // this.packageService.getAll().subscribe({
-    //   next: (response: Package[]) => {
-    //     this.packages = response;
-    //   },
-    //   error: (err) => {
-    //     console.error('Error fetching packages', err);
-    //   },
-    // });
+    this.loadServiceData(this.currentPage, this.itemsPerPage);
+    this.loadPackageData(this.currentPage, this.itemsPerPage);
+
   }
   loadServiceData(
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
-    this.serviceservice.getAll(page, pageSize).subscribe(
+    this.serviceservice.getAllpag(page, pageSize).subscribe(
       (response) => {
         //
         this.services = response.data.$values;
@@ -82,7 +69,7 @@ export class HomeComponent {
     page: number = this.currentPage,
     pageSize: number = this.itemsPerPage
   ): void {
-    this.packageService.getAll(page, pageSize).subscribe(
+    this.packageService.getAllpag(page, pageSize).subscribe(
       (response) => {
         //
         this.packages = response.data.$values;
@@ -94,5 +81,55 @@ export class HomeComponent {
         console.error('Error loading data:', error);
       }
     );
+  }
+
+  bookservice(serviceId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/AddBookingService'], { queryParams: { serviceId: serviceId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+        Swal.fire({
+        title: 'Not Logged In',
+        text: 'You need to log in to book a Service. Do you want to log in now?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log in',
+        cancelButtonText: 'No, cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
+    }
+     
+}
+  
+  bookPackage(packageId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/communicationData'], { queryParams: { packageId: packageId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+      Swal.fire({
+      title: 'Not Logged In',
+      text: 'You need to log in to book a package. Do you want to log in now?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, log in',
+      cancelButtonText: 'No, cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/login']);
+      }
+    });
+    }
+     
   }
 }

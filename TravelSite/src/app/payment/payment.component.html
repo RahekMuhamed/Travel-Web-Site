@@ -1,5 +1,10 @@
-<p>payment works!</p>
-<form (ngSubmit)="pay()" class="form-control">
-    <button type="submit" class="btn btn-info">Checkout</button>
+
+<div class="imgdiv">
+        <img src ="../../assets/credit-card-landing-page-payment-concept_23-2148298750.jpg">
+</div>
+<form (ngSubmit)="pay() ; false">
+    <div class="paybtn">
+         <button type="submit"><span class="fdd">Pay</span> <span class="ldd">Pal</span></button>
+    </div>
 </form>
 

@@ -293,7 +293,7 @@
 }
 
 .ezy__epoverview18-card {
-  background-color: var(--ezy-card-bg);
+ 
   border-radius: 15px;
 }
 
@@ -421,9 +421,12 @@
 
 .ezy__epoverview18-btn-outline:hover,
 .ezy__epoverview18-btn:hover {
-  background-color: rgba(var(--ezy-theme-color-rgb), 0.9) !important;
-  color: var(--ezy-button-color);
+  background-color: rgba(246, 246, 246, 0.9) !important;
+  color: rgb(13, 110, 253);
 }
+
+
+
 
 .ezy__epoverview18-fav,
 .ezy__epoverview18-share {
@@ -455,7 +458,100 @@
   padding-left: 8px;
   padding-right: 8px;
 }
+.img
+{
+  height:300px;
+  
+}
+.img img
+{
+  height: 100%;
+      border-radius: 10px;
+}
 
+ .book-btn {
+   --color: #0077ff;
+   font-family: inherit;
+   display: inline-block;
+   width: 92%;
+   height: 90%;
+   line-height: 2.5em;
+   overflow: hidden;
+   cursor: pointer;
+   margin: 8px;
+   font-size: 17px;
+   z-index: 1;
+   color: var(--color);
+   border: 2px solid var(--color);
+   border-radius: 6px;
+   position: relative;
+   text-align: center;
+ }
+
+ .book-btn::before {
+   position: absolute;
+   content: "";
+   background: var(--color);
+   width: 150px;
+   height: 200px;
+   z-index: -1;
+   border-radius: 50%;
+ }
+
+ .book-btn:hover {
+   color: white;
+ }
+
+ .book-btn:before {
+   top: 100%;
+   left: 100%;
+   transition: 0.3s all;
+ }
+
+ .book-btn:hover::before {
+   top: -30px;
+   left: -30px;
+ }
+
+ .footer {
+   width: 84%;
+   text-align: left;
+   position: absolute;
+   bottom: 5px;
+
+ }
+
+ /* read More*/
+ .btn {
+   position: relative;
+   top: 20px;
+   font-weight: bold;
+ }
+
+ .btn:hover {
+   color: #0077ff;
+ }
+
+ .price {
+   position: absolute;
+   bottom: 100px;
+   color: black;
+   font-weight: bold;
+ }
+
+ /*LIKE ICON*/
+ #heart {
+   cursor: pointer;
+ }
+
+ .like {
+   float: right;
+   font-size: 22px;
+   position: relative;
+   top: 20px;
+
+   color: #333333;
+ }
 /* .packages-list {
   display: flex;
   justify-content: center;
@@ -478,11 +574,7 @@
   transform: translateY(-5px);
 }
 
-.card-img-top {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
+
 
 .article-body {
   padding: 20px;

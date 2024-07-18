@@ -34,7 +34,16 @@
               Price is required.
             </div>
           </div>
+          <div class="form-outline form-white mb-4">
+            <label class="form-label" for="servicesprovider">services provider</label>
+            <ng-multiselect-dropdown
+              [placeholder]="'Select services provider'"
+              [data]="servicesproviderList"
+              formControlName="servicesprovider"
+              [settings]="dropdownSettings">
+            </ng-multiselect-dropdown>
 
+          </div>
         </div>
         <div class="col-md-6">
           <div class="form-outline form-white mb-4">
@@ -53,12 +62,12 @@
             </div>
           </div>
 <br>
-          <div class="form-outline form-white mb-4">
+       <div class="form-outline form-white mb-4">
             <input formControlName="image" type="file" id="image" name="image" class="form-control form-control-lg visually-hidden" accept="image/*" (change)="imageUpload($event)" />
             <label for="image" class="btn btn-primary btn-sm m-2">Select File</label>
             <label class="form-label" for="image">Upload Image</label>
             <span>{{ imageName }}</span>
-           <div *ngIf="formControls['image']?.touched && formControls['image']?.errors?.['required']" class="text-danger">
+          <div *ngIf="formControls['image']?.touched && formControls['image']?.errors?.['required']" class="text-danger">
               Image is required.
             </div>
           </div>

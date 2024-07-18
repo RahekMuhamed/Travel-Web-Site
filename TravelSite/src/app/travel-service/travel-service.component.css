@@ -92,6 +92,7 @@
 .ezy__travel4_dv0tjLKH-card {
   background-color: rgba(var(--ezy-body-color-invert-rgb), 1);
 }
+
 .ezy__travel4_dv0tjLKH-header {
   background-color: var(--ezy-header-bg);
   color: #ffffff;
@@ -104,6 +105,7 @@
   height: 65px;
   font-size: 24px;
 }
+
 .ezy__travel4_dv0tjLKH-header h3 {
   font-size: 28px;
   line-height: 1;
@@ -114,6 +116,7 @@
   background-color: var(--ezy-body-color-invert);
   border: 1px solid var(--ezy-border-color);
 }
+
 .ezy__travel4_dv0tjLKH-filters .ezy__travel4_dv0tjLKH-header {
   border-radius: 4px 4px 0 0;
 }
@@ -125,6 +128,7 @@
 .ezy__travel4_dv0tjLKH-accordion {
   border-bottom: 1px dashed var(--ezy-divider-color);
 }
+
 .ezy__travel4_dv0tjLKH-accordion a,
 .ezy__travel4_dv0tjLKH-accordion a:hover {
   color: var(--bs-body-color);
@@ -140,6 +144,7 @@
   border-radius: 0 !important;
   color: var(--bs-body-color);
 }
+
 .ezy__travel4_dv0tjLKH-depart-option:hover {
   background-color: var(--ezy-header-bg);
   color: #fff;
@@ -165,6 +170,7 @@
   border-color: rgba(var(--ezy-theme-color-rgb), 0.9);
   color: #ffffff;
 }
+
 .ezy__travel4_dv0tjLKH .form-select,
 .ezy__travel4_dv0tjLKH .form-select option {
   background-color: var(--ezy-body-color-invert);
@@ -192,10 +198,12 @@
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
 @media (min-width: 991px) {
   .ezy__travel4_dv0tjLKH-details {
     border-radius: 5px 10px 10px 5px;
   }
+
   .ezy__travel4_dv0tjLKH-price {
     border-radius: 10px 5px 5px 10px;
   }
@@ -207,6 +215,7 @@
   overflow: visible;
   opacity: 0.5;
 }
+
 .ezy__travel4_dv0tjLKH-divider::before {
   content: "";
   position: absolute;
@@ -218,6 +227,7 @@
   height: 8px;
   border-radius: 50%;
 }
+
 .ezy__travel4_dv0tjLKH-divider::after {
   content: "";
   position: absolute;
@@ -233,6 +243,7 @@
 .ezy__travel4_dv0tjLKH-btn-collapse:focus {
   box-shadow: none !important;
 }
+
 .ezy__travel4_dv0tjLKH-btn-collapse {
   color: var(--bs-body-color) !important;
 }
@@ -412,12 +423,12 @@
   outline-color: var(--ezy-product-color);
 }
 
-.ezy__epoverview18-radios .btn-check:checked + .btn {
+.ezy__epoverview18-radios .btn-check:checked+.btn {
   background-color: var(--ezy-product-color);
   outline-color: rgb(var(--ezy-theme-color-rgb));
 }
 
-.ezy__epoverview18-radios .btn-check:disabled + .btn {
+.ezy__epoverview18-radios .btn-check:disabled+.btn {
   text-decoration: line-through;
   opacity: 0.5;
 }
@@ -473,52 +484,173 @@
   margin-right: -8px;
 }
 
-.ezy__epoverview18-row > [class*="col-"] {
+.ezy__epoverview18-row>[class*="col-"] {
   padding-left: 8px;
   padding-right: 8px;
 }
-
-/* .packages-list {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: #fafafa;
 }
 
-.card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* Center the cards horizontally */
+}
+
+.cardcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  /* Set a fixed width for the cards */
+  margin: 10px;
+  /* Add some space between cards */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
-  width: 320px;
-  background: #fff;
 }
 
-.card:hover {
-  transform: translateY(-5px);
+
+
+.content {
+
+  text-align: center;
 }
 
-.card-img-top {
+.footer {
+
+  text-align: center;
+
+}
+.card {
+  box-sizing: border-box;
+  background: white;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, .75);
+  position: relative;
+  height: 400px;
+  transition: all 1s;
+}
+.price {
+  position: absolute;
+  bottom: 110px;
+  left: 38%;
+  font-weight: bold;
+}
+
+.card-title {
+  color: #18638f;
+}
+
+.card-text {
+  color: #6F7A8F;
+}
+
+.card-body {
+  padding: 5px 10px;
+}
+
+.card img {
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  height: 175px;
 }
 
-.article-body {
-  padding: 20px;
-}
 
-.btn-info {
-  background-color: #17a2b8;
-  border-color: #17a2b8;
-  color: #fff;
-}
-
-.btn-info:hover,
-.btn-info:focus {
-  background-color: #117a8b;
-  border-color: #117a8b;
-} */
-
+     .prev {
+       border-radius: 5px;
+       background-color: #0077ff;
+       border: solid 1px #0077ff;
+       color: white;
+     }
+            .book-btn {
+              --color: #0077ff;
+              font-family: inherit;
+              display: inline-block;
+              width: 92%;
+              height: 90%;
+              line-height: 2.5em;
+              overflow: hidden;
+              cursor: pointer;
+              margin: 8px;
+              font-size: 17px;
+              z-index: 1;
+              color: var(--color);
+              border: 2px solid var(--color);
+              border-radius: 6px;
+              position: relative;
+              text-align: center;
+            }
+      
+            .book-btn::before {
+              position: absolute;
+              content: "";
+              background: var(--color);
+              width: 150px;
+              height: 200px;
+              z-index: -1;
+              border-radius: 50%;
+            }
+      
+            .book-btn:hover {
+              color: white;
+            }
+      
+            .book-btn:before {
+              top: 100%;
+              left: 100%;
+              transition: 0.3s all;
+            }
+      
+            .book-btn:hover::before {
+              top: -30px;
+              left: -30px;
+            }
+      
+            .footer {
+              width: 84%;
+              text-align: left;
+              position: absolute;
+              bottom: 5px;
+      
+            }
+      
+            /* read More*/
+            .btn {
+              position: relative;
+              top: 20px;
+              font-weight: bold;
+            }
+      
+            .btn:hover {
+              color: #0077ff;
+            }
+      
+          
+      
+            /*LIKE ICON*/
+            #heart {
+              cursor: pointer;
+            }
+      
+            .like {
+              float: right;
+              font-size: 22px;
+              position: relative;
+              top: 20px;
+      
+              color: #333333;
+            }
+                             .headline {
+                               color: #18638f;
+                               font-weight: bold;
+                               font-family: 'Times New Roman', Times, serif;
+                               margin-bottom: 30px;
+                               text-align: center;
+                             }

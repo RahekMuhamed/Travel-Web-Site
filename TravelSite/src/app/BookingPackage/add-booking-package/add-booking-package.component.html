@@ -1,29 +1,21 @@
-<p>add-booking-package works!</p>
-<form (ngSubmit)="booking()" class="form-control">
-  <div class="form-group">
-      <label for="clientId">Client ID:</label>
-        <input type="text" id="clientId" [(ngModel)]="clientId" name="clientId" class="form-control"  />
-    </div>
-    <div class="form-group">
-        <label for="packageId">Package ID:</label>
-        <input type="number" id="packageId" [(ngModel)]="packageId" name="packageId" class="form-control"  />
-    </div>
-    <button type="submit" class="btn btn-info" id="btn-book" [disabled]="isSubmitting">Book</button>
-</form>
-<div class="modal fade" id="bookingmodal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="bookingModalLabel">Booking Confirmed</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Your booking has been successfully added!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"id="checkLater">Checkout Later</button>
-                <button type="button" class="btn btn-primary" (click)="checkout()">Checkout Now</button>
+<app-navbar></app-navbar>
+<div class="wrapper">
+<div class="card mb-3" style="max-width: 700px;">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+          <img [src]="'../../../assets/'+ Package?.image" alt="Dynamic Image" />
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{Package?.name}}</h5>
+                <p class="card-text"><b>Description : </b>{{Package?.description}}</p>
+                 <p class="card-text"><b>Duration : </b>{{Package?.duration}} Days</p>
+                   <p class="card-text p"><b>Price : </b> <span class="price">{{Package?.price}}$</span></p>
+                     <p class="btns"><button (click)="Back()" class="btn btn-primary">Back</button></p>
+                     <p class="btns"><button (click)="booking()" class="btn btn-info ">Confirm Booking</button></p>
             </div>
         </div>
     </div>
 </div>
+</div>
+<app-footer></app-footer>

@@ -3,6 +3,7 @@ import { AuthServiceService } from '../../src/app/services/auth-service.service'
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -38,14 +39,18 @@ export class LoginComponent {
 
     this.authService.login(loginData).subscribe(
       () => {
-        // this.router.navigate(['/Aminlayout']);
-        this.router.navigate(['/Admin']);
+        this.router.navigate(['/home']);
       },
       (error) => {
         console.error('Login Error:', error);
-        this.errorMessage = 'Invalid credentials. Please try again.';
         this.submitting = false;
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Failed',
+          text: 'Invalid credentials. Please check your email and password and try again.',
+        });
       }
     );
   }
+
 }

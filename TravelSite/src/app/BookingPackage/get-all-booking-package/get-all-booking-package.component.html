@@ -1,22 +1,29 @@
-<p>get-all-booking-package works!</p>
-<input type="text" [(ngModel)]="clientId" placeholder="Enter Client ID" id="clientId" />
-<button (click) ="fetchBookings(clientId)">Fetch Bookings</button>
-
-    <div *ngFor="let booking of this.AllBookingPackages ; let i = index" class="booking-card">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Booking ID: {{ booking.id }}</h5>
-                <p class="card-text">Package ID: {{ booking.packageId }}</p>
-                <p class="card-text">Client ID: {{ booking.clientId }}</p>
-                <p class="card-text">price: {{ booking.price }}</p>
-               
-                <img [src]="'../../../assets/' + booking.image" alt="Image" />
-
+<div class="wrapper">
+    <h2 class="mb-4 mt-4">Unpaid Bookings</h2>
+    <div *ngIf="AllBookingPackages.length === 0" class="no-bookings">
+        <p>There Are No Bookings To Pay</p>
+    </div>
+    <div *ngFor="let booking of AllBookingPackages; let i = index" class="booking-card">
+        <div class="card mb-3" style="max-width: 700px;">
+            <div class="row no-gutters">
+                <div class="col-md-4 img">
+                    <img [src]="'../../../assets/' + booking?.packageImage" alt="Dynamic Image" />
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{booking?.packageName}}</h5>
+                        <!--<p class="card-text p"><b>Price : </b> <span class="price">{{booking?.id}}</span></p>-->
+                        <p class="card-text p"><b>Price : </b> <span class="price">${{booking?.price}}</span></p>
+                        <p class="btns">
+                            <button (click)="payment(booking.id, booking.price)"
+                                class="btn btn-primary">Checkout</button>
+                        </p>
+                        <p class="btns">
+                            <button (click)="Remove(booking.id)" class="btn btn-danger">Remove</button>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <h2>total price ={{Total_Amount}}</h2>
- <div class="w-75 m-auto">
-    <button class="btn btn-info" (click)="payment()"> Pay With Paypal<i class="fa fa-cc-paypal" aria-hidden="true"></i></button>
 </div>
-

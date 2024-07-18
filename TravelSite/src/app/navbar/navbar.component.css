@@ -4,13 +4,25 @@
 Dropdown Styles
 -----------------
 */
-
+/*
+.navbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  padding: 10px 20px;
+  z-index: 1000;
+}*//*
 .dropdown-container {
   display: inline-block;
   padding: 10px;
+}
 
   .dropdown {
     position: relative;
+  }
+
 
     &[open] .with-down-arrow::after {
       content: "\e5c7";
@@ -25,10 +37,10 @@ Dropdown Styles
       display: inline-block;
       cursor: pointer;
       border-radius: 6px;
-
+    }
       &.avatar {
         border-radius: 50px;
-
+      }
         img {
           width: 40px;
           height: 40px;
@@ -36,7 +48,7 @@ Dropdown Styles
           display: inline-block;
           margin: 0;
         }
-      }
+      
 
       .with-down-arrow {
         display: inline-flex;
@@ -44,7 +56,7 @@ Dropdown Styles
         align-items: center;
         color: #fff;
         line-height: 1;
-
+      }
         &::after {
           content: "\e5c5";
           font-family: "Material Symbols Outlined";
@@ -60,8 +72,8 @@ Dropdown Styles
           direction: ltr;
           -webkit-font-smoothing: antialiased;
         }
-      }
-    }
+    
+  
 
     &.left ul {
       left: 0;
@@ -81,14 +93,16 @@ Dropdown Styles
       border-radius: 10px;
       background-color: #fff;
       z-index: 2;
+    }
 
       li {
         list-style-type: none;
         display: block;
+      }
         /* If you use divider & borders, it's best to use top borders */
         /*border-top: 1px solid #ccc;*/
 
-        &:first-of-type {
+       /* &:first-of-type {
           border: none;
           background-color: #f2f2f2;
         }
@@ -124,10 +138,10 @@ Dropdown Styles
           border: none;
           border-bottom: 1px solid #333;
 
-          /*
+      
 					 * removes border from Li after the divider element
 					 * best used in combination with top borders on other LIs
-					 */
+					 *//*
           & ~ li {
             border: none;
           }
@@ -145,7 +159,7 @@ Dropdown Styles
 IGNORE: CODEPEN STYLES
 -----------------
 */
-
+/*
 * {
   box-sizing: border-box;
 }
@@ -224,4 +238,231 @@ nav {
 
 .italic {
   font-style: italic;
+}*/
+
+
+/* Amira------------------------------------------------------*/
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap');
+
+:root {
+  --main-bg-color: #f5f7fb;
+  --main-pink-dark-color: #E72463;
+  --main-pink-light-color: #F05990;
+  --black-color: #000000;
+  --white-color: #ffffff;
+  --text-color: #33334f;
+  --anchor-text: #dddddd;
+
 }
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box !important;
+  list-style-type: none;
+}
+
+body {
+  background-color: #f5f7fb;
+}
+
+.header-container {
+  box-shadow: 0 0 2rem 0 rgba(33, 37, 41, .3);
+}
+
+.logo {
+  font-family: 'Lobster Two', sans-serif;
+}
+
+.logo a {
+  font-weight: 500;
+  color: #33334f;
+}
+
+.logo img {
+  width: auto;
+  height: 29px;
+  width: 29px;
+  margin-bottom: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.logo #floral {
+  font-size: 35px;
+}
+
+.logo #boutique {
+  font-weight: 500;
+  font-size: 25px;
+  margin-top: -20px;
+}
+
+
+.ifUserLogged,
+.nav-item.dropdown {
+  display: none;
+}
+
+.ifUserLogged .nav-item {
+  width: 30px;
+
+}
+
+.nav-item a {
+  color: #222222;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+ol,
+ul {
+  padding-left: 0 !important;
+}
+
+.nav-icons {
+  margin-right: 50px;
+}
+
+.navbar {
+  position: relative;
+  padding: 0 !important;
+}
+
+.navbar-collapse {
+  /* order: 2; */
+  background-color: white;
+  z-index: 3;
+}
+
+.navbar-nav {
+  align-items: baseline;
+}
+
+.dropdown-item:active {
+  color: var(--main-pink-light-color) !important;
+}
+
+.shopping-cart {
+  color: var(--black-color);
+  font-size: 18px;
+  margin-right: 7px;
+}
+
+@media screen and (max-width:992px) {
+  .navbar-collapse {
+    position: absolute;
+    height: 85vh;
+    width: 200px;
+    right: -15px;
+    top: 56px;
+  }
+
+  .navbar {
+
+    order: 3;
+  }
+}
+
+/* line 12, ../sass/main.scss */
+.homeSection_1 {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  height: 82px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color:white;
+  padding: 10px 15px;
+}
+
+.nav-icons {
+  display: flex;
+  margin-left: 30px;
+  align-items: baseline;
+}
+
+.user {
+  display: flex;
+}
+
+.user li {
+  padding: 15px;
+}
+
+.user li i {
+  font-size: 40px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: var(--black-color);
+  font-size: 20px;
+  margin: 10px;
+  text-decoration: none !important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.nav-item.active .nav-link {
+  color: #18638f !important;
+}
+     .active-link {
+       color: #18638f !important
+     }
+
+
+.dropdown-container {
+  display: inline-block;
+  position: absolute;
+  top: 23px;
+  
+}
+  .dropdown  ul{/*list*/
+    position: relative;
+   background-color: rgb(255, 255, 255);
+   padding: 7px 30px;
+   top: 13px;
+   border-radius:5px;
+  }
+    .dropdown ul li{
+      box-sizing: border-box;
+      margin-bottom: 1px;
+      background-color: hwb(0 100% 0%);
+      padding: 3px;
+      border-radius: 10px;
+    }
+        .dropdown ul li:hover,.dropdown ul li a:hover
+        {
+          color:blue;
+        }
+         .bb {
+           /* nav-item for dropdown*/
+           width: 134.4px;
+           height: 50px;
+           padding-left: 27px;
+         }
+    summary {
+      list-style: none;
+      display: inline-block;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+      &.avatar {
+        border-radius: 50px;
+      }
+      
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50px;
+          display: inline-block;
+          margin: 0;
+        }
+        .like
+        {
+          font-size: 25px;
+        }
+          

@@ -6,6 +6,8 @@ import { ServicesService } from '../services/services.service';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
+import Swal from 'sweetalert2';
+import { AuthServiceService } from '../services/auth-service.service';
 
 @Component({
     selector: 'app-service-details',
@@ -15,7 +17,7 @@ import { FooterComponent } from "../footer/footer.component";
     providers: [ServicesService],
     imports: [CommonModule, NavbarComponent, FooterComponent,RouterLink,CommonModule]
 })
-export class ServiceDetailsComponent implements OnInit{
+export class ClientServiceDetailsComponent implements OnInit{
   serviceId: number | undefined;
   serviceDetails: Services = new Services(
     0,
@@ -31,22 +33,10 @@ export class ServiceDetailsComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private serviceService: ServicesService,
-    private router: Router
+    private router: Router,
+    private authService:AuthServiceService
   ) {}
 
-  // ngOnInit(): void {
-  //   const id = this.route.snapshot.paramMap.get('id');
-  //   if (id) {
-  //     this.serviceService.getServiceById(+id).subscribe({
-  //       next: (response: Services) => {
-  //         this.serviceDetails = response;
-  //       },
-  //       error: (err) => {
-  //         console.error('Error fetching service details', err);
-  //       },
-  //     });
-  //   }
-  // }
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const idParam = params['id'];
@@ -72,4 +62,29 @@ export class ServiceDetailsComponent implements OnInit{
   redirectToPackageList(): void {
     this.router.navigate(['/services']);
   }
+
+   bookservice(serviceId: number): void {
+    if (this.authService.isAuthenticated()) {
+      const clientId = this.authService.getUserIdFromToken();
+      if (clientId) {
+        this.router.navigate(['/AddBookingService'], { queryParams: { serviceId: serviceId, clientId: clientId } });
+      } else {
+        console.error('Client ID not found.');
+      }
+    } else {
+        Swal.fire({
+        title: 'Not Logged In',
+        text: 'You need to log in to book a Service. Do you want to log in now?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log in',
+        cancelButtonText: 'No, cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
+    }
+     
+}
 }

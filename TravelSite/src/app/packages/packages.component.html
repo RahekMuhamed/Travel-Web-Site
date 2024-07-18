@@ -1,45 +1,71 @@
-
-
-      <div class="container ">
-       <h1 class="headline">Packages </h1>
-      <!-- <div class="row"> -->
-
-       
-
-      <div  class="cardcontainer m-2" *ngFor="let item of packages; let i = index">
-            <div class="photo">
-                <img src="../../assets/umrah1.jpeg">
-                
-            </div>
-     
-   
-            <div class="content">
-                <p class="txt4">{{ item.name}}</p>
-                <!-- <p class="date">{{ item.startDate}}</p> -->
-
-                <p class="txt5">{{ item.price}}$</p>
-                <p class="txt2">{{ item.description}}</p>
-              </div>
-
-            <div class="footer">
-                <p>
-                   <a class="waves-effect waves-light btn" [routerLink]="['/packageDetails', item.id]">Read More</a>
-                 
-                   <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
-              
-                </p>
-                 <button class="book-btn">book now</button>
-                <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
-            </div>
-     
-        </div>
-
-      
-       
-        </div>
-
-<div class="pagination">
-  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
-  <span>Page {{ currentPage }} of {{ totalPages }}</span>
-  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+<app-navbar></app-navbar>
+<div *ngIf="isLoading">
+  <app-spinner></app-spinner>
 </div>
+
+
+
+<div *ngIf="!isLoading">
+
+
+  <div class="container">
+    <p-dataView #dv [value]="packages" [sortField]="sortField" [sortOrder]="sortOrder">
+      <ng-template pTemplate="header">
+        <h1 class="headline">Packages</h1>
+        <div>
+          <p-dropdown [options]="sortOptions" placeholder="Sort By Price" (onChange)="onSortChange($event)"
+            styleClass="mb-2 md:mb-0"></p-dropdown>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="list" let-packages>
+
+        <!--        pACKAGES -->
+        <div class="container packages">
+          <!-- <h1 class="headline">PACKAGES</h1> -->
+          <div class="row">
+            <div *ngFor="let item of packages ; let i = index" class="col-12 col-md-4 col-lg-3 mb-4">
+              <div class="card">
+                <img [src]="'../../../assets/'+ item?.image" alt="Dynamic Image" />
+                <div class="card-body">
+                  <h5 class="card-title">{{item.name}}</h5>
+                  <!--<p class="card-text">{{item.description}}</p>-->
+                  <p class="card-text price" style="color: brown;"> {{item.price}}$</p>
+                  <div class="footer">
+                    <p>
+                      <a class="waves-effect waves-light btn" [routerLink]="['/packageDetails', item.id]">Read More</a>
+
+                      <a id="heart" (click)="toggleWishlist(item)">
+                        <span class="like" [ngClass]="{ liked: item.isInWishlist }">
+                          <i class="fab fa-gratipay" [style.color]="item.isInWishlist ? 'red' : 'black'">
+                          </i>
+                          
+                        </span>
+                      </a>
+                    </p>
+
+                    <button class="book-btn" (click)="bookPackage(item.id)">Book now</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </ng-template>
+    </p-dataView>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="pagination mb-5">
+  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="prev p-2">Previous</button>
+  <span class="page">Page {{ currentPage }} of {{ totalPages }}</span>
+  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="prev p-2">Next</button>
+</div>
+<app-footer></app-footer>

@@ -5,44 +5,37 @@ import { ResetPasswordComponent } from '../../Authenticaion/reset-password/reset
 import { ContactUSComponent } from './contact-us/contact-us.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { HttpClientModule } from '@angular/common/http';
-import { TravelServiceComponent } from './travel-service/travel-service.component';
-import { ButtonModule } from 'primeng/button';
-import { PackagesListComponent } from '../../Dashboard/SuperAdmin/SuperPackages-list/packages-list.component';
-import { AdminPackagesComponent } from '../../Dashboard/Admin/admin-packages/admin-packages.component';
-import { AdminServicesComponent } from '../../Dashboard/Admin/admin-services/admin-services.component';
-import { PackageDetailsComponent } from '../../Dashboard/Admin/package-details/package-details.component';
-import { AdminsListComponent } from '../../Dashboard/SuperAdmin/admins-list/admins-list.component';
-import { SignUpComponent } from '../../Authenticaion/sign-up/sign-up.component';
+import { HttpClient } from '@angular/common/http';
 import { LoginComponent } from '../../Authenticaion/login/login.component';
+import { SignUpComponent } from '../../Authenticaion/sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
-import { AddPackageComponent } from '../../Dashboard/Admin/add-package/add-package.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-  imports: [
-    // RouterOutlet,
-    // LoginComponent,
-    // SignUpComponent,
-    // ForgetPasswordComponent,
-    // ResetPasswordComponent,
-    // ContactUSComponent,
-    // NavbarComponent,
-    // HomeComponent,
-    // NavbarComponent,
-    // SuperAdminLayoutComponent,
-    // HttpClientModule,
-    // TravelServiceComponent, RouterModule,
-    // ButtonModule,
-    // AddPackageComponent,
-    FooterComponent,
-    NavbarComponent,
-     RouterOutlet,
-  ],
-   
+    imports: [
+      // RouterOutlet,
+
+        // LoginComponent,
+        // SignUpComponent,
+        // HomeComponent,
+        // NavbarComponent,
+        // FooterComponent,
+        // RouterModule,
+        // ForgetPasswordComponent,
+        // ResetPasswordComponent,
+        // HttpClientModule,
+        // TravelServiceComponent,
+
+        RouterOutlet,
+        NavbarComponent,
+        FooterComponent,
+        HttpClientModule,
+
+          ]
 })
 export class AppComponent {
   title = 'TravelSite';

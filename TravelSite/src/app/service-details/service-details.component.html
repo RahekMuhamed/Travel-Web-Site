@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 
 
 <!-- ########## -->
@@ -6,8 +7,9 @@
     <div class="row">
       <div class="col-lg-6">
         <div class="ezy__epoverview18-card p-3 p-sm-4 p-lg-5 me-lg-4">
-          <div class="text-center mb-3 p-md-4">
-            <img src="{{serviceDetails.image}}" alt="photo" class="img-fluid w-100" />
+          <div class="text-center img mb-5 p-md-4">
+            <img [src]="'../../assets/' + serviceDetails.image" alt="photo" class="img-fluid w-100" />
+
           </div>
 
         </div>
@@ -17,7 +19,6 @@
           <h1 class="ezy__epoverview18-heading mb-3">{{serviceDetails.name}}</h1>
 
 
-          <h3 class="ezy__epoverview18-price fw-bold mb-0">{{serviceDetails.price}}$</h3>
         </div>
 
         <form action="#!">
@@ -29,6 +30,7 @@
               </span> </h5>
             </div>
           </div>
+          
 
           <div class="mb-4">
             <h5 class="ezy__epoverview18-title mb-0">Start Date : <span class="opacity-50">{{serviceDetails.startDate}}</span></h5>
@@ -36,32 +38,27 @@
           </div>
           <div class="mb-4">
             <h5 class="ezy__epoverview18-title mb-2">Quantity : <span class="opacity-50">{{serviceDetails.quantityAvailable}}</span></h5>
-
           </div>
+                    <h3 class="ezy__epoverview18-price fw-bold mb-0">{{serviceDetails.price}}$</h3>
 
           <div class="row align-items-center">
             <div class="col-md-10 d-flex">
               <button [routerLink]="['/booking']"
                 class="btn ezy__epoverview18-btn text-uppercase d-inline-flex justify-content-center align-items-center px-3 px-sm-5 me-2 me-lg-3 w-100"
+                (click)=" bookservice(serviceDetails.id)"
               >
                Book Now
               </button>
-               <!-- <button
-                class="btn btn-link ezy__epoverview18-fav d-inline-flex align-items-center text-decoration-none"
-              > -->
-              <button
+              
+            <!--  <button
                 class="btn ezy__epoverview18-btn-outline text-uppercase bg-transparent d-inline-flex justify-content-center align-items-center px-3 px-sm-4 w-100"
               >
 
                 <i class="far fa-heart fs-5 me-1"></i> Add to wishlist
               </button>
-              <!-- <button
-                class="btn ezy__epoverview18-btn-outline text-uppercase bg-transparent d-inline-flex justify-content-center align-items-center px-3 px-sm-4 w-100"
-              >
-                Add To Cart
-              </button> -->
+          
             </div>
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-3">-->
 
 
             </div>
@@ -97,3 +94,4 @@
   </article>
 </section> -->
 
+<app-footer></app-footer>

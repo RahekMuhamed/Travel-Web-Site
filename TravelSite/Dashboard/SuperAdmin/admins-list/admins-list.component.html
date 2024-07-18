@@ -1,5 +1,20 @@
 <div class="container">
-  <h2>Admins List</h2>
+  <div class="d-flex align-items-center justify-content-between">
+    <app-search-bar (searchQuery)="onSearch($event)"></app-search-bar>
+    <button class="btn btn-info" (click)="addAdmin()">Add Admin</button>
+
+  </div>
+
+
+  <div class="d-flex align-items-center justify-content-between mt-2">
+    <h2>Admins List</h2>
+    <div>
+      <label for="rowsPerPage">Rows per page: </label>
+      <select id="rowsPerPage" [(ngModel)]="rowsPerPage" (change)="onRowsPerPageChange($event)">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+    </div>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -22,5 +37,4 @@
       </tr>
     </tbody>
   </table>
-  <button class="btn btn-info" (click)="addAdmin()">Add Admin</button>
 </div>

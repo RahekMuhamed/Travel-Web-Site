@@ -4,34 +4,52 @@ import { PackagesService } from '../../../src/app/services/packages.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SearchBarComponent } from '../../search-bar/search-bar.component';
+import { PaginationService } from '../../../src/app/services/pagination.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-packages',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, SearchBarComponent,FormsModule],
   templateUrl: './admin-packages.component.html',
-  styleUrl: './admin-packages.component.css',
+  styleUrls: ['./admin-packages.component.css']
 })
 export class AdminPackagesComponent implements OnInit {
-  packages: Package[] | null = null;
+  packages: Package[] = [];
+  filteredPackages: Package[] = [];
+  paginatedPackages: Package[] = [];
+  rowsPerPage: number = 10;
+  currentPage: number = 1;
+  pageSizes: number[] = [5, 10, 20, 50];
+
   constructor(
     private packageservice: PackagesService,
-    private router: Router
+    private router: Router,
+    private paginationService: PaginationService
   ) {}
+
   ngOnInit(): void {
     this.packageservice.getAll().subscribe({
       next: (response: any) => {
         this.packages = response.$values;
+        this.filteredPackages = response.$values;
       },
+      error: (error) => {
+        console.error('Error fetching packages:', error);
+      }
     });
+      
+
   }
+   
 
   viewDetails(packageId: number): void {
-    this.router.navigate(['/Admin/packageDetail', packageId]);
+    this.router.navigate(['/profile/packageDetail', packageId]);
   }
 
   updatePackage(packageId: number): void {
-    this.router.navigate(['/Admin/updatePackage', packageId]);
+    this.router.navigate(['/profile/updatePackage', packageId]);
   }
 
   removePackage(packageId: number): void {
@@ -41,27 +59,18 @@ export class AdminPackagesComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it',
+      cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.isConfirmed) {
         this.packageservice.deletePackage(packageId).subscribe(
           () => {
-            if (this.packages) {
-              this.packages = this.packages.filter((p) => p.id !== packageId);
-              Swal.fire(
-                'Deleted!',
-                'Your package has been deleted.',
-                'success'
-              );
-            }
+            this.packages = this.packages.filter((p) => p.id !== packageId);
+            this.filteredPackages = this.filteredPackages.filter((p) => p.id !== packageId);
+            Swal.fire('Deleted!', 'Your package has been deleted.', 'success');
           },
           (error) => {
             console.error('Error removing package:', error);
-            Swal.fire(
-              'Error!',
-              'Failed to delete package. Please try again later.',
-              'error'
-            );
+            Swal.fire('Error!', 'Failed to delete package. Please try again later.', 'error');
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -71,6 +80,24 @@ export class AdminPackagesComponent implements OnInit {
   }
 
   addPackage(): void {
-    this.router.navigate(['/Admin/AddPackage']);
+    this.router.navigate(['/profile/AddPackage']);
   }
+  onRowsPerPageChange(event: Event): void {
+    this.rowsPerPage = +(event.target as HTMLSelectElement).value;
+    this.updatePaginatedPackages();
+  }
+
+  updatePaginatedPackages(): void {
+    this.paginatedPackages = this.paginationService.getPaginatedItems(this.filteredPackages, this.currentPage, this.rowsPerPage);
+  }
+
+  onSearch(query: string): void {
+    this.filteredPackages = this.packages.filter(pkg =>
+      pkg.name.toLowerCase().includes(query.toLowerCase())
+    );
+    this.currentPage = 1;
+    this.updatePaginatedPackages();
+  }
+
+
 }

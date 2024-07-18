@@ -1,0 +1,43 @@
+.wrapper
+{
+    box-sizing: border-box !important;
+    overflow-x: hidden;
+
+    height: 88vh;
+    background-color: #e9ecef;
+    background-image: url("../../assets/form1.jpg");
+    /* background: linear-gradient(to right, #ddaadb, #be65e4);*/
+  /* background-image: url("../../assets/oxford-blue-abstract-creative-background-design_851755-195753.jpg");*/
+   background-repeat: no-repeat;
+   background-size:100% 100%;
+   background-position: center;
+   background-attachment: fixed;
+    text-align: center;
+    margin: auto;
+}
+.inner
+{
+    width:90%;
+    margin: auto;
+display: flex;
+justify-content: right;
+align-items: center;
+padding-top: 50px;
+
+}
+.card
+{
+    padding-top:50px;
+    padding-bottom: 30px;
+}
+.error-message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}
+#btn
+{
+    padding:10px 15px;
+}
+
+

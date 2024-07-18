@@ -4,55 +4,40 @@ import { BookingPackage } from '../../models/booking-package';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthServiceService } from '../../services/auth-service.service';
+import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-get-all-booking-package',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './get-all-booking-package.component.html',
   styleUrl: './get-all-booking-package.component.css'
 })
-  /*
-export class GetAllBookingPackageComponent  {
-  book: BookingPackage = new BookingPackage(1, 1, "f9cd98fd-bebc-440e-9378-52a4b018d21e", 1);
-  AllBookingPackages: BookingPackage[] = [this.book];
-  clientId: string = "bdd79742-792d-4b4a-bbaa-0640cdd6bc58";
-  constructor(public bookingPackageService: BookingPackageService) { }
-  //ngOnInit(): void {
-    // here i will get the clientId of the logindclient from token
-    // when fetch clientId from token i will subscribe here 
-
-  //}
-  fetchBookings() {
-    console.log("hi fetch");
-    if (this.clientId) {
-      this.bookingPackageService.getAllbookingPackage(this.clientId).subscribe(
-        (data: BookingPackage[]) => {
-          this.AllBookingPackages = data;
-          console.log("hello");
-        },
-        error => {
-          console.error('Error fetching bookings:', error);
-        }
-      );
-    }
-  }
-}*/
-export class GetAllBookingPackageComponent {
+export class GetAllBookingPackageComponent implements OnInit {
   AllBookingPackages: BookingPackage[] = [];
-  clientId: string = "";  // Initialize with an empty string
-  Total_Amount: number = 0;
-  constructor(public bookingPackageService: BookingPackageService ,public router:Router) { }
+  clientId: string | null = "";  // Initialize with an empty string
 
-  fetchBookings(clientId:string) {
+
+  constructor(public bookingPackageService: BookingPackageService, public router: Router,
+    public authServiceService: AuthServiceService
+  ) { }
+  ngOnInit(): void {
+    // get the current client ID
+    this.clientId = this.authServiceService.getUserIdFromToken();
+    this.fetchBookings(this.clientId);
+  }
+
+  fetchBookings(clientId: string | null) {
     console.log("Fetching bookings for clientId:", this.clientId);
 
     if (this.clientId) {
-      this.bookingPackageService.getAllbookingPackage(this.clientId).subscribe(
+      this.bookingPackageService.getAllBookingPackage(this.clientId).subscribe(
         (data: BookingPackage[]) => {//next function
           this.AllBookingPackages = data;
           console.log("Bookings fetched successfully:", this.AllBookingPackages);
-          this.calculateTotalAmount();
         },
         error => {// error function
           console.error('Error fetching bookings:', error);
@@ -63,32 +48,53 @@ export class GetAllBookingPackageComponent {
     }
   }//end of fetch
 
-  calculateTotalAmount() {
-    // Ensure AllBookingPackages is not null or undefined
-     if (this.AllBookingPackages && this.AllBookingPackages.length > 0) {
-       this.Total_Amount = this.AllBookingPackages.reduce((total, booking) => {// reduce iterates on each booking object in all bookingpackage array
-        // and sum(total) each bookingPrice to the total,(total==sum)
-        // Check if price is defined before adding to total
-        if (booking.price != undefined) {
-          return total + booking.price;
-        } else {
-          return total; // Or handle the case where price is undefined
-        }
-      }, 0);
-    } else {
-      this.Total_Amount = 0; // Handle case where there are no bookings
-    }
-  }
- payment() {
-  if (this.AllBookingPackages && this.AllBookingPackages.length > 0) {
-    const bookingIds = this.AllBookingPackages.map(booking => booking.id).join(',');
-    this.router.navigate(['/payment'], { 
-      queryParams: { 
-        bookingPackageIds: bookingIds, 
-        amount: this.Total_Amount 
-      } 
+  payment(id: number | undefined, price: number | undefined) {// i use undefined as price , id are optional in bookingPackage model 
+    this.router.navigate(['/payment'], {
+      queryParams: {
+        bookingPackageId: id ?? null,
+        amount: price ?? null
+      }
     });
   }
-}
+
+  Remove(id: number | undefined) {
+    if (id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.bookingPackageService.DeleteBooking(id).subscribe(
+            response => {
+              Swal.fire(
+                'Deleted!',
+                'Your booking has been deleted.',
+                'success'
+              );
+               //After a booking is successfully deleted,
+               // the method filters out the deleted booking from the AllBookingPackages array.This immediately updates the component's state and the UI.
+              this.AllBookingPackages = this.AllBookingPackages.filter(
+                  booking => booking.id !== id
+                );
+
+            },
+            error => {
+              Swal.fire(
+                'Error!',
+                'There was an error deleting the booking.',
+                'error'
+              );
+            }
+          );
+        }
+      });
+    }
+  }
+
 
 }

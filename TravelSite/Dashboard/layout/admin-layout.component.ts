@@ -5,11 +5,12 @@ import { Route, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { UserServiceService } from '../../src/app/services/user-service.service';
 import { AuthServiceService } from '../../src/app/services/auth-service.service';
 import Swal from 'sweetalert2';
+import { NavbarComponent } from '../../src/app/navbar/navbar.component';
 
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [RouterOutlet,RouterLink,FormsModule,CommonModule],
+  imports: [RouterOutlet,RouterLink,FormsModule,CommonModule,NavbarComponent],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.css'
 })
@@ -55,7 +56,7 @@ export class AdminLayoutComponent implements OnInit {
         this.authService.logout().subscribe(
           () => {
             console.log('Logged out successfully');
-            this.router.navigate(['/login']);
+            this.router.navigate(['/home']);
           },
           error => {
             console.error('Logout error:', error);

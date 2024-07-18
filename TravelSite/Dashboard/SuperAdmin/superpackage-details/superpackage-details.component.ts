@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SuperpackageDetailsComponent implements OnInit {
   packageId: number | undefined;
-  packageDetails: Package = new Package(0, '', false, '', '', 0, 0);
+  packageDetails: Package = new Package(0, '',0,false,);
 
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +43,6 @@ export class SuperpackageDetailsComponent implements OnInit {
   }
 
   redirectToPackageList(): void {
-    this.router.navigate(['/Admin/superPackagelist']);
+    this.router.navigate(['/profile/superPackagelist']);
   }
 }

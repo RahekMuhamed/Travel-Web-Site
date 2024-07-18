@@ -10,24 +10,29 @@ import {
 import { CommonModule } from '@angular/common';
 import { ServicesService } from '../../../src/app/services/services.service';
 import { Router } from '@angular/router';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { Serviceprovider } from '../../../src/app/models/serviceprovider';
+import { ServiceProviderServiceService } from '../../../src/app/services/service-provider-service.service';
 
 @Component({
   selector: 'app-add-service',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule,NgMultiSelectDropDownModule,],
   templateUrl: './add-service.component.html',
   styleUrl: './add-service.component.css',
 })
 export class AddServiceComponent implements OnInit {
-  newservice: Services = new Services(0, '', 0, '');
+  newservice: Services = new Services(0, '', 0,);
   serviceForm!: FormGroup;
   imageName: string | null = null;
   base64Image: string | null = null;
-
+  servicesproviderList: Serviceprovider[] = [];
+  dropdownSettings = {};
   constructor(
     private formBuilder: FormBuilder,
     private serviceservice: ServicesService,
-    private router: Router
+    private router: Router,
+    public servicesproviderservice:ServiceProviderServiceService
   ) {}
 
   ngOnInit(): void {
@@ -39,9 +44,33 @@ export class AddServiceComponent implements OnInit {
       startDate: ['', Validators.required],
       image: [''],
       isDeleted: [false],
+      serviceProvider: [[]],
     });
+    this.fetchserviceProvider();
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 5,
+      allowSearchFilter: true,
+    };
   }
-
+  fetchserviceProvider(): void {
+    this.servicesproviderservice.getAll().subscribe(
+      (response: any) => {
+        if (response && response.$values) {
+          this.servicesproviderList = response.$values;
+        } else {
+          console.error('Invalid API response format:', response);
+        }
+      },
+      (error) => {
+        console.error('Failed to fetch services:', error);
+      }
+    );
+  }
   get formControls() {
     return this.serviceForm.controls;
   }
@@ -90,7 +119,7 @@ export class AddServiceComponent implements OnInit {
     this.serviceservice.add(this.serviceForm.value).subscribe(
       () => {
         alert('service added successfully!');
-        this.router.navigateByUrl('Admin/servicelist');
+        this.router.navigateByUrl('profile/servicelist');
       },
       (error) => console.error('service save failed:', error)
     );

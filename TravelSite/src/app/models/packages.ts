@@ -1,20 +1,26 @@
-import { Services } from "./services";
-
 export class Package {
   constructor(
-    public id: number,
+      public id: number,
     public name: string,
-    public isDeleted: boolean,
+    public firstLocation?: number,
+    public isDeleted?: boolean,
+    public BookingTimeAllowed?:number,
+    public secondLocation?: number,
+    public services?: string[],
     public description?: string,
-    public image?: string ,
+    public imageUrl?: string,
+     public image?: string ,
     public quantityAvailable?: number,
     public price?: number,
     public startDate?: Date,
+    public endDate?: Date,
     public duration?: number,
-   // public bookingPackages: BookingPackage[],
-   //public lovePackages: LovePackage[],
-  // public adminId: string | undefined,
-  // public admin: admin,
-   public services: Services[]=[]
-  ) {}
+    public liked: boolean = false  ,
+    public firstLocationDuration?: number,
+    public secondLocationDuration?: number,
+    public isInWishlist?: boolean,
+    public wishlistItemId?: number | null
+     
+) {}
+
 }

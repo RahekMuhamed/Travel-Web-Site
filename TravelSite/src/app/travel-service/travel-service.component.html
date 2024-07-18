@@ -1,73 +1,15 @@
+<app-navbar></app-navbar>
+
+<!-- <div class="container">
 
 
-
-
-
-
- <h1 class="headline">Services </h1>
-  <section class="ezy__travel4_dv0tjLKH">
-  <div class="container">
-    <!-- header portion -->
-
-
-    <!-- body portion -->
+   
     <div class="row ">
-      <!-- filter -->
-      <!-- <div class="col-lg-3 ps-md-0">
-        <div class="ezy__travel4_dv0tjLKH-filters h-100 rounded pb-4">
-          <div class="ezy__travel4_dv0tjLKH-header p-3 text-center">
-            <h3 class="mb-0">FILTERS</h3>
-          </div>
-
-          <form action="">
-
-            <div class="ezy__travel4_dv0tjLKH-accordion">
-              <a
-                class="btn p-3 p-lg-4 w-100 text-start d-flex justify-content-between align-items-center ezy__travel4_dv0tjLKH-btn-collapse"
-                data-bs-toggle="collapse"
-                href="#ezy__travel4_dv0tjLKH-collapse-1"
-                role="button"
-                aria-expanded="true"
-                aria-controls="ezy__travel4_dv0tjLKH-collapse-1"
-              >
-                <h5 class="mb-0">Price Range</h5>
-                <span class="fas fa-chevron-down"></span>
-              </a>
-              <div class="collapse show" id="ezy__travel4_dv0tjLKH-collapse-1">
-                <div class="ezy__travel4_dv0tjLKH-content px-3 px-lg-4 pb-lg-4 mt-3">
-                  <div>
-                    <label for="ezy__travel4_dv0tjLKH-range1" class="form-label fw-bold mb-2 opacity-75"
-                      >Min Price($200)</label
-                    >
-                    <input type="range" class="form-range" id="ezy__travel4_dv0tjLKH-range1" />
-                  </div>
-                  <div>
-                    <label for="ezy__travel4_dv0tjLKH-range1" class="form-label fw-bold mb-2 opacity-75"
-                      >Max Price($2000)</label
-                    >
-                    <input type="range" class="form-range" id="ezy__travel4_dv0tjLKH-range1" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-            <div class="px-4 mt-4">
-              <button class="btn w-100 ezy__travel4_dv0tjLKH-btn">Applay Filter</button>
-            </div>
-          </form>
-        </div>
-      </div> -->
-      <!-- end filters -->
-
-      <!-- results -->
+   
       <div class="col-lg-12 mt-4 mt-lg-0">
         <div class="row justify-content-between">
           <div class="col-12 col-sm-6">
-            <h4 class="mb-0">{{totalItems}} Results</h4>
           </div>
-          <!-- category selected -->
           <div class="col-12 col-sm-4 text-end">
             <form action="" class="d-flex align-items-center">
               <h5 class="fw-normal mb-0 me-3 text-nowrap">Category</h5>
@@ -79,133 +21,87 @@
               </select>
             </form>
           </div>
-           <!-- end of category selected -->
-
-<!-- items section -->
-<!-- <div class="row mt-4">
-            <div class="col-12 col-lg-12 pe-lg-0 ">
-              <div class="ezy__travel4_dv0tjLKH-card ezy__travel4_dv0tjLKH-details align-items-center h-100 p-2"> -->
 
 
             <div class="container ">
 
-      <!-- <div class="row"> -->
+   
 
 
 
-      <div  class="cardcontainer m-2" *ngFor="let item of services; let i = index">
-            <div class="photo">
-                <img src="../../assets/umrah1.jpeg">
+      
+        </div>
+      </div>
+    </div> 
 
-            </div>
-
-
-            <div class="content">
-                <p class="txt4">{{ item.name}}</p>
-                <!-- <p class="date">{{ item.startDate}}</p> -->
-
-                <p class="txt5">{{ item.price}}$</p>
-                <p class="txt2">{{ item.description}}</p>
-              </div>
-
-            <div class="footer">
-                <p>
-                   <a class="waves-effect waves-light btn"   [routerLink]="['/serviceDetails', item.id]">Read More</a>
-
-                   <a id="heart"><span class="like"><i class="fab fa-gratipay"></i>Like</span></a>
-
-                </p>
-                 <button class="book-btn">book now</button>
-                <!-- <p class="txt3"><i class="far fa-clock"></i>10 Minutes Ago <span class="comments"><i class="fas fa-comments"></i>45 Comments</span></p> -->
-            </div>
+  </div>
 
         </div>
+-->
+<div *ngIf="!isLoading">
 
 
-
-        </div>
-          </div>
-            </div>
-              </div>
-
-
- <!-- end of items -->
-
-
-        </div>
-
-
+  <div class="container">
+    <p-dataView #dv [value]="services" [sortField]="sortField" [sortOrder]="sortOrder">
+      <ng-template pTemplate="header">
+        <h1 class="headline">Hotels </h1>
         <div>
+          <p-dropdown [options]="sortOptions" placeholder="Sort By Price" (onChange)="onSortChange($event)"
+            styleClass="mb-2 md:mb-0"></p-dropdown>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="list" let-services>
 
-          <!-- item -->
- <!-- <div class="row mt-4">
-            <div class="col-12 col-lg-10 pe-lg-0">
-              <div class="ezy__travel4_dv0tjLKH-card ezy__travel4_dv0tjLKH-details align-items-center h-100 p-2">
+        <!--        pACKAGES -->
+        <div class="container packages">
+          <!-- <h1 class="headline">PACKAGES</h1> -->
+          <div class="row">
+            <div *ngFor="let item of services ; let i = index" class="col-12 col-md-4 col-lg-3 mb-4">
+              <div class="card">
+                <img [src]="'../../../assets/'+ item?.image" alt="Dynamic Image" />
+                <div class="card-body">
+                  <h5 class="card-title">{{item.name}}</h5>
+                  <!--<p class="card-text">{{item.description}}</p>-->
+                  <p class="card-text price" style="color: brown;"> {{item.price}}$</p>
+                  <div class="footer">
+                    <p>
+                      <a class="waves-effect waves-light btn" [routerLink]="['/serviceDetails', item.id]">Read More</a>
 
+                      <!-- <a id="heart" (click)="toggleWishlist(item)">
+             <span class="like" [ngClass]="{ liked: item.isInWishlist }">
+          <i
+            class="fab fa-gratipay"
+            [style.color]="item.isInWishlist ? 'red' : 'black'"
+          > 
+        </i>
+          Like
+        </span>
+      </a>  -->
+                    </p>
 
-                <div>
-
-       </div>
+                    <button class="book-btn" (click)="booking(item.id)">Book now</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          </div>
-   </div> -->
-
-          </div>
-            <!-- </div>
-          </div>
-
-
-        </div> -->
+        </div>
 
 
 
-</section>
+      </ng-template>
+    </p-dataView>
+  </div>
 
 
-
-  <!-- <div class="row"> -->
-
-
-   <!-- end of main container -->
-
-
-
-<!-- <div *ngFor="let item of services">
-
-  <p>{{ item.name }}</p>
 </div>
 
-<div class="pagination">
-  <button
-    (click)="onPageChange(currentPage - 1)"
-    [disabled]="currentPage === 1"
-  >
-    Previous
-  </button>
-  <button
-    *ngFor="let page of [].constructor(totalPages); let i = index"
-    (click)="onPageChange(i + 1)"
-  >
-    {{ i + 1 }}
-  </button>
-  <button
-    (click)="onPageChange(currentPage + 1)"
-    [disabled]="currentPage === totalPages"
-  >
-    Next
-  </button>
-</div> -->
-<!-- <app-pagination>
-[currentPage]="currentPage"
-  [itemsPerPage]="itemsPerPage"
-  [totalItems]="totalItems"
-  (pageChanged)="onPageChange($event)"
 
-</app-pagination> -->
 
-<div class="pagination">
-  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+
+<div class="pagination mb-3">
+  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="prev p-2">Previous</button>
   <span>Page {{ currentPage }} of {{ totalPages }}</span>
-  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="prev p-2">Next</button>
 </div>
-
+<app-footer></app-footer>

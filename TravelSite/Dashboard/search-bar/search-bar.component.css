@@ -1,0 +1,13 @@
+.input-group{
+  padding: 20px 0;
+  width: 50vw
+}
+.input-group-text{
+  background: #ffff;
+  border-left: .5px solid white;
+}
+.form-control
+{
+  border-right: .5px solid white;
+
+}

@@ -66,7 +66,7 @@ export class EditUserInfoComponent implements OnInit {
     if (this.editForm.valid) {
       const updatedUser = this.editForm.getRawValue();
       this.userService.updateUser(updatedUser).subscribe(
-        () => this.router.navigate(['/Admin/userinfo']),
+        () => this.router.navigate(['/profile/userinfo']),
         (error) => (this.errorMessage = `Error updating user data: ${error}`)
       );
     }
